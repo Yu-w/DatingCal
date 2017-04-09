@@ -1,0 +1,34 @@
+PODS:
+  - Alamofire (4.3.0)
+  - ChameleonFramework (2.1.0):
+    - ChameleonFramework/Default (= 2.1.0)
+  - ChameleonFramework/Default (2.1.0)
+  - JTAppleCalendar (6.1.1)
+  - SVProgressHUD (2.1.2)
+  - SwiftyJSON (3.1.4)
+  - TextFieldEffects (1.3.0)
+  - YYKit (1.0.9):
+    - YYKit/no-arc (= 1.0.9)
+  - YYKit/no-arc (1.0.9)
+
+DEPENDENCIES:
+  - Alamofire
+  - ChameleonFramework
+  - JTAppleCalendar
+  - SVProgressHUD
+  - SwiftyJSON
+  - TextFieldEffects
+  - YYKit
+
+SPEC CHECKSUMS:
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  JTAppleCalendar: fc53eb29ec81f8a90969e2d214b3aa610ab4e5b3
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  TextFieldEffects: ef594746f17997c813e07633f8ae5acaf9b04f27
+  YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
+
+PODFILE CHECKSUM: 225f06d089e73d5e73c0da974c757193878fa912
+
+COCOAPODS: 1.2.0

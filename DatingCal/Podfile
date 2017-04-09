@@ -1,0 +1,15 @@
+# Uncomment this line to define a global platform for your project
+platform :ios, '9.0'
+use_frameworks!
+
+target 'DatingCal' do
+
+pod 'Alamofire'
+pod 'ChameleonFramework'
+pod 'SVProgressHUD'
+pod 'SwiftyJSON'
+pod 'TextFieldEffects'
+pod 'YYKit'
+pod 'JTAppleCalendar'
+
+end
