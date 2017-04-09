@@ -10,6 +10,6 @@ pod 'SVProgressHUD'
 pod 'SwiftyJSON'
 pod 'TextFieldEffects'
 pod 'YYKit'
-pod 'JTAppleCalendar'
+pod 'FSCalendar'
 
 end
