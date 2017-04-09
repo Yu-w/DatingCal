@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F103EC1E9AE1D90047F308 /* AppDelegate.swift */; };
-		88F103EF1E9AE1DA0047F308 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F103EE1E9AE1DA0047F308 /* ViewController.swift */; };
 		88F103F21E9AE1DA0047F308 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88F103F01E9AE1DA0047F308 /* Main.storyboard */; };
 		88F103F41E9AE1DA0047F308 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F103F31E9AE1DA0047F308 /* Assets.xcassets */; };
 		88F103F71E9AE1DA0047F308 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88F103F51E9AE1DA0047F308 /* LaunchScreen.storyboard */; };
 		88F104021E9AE1DA0047F308 /* DatingCalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F104011E9AE1DA0047F308 /* DatingCalTests.swift */; };
 		88F1040D1E9AE1DA0047F308 /* DatingCalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F1040C1E9AE1DA0047F308 /* DatingCalUITests.swift */; };
+		88F1041E1E9AE8EF0047F308 /* MainCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F1041D1E9AE8EE0047F308 /* MainCalendarViewController.swift */; };
 		AC88F8340664D2C0360A28C3 /* Pods_DatingCal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B87019FB7411A7235D57BD /* Pods_DatingCal.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +38,6 @@
 		14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.debug.xcconfig"; sourceTree = "<group>"; };
 		88F103E91E9AE1D90047F308 /* DatingCal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatingCal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88F103EC1E9AE1D90047F308 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		88F103EE1E9AE1DA0047F308 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		88F103F11E9AE1DA0047F308 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		88F103F31E9AE1DA0047F308 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88F103F61E9AE1DA0047F308 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +48,8 @@
 		88F104081E9AE1DA0047F308 /* DatingCalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DatingCalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88F1040C1E9AE1DA0047F308 /* DatingCalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatingCalUITests.swift; sourceTree = "<group>"; };
 		88F1040E1E9AE1DA0047F308 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88F1041A1E9AE7DC0047F308 /* DatingCal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DatingCal-Bridging-Header.h"; sourceTree = "<group>"; };
+		88F1041D1E9AE8EE0047F308 /* MainCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarViewController.swift; sourceTree = "<group>"; };
 		C3B87019FB7411A7235D57BD /* Pods_DatingCal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatingCal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCD3225477F11CAFB04E765 /* Pods-DatingCal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.release.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,11 +114,12 @@
 			isa = PBXGroup;
 			children = (
 				88F103EC1E9AE1D90047F308 /* AppDelegate.swift */,
-				88F103EE1E9AE1DA0047F308 /* ViewController.swift */,
+				88F1041D1E9AE8EE0047F308 /* MainCalendarViewController.swift */,
 				88F103F01E9AE1DA0047F308 /* Main.storyboard */,
 				88F103F31E9AE1DA0047F308 /* Assets.xcassets */,
 				88F103F51E9AE1DA0047F308 /* LaunchScreen.storyboard */,
 				88F103F81E9AE1DA0047F308 /* Info.plist */,
+				88F1041A1E9AE7DC0047F308 /* DatingCal-Bridging-Header.h */,
 			);
 			path = DatingCal;
 			sourceTree = "<group>";
@@ -220,6 +222,7 @@
 					88F103E81E9AE1D90047F308 = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = BLNBM6S947;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					88F103FC1E9AE1DA0047F308 = {
@@ -336,7 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88F103EF1E9AE1DA0047F308 /* ViewController.swift in Sources */,
+				88F1041E1E9AE8EF0047F308 /* MainCalendarViewController.swift in Sources */,
 				88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,11 +495,14 @@
 			baseConfigurationReference = 14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = BLNBM6S947;
 				INFOPLIST_FILE = DatingCal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cs242.DatingCal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DatingCal/DatingCal-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -506,11 +512,13 @@
 			baseConfigurationReference = CCCD3225477F11CAFB04E765 /* Pods-DatingCal.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = BLNBM6S947;
 				INFOPLIST_FILE = DatingCal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cs242.DatingCal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DatingCal/DatingCal-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -592,6 +600,7 @@
 				88F104131E9AE1DA0047F308 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88F104141E9AE1DA0047F308 /* Build configuration list for PBXNativeTarget "DatingCalTests" */ = {
 			isa = XCConfigurationList;
@@ -600,6 +609,7 @@
 				88F104161E9AE1DA0047F308 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88F104171E9AE1DA0047F308 /* Build configuration list for PBXNativeTarget "DatingCalUITests" */ = {
 			isa = XCConfigurationList;
@@ -608,6 +618,7 @@
 				88F104191E9AE1DA0047F308 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
