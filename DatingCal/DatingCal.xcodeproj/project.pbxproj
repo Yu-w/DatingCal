@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A7758DA1E9AEF0B00C1DDDB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */; };
 		88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F103EC1E9AE1D90047F308 /* AppDelegate.swift */; };
 		88F103F21E9AE1DA0047F308 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88F103F01E9AE1DA0047F308 /* Main.storyboard */; };
 		88F103F41E9AE1DA0047F308 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F103F31E9AE1DA0047F308 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.debug.xcconfig"; sourceTree = "<group>"; };
+		4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		88F103E91E9AE1D90047F308 /* DatingCal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatingCal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88F103EC1E9AE1D90047F308 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88F103F11E9AE1DA0047F308 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 		88F103EB1E9AE1D90047F308 /* DatingCal */ = {
 			isa = PBXGroup;
 			children = (
+				4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */,
 				88F103EC1E9AE1D90047F308 /* AppDelegate.swift */,
 				88F1041D1E9AE8EE0047F308 /* MainCalendarViewController.swift */,
 				88F1041F1E9AED300047F308 /* MainCalendarFSEx.swift */,
@@ -348,6 +351,7 @@
 				88F104221E9AED5D0047F308 /* MainCalendarTableEx.swift in Sources */,
 				88F1041E1E9AE8EF0047F308 /* MainCalendarViewController.swift in Sources */,
 				88F104201E9AED300047F308 /* MainCalendarFSEx.swift in Sources */,
+				4A7758DA1E9AEF0B00C1DDDB /* LoginViewController.swift in Sources */,
 				88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
