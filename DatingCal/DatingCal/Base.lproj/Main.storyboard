@@ -12,7 +12,7 @@
         <!--Data Source-->
         <scene sceneID="oFA-A1-4t7">
             <objects>
-                <viewController title="FSCalendarScopeExample" id="QHj-xg-hze" customClass="MainCalendarViewController" customModule="DatingCal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="QHj-xg-hze" customClass="MainCalendarViewController" customModule="DatingCal" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dnc-3E-LMR"/>
                         <viewControllerLayoutGuide type="bottom" id="DOU-lX-GKh"/>
@@ -80,13 +80,7 @@
                             <constraint firstItem="yta-q3-fIO" firstAttribute="top" secondItem="Dnc-3E-LMR" secondAttribute="bottom" id="w9T-Mf-QKN"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="FSCalendar" id="Uo6-6d-WpM">
-                        <barButtonItem key="rightBarButtonItem" title="Toggle" id="JGJ-1J-Q6y">
-                            <connections>
-                                <action selector="toggleClickedWithSender:" destination="QHj-xg-hze" id="IfB-0E-co5"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Dating Cal" id="Uo6-6d-WpM"/>
                     <connections>
                         <outlet property="calendar" destination="yta-q3-fIO" id="lHz-Q4-3aj"/>
                         <outlet property="calendarHeightConstraint" destination="Lwm-Te-dns" id="n02-qB-BbI"/>

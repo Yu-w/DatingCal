@@ -9,14 +9,14 @@
 import UIKit
 import FSCalendar
 
-class MainCalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FSCalendarDataSource, FSCalendarDelegate, UIGestureRecognizerDelegate {
+class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var calendar: FSCalendar!
     
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
     
-    fileprivate lazy var dateFormatter: DateFormatter = {
+    lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter
@@ -63,57 +63,6 @@ class MainCalendarViewController: UIViewController, UITableViewDataSource, UITab
             }
         }
         return shouldBegin
-    }
-    
-    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        self.calendarHeightConstraint.constant = bounds.height
-        self.view.layoutIfNeeded()
-    }
-    
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        debugPrint("did select date \(self.dateFormatter.string(from: date))")
-        let selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
-        debugPrint("selected dates is \(selectedDates)")
-        if monthPosition == .next || monthPosition == .previous {
-            calendar.setCurrentPage(date, animated: true)
-        }
-    }
-
-    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        debugPrint("\(self.dateFormatter.string(from: calendar.currentPage))")
-    }
-    
-    // MARK:- UITableViewDataSource
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        return cell
-    }
-    
-    
-    // MARK:- UITableViewDelegate
-    
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
-    }
-    
-    // MARK:- Target actions
-    
-    @IBAction func toggleClicked(sender: AnyObject) {
-        if self.calendar.scope == .month {
-            self.calendar.setScope(.week, animated: true)
-        } else {
-            self.calendar.setScope(.month, animated: true)
-        }
     }
     
 }
