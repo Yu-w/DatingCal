@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GoogleAPIClient
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -28,12 +30,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return true;
     }
     
+    let service = GTLServiceCalendar()
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError err: Error!) {
         if (err == nil) {
             print("Login: ", user)
+            
+            /**
+            let query = GTLQueryCalendar.queryForEventsList(withCalendarId: "primary")
+            query?.maxResults = 10
+            query?.timeMin = GTLDateTime(date: Date(), timeZone: TimeZone.current)
+            query?.singleEvents = true
+            query?.orderBy = kGTLCalendarOrderByStartTime
+            **/
+            let query = GTLQueryCalendar.queryForCalendarListList()
+            query?.maxResults = 10
+            service.apiKey = "AIzaSyAREobH4SVg2gkjnWwyzz33uBPn7J0b-cA"
+            service.executeQuery(
+                query!,
+                delegate: self,
+                didFinish: #selector(AppDelegate.displayResultWithTicket(_:finishedWithObject:error:))
+            )
         } else {
             print(err.localizedDescription)
         }
+    }
+    
+    // Display the start dates and event summaries in the UITextView
+    func displayResultWithTicket(
+        _ ticket: GTLServiceTicket,
+        finishedWithObject response : GTLCalendarCalendarList,
+        error : NSError?) {
+        
+        if let error = error {
+            print("Error", error.localizedDescription)
+            return
+        }
+        
+        var eventString = ""
+        print(response)
     }
     
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user:GIDGoogleUser!, withError err: Error!) {
