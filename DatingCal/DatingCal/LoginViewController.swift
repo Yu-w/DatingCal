@@ -7,28 +7,42 @@
 //
 
 import Foundation
-import GoogleAPIClient
-import GTMOAuth2
 import UIKit
+import AppAuth
+import PromiseKit
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate {
+class LoginViewController: UIViewController {
     
     private let kKeychainItemName = "Google Calendar API"
     private let kClientID = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
+    private let kClientSecret = "???"
+    private let kRedirectURI = "???"
+    private let kIssuer = "https://accounts.google.com"
     
-    // If modifying these scopes, delete your previously saved credentials by
-    // resetting the iOS simulator or uninstall the app.
-    private let scopes = [kGTLAuthScopeCalendarReadonly]
+    let signInButton = UIButton()
     
-    private let service = GTLServiceCalendar()
-    let signInButton = GIDSignInButton()
+    func willSignIn() {
+        firstly {
+            Promise { fufill, reject in
+                fufill(123)
+            }
+        }
+        /*
+        OIDAuthorizationService.discoverConfiguration(forIssuer: kIssuer, completion: <#T##OIDDiscoveryCallback##OIDDiscoveryCallback##(OIDServiceConfiguration?, Error?) -> Void#>)
+        let request = OIDAuthorizationRequest(configuration: config, clientId: kClientID, clientSecret: kClientSecret, scope: kScope, redirectURL: kRedirectURI, responseType: OIDResponseTypeCode, additionalParameters: nil)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.googleAuthFlow = OIDAuthState.authState(byPresenting: request, presenting: self, callback: { (authState: OIDAuthState, err: NSError) in
+            return
+        })
+ **/
+    }
     
     // When the view loads, create necessary subviews
     // and initialize the Google Calendar API service
     override func viewDidLoad() {
         super.viewDidLoad()
-        GIDSignIn.sharedInstance().uiDelegate = self
         
+        signInButton.addTarget(self, action: #selector(willSignIn), for: .touchUpInside)
         view.addSubview(signInButton)
     }
     

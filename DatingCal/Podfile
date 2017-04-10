@@ -4,6 +4,8 @@ use_frameworks!
 
 target 'DatingCal' do
 
+swift_version = "3.0"
+
 pod 'Alamofire'
 pod 'ChameleonFramework'
 pod 'SVProgressHUD'
@@ -14,5 +16,7 @@ pod 'FSCalendar'
 pod 'GoogleAPIClient/Calendar', '~> 1.0.2'
 pod 'GTMOAuth2', '~> 1.1.0'
 pod 'Google/SignIn'
+pod 'AppAuth'
+pod "PromiseKit", "~> 4.0"
 
 end

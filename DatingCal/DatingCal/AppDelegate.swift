@@ -7,89 +7,18 @@
 //
 
 import UIKit
-import GoogleAPIClient
+import AppAuth
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var googleAuthFlow: OIDAuthorizationFlowSession?
     
-    // -------------- GOOGLE LOGIN helpers --------------------
-    
-    func initGoogleSignIn() -> Bool {
-        // Initialize Google sign-in
-        var configErr: NSError?
-        GGLContext.sharedInstance().configureWithError(&configErr)
-        if(configErr != nil) {
-            print("Error while configuring Google services");
-            return false;
-        }
-        
-        GIDSignIn.sharedInstance().delegate = self
-        return true;
-    }
-    
-    let service = GTLServiceCalendar()
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError err: Error!) {
-        if (err == nil) {
-            print("Login: ", user)
-            
-            /**
-            let query = GTLQueryCalendar.queryForEventsList(withCalendarId: "primary")
-            query?.maxResults = 10
-            query?.timeMin = GTLDateTime(date: Date(), timeZone: TimeZone.current)
-            query?.singleEvents = true
-            query?.orderBy = kGTLCalendarOrderByStartTime
-            **/
-            let query = GTLQueryCalendar.queryForCalendarListList()
-            query?.maxResults = 10
-            service.apiKey = "AIzaSyAREobH4SVg2gkjnWwyzz33uBPn7J0b-cA"
-            service.executeQuery(
-                query!,
-                delegate: self,
-                didFinish: #selector(AppDelegate.displayResultWithTicket(_:finishedWithObject:error:))
-            )
-        } else {
-            print(err.localizedDescription)
-        }
-    }
-    
-    // Display the start dates and event summaries in the UITextView
-    func displayResultWithTicket(
-        _ ticket: GTLServiceTicket,
-        finishedWithObject response : GTLCalendarCalendarList,
-        error : NSError?) {
-        
-        if let error = error {
-            print("Error", error.localizedDescription)
-            return
-        }
-        
-        var eventString = ""
-        print(response)
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user:GIDGoogleUser!, withError err: Error!) {
-        if (err == nil) {
-            print("Disconnect: ", user)
-        } else {
-            print(err.localizedDescription)
-        }
-    }
-    
-    // -------------- END OF GOOGLE LOGIN helpers --------------------
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return initGoogleSignIn()
-    }
-    
-    func application(_ application: UIApplication, open openURL: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return GIDSignIn.sharedInstance().handle(
-            openURL,
-            sourceApplication: sourceApplication,
-            annotation: annotation)
+        return true
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
