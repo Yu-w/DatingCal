@@ -14,36 +14,34 @@ import PromiseKit
 class LoginViewController: UIViewController {
     
     private let kKeychainItemName = "Google Calendar API"
-    private let kClientID = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
-    private let kClientSecret = "???"
-    private let kRedirectURI = "???"
-    private let kIssuer = "https://accounts.google.com"
+    private let kScopes : [String]? = ["https://www.googleapis.com/auth/calendar"]
+    private let kRedirectURI : URL = URL(string: "cs242.datingcal:/oauth2redirect/google")!
+    private let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
     
-    let signInButton = UIButton()
+    let googleAuth = OIDPromise(issuer: URL(string: "https://accounts.google.com")!)
     
-    func willSignIn() {
-        firstly {
-            Promise { fufill, reject in
-                fufill(123)
-            }
+    @IBAction func willSignIn(_ sender: Any) {
+        googleAuth.getConfigurations().then { config -> Promise<OIDAuthState> in
+            let request = OIDAuthorizationRequest(configuration: config
+                , clientId: self.kClientId, clientSecret: nil
+                , scopes: self.kScopes, redirectURL: self.kRedirectURI
+                , responseType: OIDResponseTypeCode, additionalParameters: nil)
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let (flow, promise) = self.googleAuth.authState(request: request, presenter: self)
+            appDelegate.googleAuthFlow = flow
+            return promise
+        }.then { authState -> Void in
+            print("Authorization result: ", authState)
+        }.catch { err -> Void in
+            print("ERROR: ", err)
         }
-        /*
-        OIDAuthorizationService.discoverConfiguration(forIssuer: kIssuer, completion: <#T##OIDDiscoveryCallback##OIDDiscoveryCallback##(OIDServiceConfiguration?, Error?) -> Void#>)
-        let request = OIDAuthorizationRequest(configuration: config, clientId: kClientID, clientSecret: kClientSecret, scope: kScope, redirectURL: kRedirectURI, responseType: OIDResponseTypeCode, additionalParameters: nil)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.googleAuthFlow = OIDAuthState.authState(byPresenting: request, presenting: self, callback: { (authState: OIDAuthState, err: NSError) in
-            return
-        })
- **/
     }
     
     // When the view loads, create necessary subviews
     // and initialize the Google Calendar API service
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        signInButton.addTarget(self, action: #selector(willSignIn), for: .touchUpInside)
-        view.addSubview(signInButton)
     }
     
     override func didReceiveMemoryWarning() {
