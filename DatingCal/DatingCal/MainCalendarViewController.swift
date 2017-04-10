@@ -37,8 +37,9 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
             self.calendarHeightConstraint.constant = 400
         }
         
-//        self.calendar.select(Date())
-        
+        let nextDat = self.calendar.gregorian.date(byAdding: Calendar.Component.day, value: 3, to: Date())
+        self.calendar.select(nextDat)
+
         self.view.addGestureRecognizer(self.scopeGesture)
         self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
         self.calendar.scope = .month
