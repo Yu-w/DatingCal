@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eEU-hA-G9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2ev-gh-tU2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,15 +21,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_1" translatesAutoresizingMaskIntoConstraints="NO" id="3n8-MO-zJO">
+                                <rect key="frame" x="0.0" y="20" width="375" height="440"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yta-q3-fIO" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="64" width="375" height="300"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="440"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="Lwm-Te-dns"/>
+                                    <constraint firstAttribute="height" constant="440" id="Lwm-Te-dns"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="fakedSelectedDay">
                                         <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMultipleSelection" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
+                                        <color key="value" red="1" green="0.20000000000000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderSelectionColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                        <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -38,10 +60,10 @@
                                 </connections>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="DZK-ny-AgO">
-                                <rect key="frame" x="0.0" y="380" width="375" height="287"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="492" width="375" height="175"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="cell" textLabel="BT3-yY-STD" imageView="JQB-xy-zxV" style="IBUITableViewCellStyleDefault" id="Xf8-a0-MOQ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="cell" textLabel="BT3-yY-STD" style="IBUITableViewCellStyleDefault" id="Xf8-a0-MOQ">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xf8-a0-MOQ" id="7az-XG-w4J">
@@ -49,16 +71,12 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Lorem ipsum dolor sit er elit lamet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BT3-yY-STD">
-                                                    <rect key="frame" x="46" y="0.0" width="314" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon_cat" id="JQB-xy-zxV">
-                                                    <rect key="frame" x="15" y="13" width="16" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -68,16 +86,30 @@
                                     <outlet property="delegate" destination="QHj-xg-hze" id="tu3-E3-WDh"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5QJ-Xm-f5o" customClass="TriangleView" customModule="DatingCal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="438" width="375" height="54"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="dYE-N4-ppH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="DZK-ny-AgO" firstAttribute="top" secondItem="yta-q3-fIO" secondAttribute="bottom" constant="16" id="IgT-iQ-pdk"/>
+                            <constraint firstItem="3n8-MO-zJO" firstAttribute="bottom" secondItem="yta-q3-fIO" secondAttribute="bottom" id="AXa-he-Mfd"/>
+                            <constraint firstItem="3n8-MO-zJO" firstAttribute="top" secondItem="Dnc-3E-LMR" secondAttribute="bottom" id="HbF-y8-475"/>
+                            <constraint firstItem="DZK-ny-AgO" firstAttribute="top" secondItem="yta-q3-fIO" secondAttribute="bottom" constant="32" id="IgT-iQ-pdk"/>
                             <constraint firstItem="DZK-ny-AgO" firstAttribute="trailing" secondItem="yta-q3-fIO" secondAttribute="trailing" id="On5-n5-Xup"/>
                             <constraint firstItem="DOU-lX-GKh" firstAttribute="top" secondItem="DZK-ny-AgO" secondAttribute="bottom" id="Rbq-oT-6ed"/>
+                            <constraint firstAttribute="trailing" secondItem="3n8-MO-zJO" secondAttribute="trailing" id="Rtm-99-B2H"/>
                             <constraint firstItem="DZK-ny-AgO" firstAttribute="leading" secondItem="yta-q3-fIO" secondAttribute="leading" id="X3P-Mx-JY8"/>
                             <constraint firstItem="yta-q3-fIO" firstAttribute="leading" secondItem="HXE-gn-vdf" secondAttribute="leading" id="YAx-Nh-BgQ"/>
                             <constraint firstAttribute="trailing" secondItem="yta-q3-fIO" secondAttribute="trailing" id="fRI-AF-IS1"/>
+                            <constraint firstItem="5QJ-Xm-f5o" firstAttribute="trailing" secondItem="DZK-ny-AgO" secondAttribute="trailing" id="jPc-xn-Wlz"/>
+                            <constraint firstItem="5QJ-Xm-f5o" firstAttribute="leading" secondItem="DZK-ny-AgO" secondAttribute="leading" id="rim-aC-bIN"/>
                             <constraint firstItem="yta-q3-fIO" firstAttribute="top" secondItem="Dnc-3E-LMR" secondAttribute="bottom" id="w9T-Mf-QKN"/>
+                            <constraint firstAttribute="leading" secondItem="3n8-MO-zJO" secondAttribute="leading" id="wPA-rr-xq2"/>
+                            <constraint firstItem="5QJ-Xm-f5o" firstAttribute="bottom" secondItem="DZK-ny-AgO" secondAttribute="top" id="wzb-QT-Mzm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Dating Cal" id="Uo6-6d-WpM"/>
@@ -122,7 +154,7 @@
         <!--Navigation Controller-->
         <scene sceneID="XiM-Gr-YT8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2ev-gh-tU2" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="2ev-gh-tU2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Oc4-aZ-TQD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -139,6 +171,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon_cat" width="16" height="16"/>
+        <image name="bg_1" width="520" height="763"/>
     </resources>
 </document>

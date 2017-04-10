@@ -37,11 +37,13 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
             self.calendarHeightConstraint.constant = 400
         }
         
-        self.calendar.select(Date())
+//        self.calendar.select(Date())
         
         self.view.addGestureRecognizer(self.scopeGesture)
         self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
         self.calendar.scope = .month
+        self.calendar.backgroundColor = .clear
+        self.calendar.bottomBorder.alpha = 0
         
         // For UITest
         self.calendar.accessibilityIdentifier = "calendar"
