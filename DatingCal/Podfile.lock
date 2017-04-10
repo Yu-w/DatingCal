@@ -21,11 +21,6 @@ PODS:
     - GTMSessionFetcher (~> 1.1)
   - GoogleAPIClient/Core (1.0.5):
     - GTMSessionFetcher (~> 1.1)
-  - GoogleAPIClientForREST (1.2.1):
-    - GoogleAPIClientForREST/Core (= 1.2.1)
-    - GTMSessionFetcher (>= 1.1.7)
-  - GoogleAPIClientForREST/Core (1.2.1):
-    - GTMSessionFetcher (>= 1.1.7)
   - GoogleSignIn (4.0.2):
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
@@ -61,7 +56,6 @@ DEPENDENCIES:
   - FSCalendar
   - Google/SignIn
   - GoogleAPIClient/Calendar (~> 1.0.2)
-  - GoogleAPIClientForREST
   - GTMOAuth2 (~> 1.1.0)
   - SVProgressHUD
   - SwiftyJSON
@@ -77,7 +71,6 @@ SPEC CHECKSUMS:
   FSCalendar: e95995a746acae531c4a7dd636b8393233125ec5
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
   GoogleAPIClient: 4a6b0b807de8b1115a2835180b25dd93dc60f1ea
-  GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
   GoogleSignIn: d7ad83f13480e1f30453471d00d19b5293ac46af
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
@@ -87,6 +80,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 3fee25aab8ac848c72d8fb2fe7ecc409281b669e
+PODFILE CHECKSUM: adf84362b1009f8bf5757013a730ede4514221ba
 
 COCOAPODS: 1.2.0
