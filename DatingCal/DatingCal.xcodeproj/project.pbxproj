@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A28AEFA1E9C607F007665F0 /* Models.swift */; };
 		4A3E6BA41E9C3B7B00E1644A /* CalendarApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E6BA31E9C3B7B00E1644A /* CalendarApi.swift */; };
 		4A7758DA1E9AEF0B00C1DDDB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */; };
 		4A7758DC1E9B1D6900C1DDDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.debug.xcconfig"; sourceTree = "<group>"; };
+		4A28AEFA1E9C607F007665F0 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		4A3E6BA31E9C3B7B00E1644A /* CalendarApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarApi.swift; sourceTree = "<group>"; };
 		4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -98,6 +100,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A28AEF91E9C6069007665F0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4A28AEFA1E9C607F007665F0 /* Models.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		4A7758DF1E9BD0B100C1DDDB /* GoogleHelpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +150,7 @@
 		88F103EB1E9AE1D90047F308 /* DatingCal */ = {
 			isa = PBXGroup;
 			children = (
+				4A28AEF91E9C6069007665F0 /* Models */,
 				4A7758DF1E9BD0B100C1DDDB /* GoogleHelpers */,
 				4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */,
 				4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */,
@@ -377,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88F104221E9AED5D0047F308 /* MainCalendarTableEx.swift in Sources */,
+				4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */,
 				88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */,
 				88F1041E1E9AE8EF0047F308 /* MainCalendarViewController.swift in Sources */,
 				88F104201E9AED300047F308 /* MainCalendarFSEx.swift in Sources */,
