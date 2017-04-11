@@ -21,7 +21,12 @@ class LoginViewController: UIViewController {
     private let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
     
     let googleAuth = OIDPromise(issuer: URL(string: "https://accounts.google.com")!)
-    let googleAuthStateStorage = "google-auth-state.dat"
+    var googleAuthStateStorage : String {
+        get {
+            let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
+            return library + "/google-auth-state.dat"
+        }
+    }
     
     var authState : OIDAuthState?
     var token : String?
@@ -38,7 +43,7 @@ class LoginViewController: UIViewController {
             return
         }
         let unarchiver = NSKeyedUnarchiver(forReadingWith: data as Data)
-        unarchiver.requiresSecureCoding = true
+        unarchiver.requiresSecureCoding = false
         self.authState = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as? OIDAuthState
     }
     
