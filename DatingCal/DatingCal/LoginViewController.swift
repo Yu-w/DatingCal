@@ -24,6 +24,7 @@ class LoginViewController: UIViewController {
     
     var authState : OIDAuthState?
     var token : String?
+    var googleCalendar : GoogleCalendar?
     
     @IBAction func willSignIn(_ sender: Any) {
         googleAuth.getConfigurations().then { config -> Promise<OIDAuthState> in
@@ -36,25 +37,11 @@ class LoginViewController: UIViewController {
             let (flow, promise) = self.googleAuth.authState(request: request, presenter: self)
             appDelegate.googleAuthFlow = flow
             return promise
-        }.then { authState -> Promise<JSON> in
+        }.then { authState -> Promise<Void> in
             self.authState = authState
             self.token = authState.lastTokenResponse?.accessToken
-            return GoogleCalendar(self.token!).listCalendarLists()
-        }.then { list -> Promise<JSON> in
-            var realm = try! Realm()
-            for cal in (list.array ?? []) {
-                let parsed = CalendarModel.parse(cal)
-                try! realm.write {
-                    realm.add(parsed)
-                }
-            }
-            return GoogleCalendar(self.token!).listEventLists(realm.objects(CalendarModel.self).first!.id)
-        }.then { list -> Void in
-            var lastEvent : EventModel?
-            for event in (list.array ?? []) {
-                lastEvent = EventModel.parse(event)
-                print(lastEvent)
-            }
+            self.googleCalendar = GoogleCalendar(self.token!)
+            return self.googleCalendar!.loadAll()
         }.catch { err -> Void in
             print("ERROR: ", err)
         }
