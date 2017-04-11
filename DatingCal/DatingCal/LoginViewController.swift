@@ -11,6 +11,7 @@ import UIKit
 import AppAuth
 import PromiseKit
 import GoogleAPIClientForREST
+import SwiftyJSON
 
 class LoginViewController: UIViewController {
     
@@ -34,20 +35,20 @@ class LoginViewController: UIViewController {
             let (flow, promise) = self.googleAuth.authState(request: request, presenter: self)
             appDelegate.googleAuthFlow = flow
             return promise
-        }.then { authState -> Promise<AnyObject> in
+        }.then { authState -> Promise<JSON> in
             self.authState = authState
             self.token = authState.lastTokenResponse?.accessToken
             return GoogleCalendar(self.token!).listCalendarLists()
-        }.then { list -> Promise<AnyObject> in
+        }.then { list -> Promise<JSON> in
             var lastCalendar : CalendarModel?
-            for cal in (list as! [AnyObject]) {
+            for cal in (list.array ?? []) {
                 lastCalendar = CalendarModel.parse(cal)
                 print(lastCalendar)
             }
             return GoogleCalendar(self.token!).listEventLists(lastCalendar!.id)
         }.then { list -> Void in
             var lastEvent : EventModel?
-            for event in (list as! [AnyObject]) {
+            for event in (list.array ?? []) {
                 lastEvent = EventModel.parse(event)
                 print(lastEvent)
             }

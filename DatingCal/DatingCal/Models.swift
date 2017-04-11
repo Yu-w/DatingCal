@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct CalendarModel {
     var id: String
@@ -15,13 +16,13 @@ struct CalendarModel {
     var bgColor: String
     var isPrimary: Bool
     
-    static func parse(_ json: AnyObject) -> CalendarModel {
+    static func parse(_ json: JSON) -> CalendarModel {
         return CalendarModel(
-            id : jsonGet(json, "id")! as! String,
-            name : jsonGet(json, "summary")! as! String,
-            timeZone : jsonGet(json, "timeZone")! as! String,
-            bgColor : jsonGet(json, "backgroundColor")! as! String,
-            isPrimary : ((jsonGet(json, "primary") as? Bool) ?? false)
+            id : json["id"].string!,
+            name : json["summary"].string!,
+            timeZone : json["timezone"].string!,
+            bgColor : json["backgroundColor"].string!,
+            isPrimary : json["primary"].bool ?? false
         )
     }
 }
@@ -31,11 +32,11 @@ struct EventModel {
     var summary: String
     var description: String
     
-    static func parse(_ json: AnyObject) -> EventModel {
+    static func parse(_ json: JSON) -> EventModel {
         return EventModel(
-            id : jsonGet(json, "id")! as! String,
-            summary : jsonGet(json, "summary")! as! String,
-            description : jsonGet(json, "description") as? String ?? ""
+            id : json["id"].string!,
+            summary : json["summary"].string!,
+            description : json["description"].string ?? ""
         )
     }
 }
