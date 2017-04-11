@@ -12,6 +12,7 @@ import AppAuth
 import PromiseKit
 import GoogleAPIClientForREST
 import SwiftyJSON
+import RealmSwift
 
 class LoginViewController: UIViewController {
     
@@ -40,12 +41,14 @@ class LoginViewController: UIViewController {
             self.token = authState.lastTokenResponse?.accessToken
             return GoogleCalendar(self.token!).listCalendarLists()
         }.then { list -> Promise<JSON> in
-            var lastCalendar : CalendarModel?
+            var realm = try! Realm()
             for cal in (list.array ?? []) {
-                lastCalendar = CalendarModel.parse(cal)
-                print(lastCalendar)
+                let parsed = CalendarModel.parse(cal)
+                try! realm.write {
+                    realm.add(parsed)
+                }
             }
-            return GoogleCalendar(self.token!).listEventLists(lastCalendar!.id)
+            return GoogleCalendar(self.token!).listEventLists(realm.objects(CalendarModel.self).first!.id)
         }.then { list -> Void in
             var lastEvent : EventModel?
             for event in (list.array ?? []) {

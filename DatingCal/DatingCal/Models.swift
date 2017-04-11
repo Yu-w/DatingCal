@@ -8,35 +8,36 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
 
-struct CalendarModel {
-    var id: String
-    var name: String
-    var timeZone: String
-    var bgColor: String
-    var isPrimary: Bool
+class CalendarModel : Object {
+    dynamic var id: String = ""
+    dynamic var name: String = ""
+    dynamic var timeZone: String = ""
+    dynamic var bgColor: String = ""
+    dynamic var isPrimary: Bool = false
     
     static func parse(_ json: JSON) -> CalendarModel {
-        return CalendarModel(
-            id : json["id"].string!,
-            name : json["summary"].string!,
-            timeZone : json["timeZone"].string!,
-            bgColor : json["backgroundColor"].string!,
-            isPrimary : json["primary"].bool ?? false
-        )
+        var ans = CalendarModel()
+        ans.id = json["id"].string!
+        ans.name = json["summary"].string!
+        ans.timeZone = json["timeZone"].string!
+        ans.bgColor = json["backgroundColor"].string!
+        ans.isPrimary = json["primary"].bool ?? false
+        return ans
     }
 }
 
-struct EventModel {
-    var id: String
-    var summary: String
-    var description: String
+class EventModel : Object {
+    dynamic var id: String = ""
+    dynamic var summary: String = ""
+    dynamic var desc: String = ""
     
     static func parse(_ json: JSON) -> EventModel {
-        return EventModel(
-            id : json["id"].string!,
-            summary : json["summary"].string!,
-            description : json["description"].string ?? ""
-        )
+        var ans = EventModel()
+        ans.id = json["id"].string!
+        ans.summary = json["summary"].string!
+        ans.desc = json["description"].string ?? ""
+        return ans
     }
 }

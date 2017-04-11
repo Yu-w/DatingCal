@@ -26,6 +26,11 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.1.7):
     - PromiseKit/CorePromise
+  - Realm (2.5.1):
+    - Realm/Headers (= 2.5.1)
+  - Realm/Headers (2.5.1)
+  - RealmSwift (2.5.1):
+    - Realm (= 2.5.1)
   - SVProgressHUD (2.1.2)
   - SwiftyJSON (3.1.4)
   - TextFieldEffects (1.3.2)
@@ -40,6 +45,7 @@ DEPENDENCIES:
   - FSCalendar
   - GoogleAPIClientForREST/Calendar
   - PromiseKit (~> 4.0)
+  - RealmSwift
   - SVProgressHUD
   - SwiftyJSON
   - TextFieldEffects
@@ -53,11 +59,13 @@ SPEC CHECKSUMS:
   GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
+  Realm: 32f86104d37c8521f864d4274050b38ba6190733
+  RealmSwift: f719e7511c902b8908593e8f143f59e47931bdb6
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: f70951ebf7f405a2c25b20aa0f7dc6b87ae8ea98
+PODFILE CHECKSUM: 6744d4fd3f7444edf823bd98bda19fa981e6fce0
 
 COCOAPODS: 1.2.0
