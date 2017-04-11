@@ -20,7 +20,7 @@ struct CalendarModel {
         return CalendarModel(
             id : json["id"].string!,
             name : json["summary"].string!,
-            timeZone : json["timezone"].string!,
+            timeZone : json["timeZone"].string!,
             bgColor : json["backgroundColor"].string!,
             isPrimary : json["primary"].bool ?? false
         )
