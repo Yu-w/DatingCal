@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 import AppAuth
 import PromiseKit
+import GoogleAPIClientForREST
 
 class LoginViewController: UIViewController {
     
-    private let kKeychainItemName = "Google Calendar API"
     private let kScopes : [String]? = ["https://www.googleapis.com/auth/calendar"]
     private let kRedirectURI : URL = URL(string: "cs242.datingcal:/oauth2redirect/google")!
     private let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
@@ -31,8 +31,12 @@ class LoginViewController: UIViewController {
             let (flow, promise) = self.googleAuth.authState(request: request, presenter: self)
             appDelegate.googleAuthFlow = flow
             return promise
-        }.then { authState -> Void in
+        }.then { authState -> Promise<Any> in
             print("Authorization result: ", authState)
+            let token = authState.lastTokenResponse?.accessToken as! String
+            return GoogleCalendar(token).listCalendarLists()
+        }.then { list -> Void in
+            print(list)
         }.catch { err -> Void in
             print("ERROR: ", err)
         }

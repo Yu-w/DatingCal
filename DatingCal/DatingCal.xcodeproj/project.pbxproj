@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A3E6BA41E9C3B7B00E1644A /* CalendarApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E6BA31E9C3B7B00E1644A /* CalendarApi.swift */; };
 		4A7758DA1E9AEF0B00C1DDDB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */; };
 		4A7758DC1E9B1D6900C1DDDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */; };
 		4A7758DD1E9B1DAC00C1DDDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.debug.xcconfig"; sourceTree = "<group>"; };
+		4A3E6BA31E9C3B7B00E1644A /* CalendarApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarApi.swift; sourceTree = "<group>"; };
 		4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4A7758E01E9BD0EB00C1DDDB /* AppAuthPromise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAuthPromise.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				4A7758E01E9BD0EB00C1DDDB /* AppAuthPromise.swift */,
+				4A3E6BA31E9C3B7B00E1644A /* CalendarApi.swift */,
 			);
 			name = GoogleHelpers;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				88F1041E1E9AE8EF0047F308 /* MainCalendarViewController.swift in Sources */,
 				88F104201E9AED300047F308 /* MainCalendarFSEx.swift in Sources */,
 				4A7758DA1E9AEF0B00C1DDDB /* LoginViewController.swift in Sources */,
+				4A3E6BA41E9C3B7B00E1644A /* CalendarApi.swift in Sources */,
 				88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */,
 				4A7758E11E9BD0EB00C1DDDB /* AppAuthPromise.swift in Sources */,
 			);
