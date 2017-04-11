@@ -66,30 +66,27 @@ class GoogleCalendar {
         
     }
     
-    func checkDeletedCalendar(_ calendarId: String, _ realmObject: CalendarModel) -> Promise<Void> {
-        let encodedId : String = calendarId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        return requestPromise(Alamofire.request("https://www.googleapis.com/calendar/v3/users/me/calendarList/\(encodedId)", method: .get, headers: getHeaders())).then { list -> Void in
-            // Currently, don't handle etags.
-            if list["items"]["id"].string == nil {
-                try! Realm().delete(realmObject) /// TODO: move this into a write block.
-            }
-        }
-    }
-    
     /// Fetch and save all calendar lists. This will not sync the events in the calendars.
     func loadAllCalendars() -> Promise<Void> {
-        return listCalendarLists().then { list in
+        return listCalendarLists().then { list -> Void in
+            let list = list.array ?? []
             var realm = try! Realm()
-            for cal in (list.array ?? []) {
-                let parsed = CalendarModel.parse(cal)
-                try! realm.write {
-                    realm.add(parsed)
+            var listAsSet = NSMutableSet(array: list)
+            
+            for cal in realm.objects(CalendarModel.self) {
+                if !listAsSet.contains(cal) {
+                    try! realm.write {
+                        realm.delete(cal)
+                    }
                 }
             }
             
-            return when(fulfilled: realm.objects(CalendarModel.self).map { cal in
-                return self.checkDeletedCalendar(cal.id, cal)
-            })
+            for cal in list {
+                let parsed = CalendarModel.parse(cal)
+                try! realm.write {
+                    realm.add(parsed, update: true)
+                }
+            }
         }
     }
     
@@ -103,7 +100,7 @@ class GoogleCalendar {
                 for event in (list.array ?? []) {
                     let parsed = EventModel.parse(event)
                     try! realm.write {
-                        realm.add(parsed)
+                        realm.add(parsed, update: true)
                     }
                 }
             }

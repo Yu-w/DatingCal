@@ -17,6 +17,10 @@ class CalendarModel : Object {
     dynamic var bgColor: String = ""
     dynamic var isPrimary: Bool = false
     
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+    
     static func parse(_ json: JSON) -> CalendarModel {
         var ans = CalendarModel()
         ans.id = json["id"].string!
@@ -32,6 +36,10 @@ class EventModel : Object {
     dynamic var id: String = ""
     dynamic var summary: String = ""
     dynamic var desc: String = ""
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
     
     static func parse(_ json: JSON) -> EventModel {
         var ans = EventModel()

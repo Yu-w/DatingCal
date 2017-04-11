@@ -21,29 +21,60 @@ class LoginViewController: UIViewController {
     private let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
     
     let googleAuth = OIDPromise(issuer: URL(string: "https://accounts.google.com")!)
+    let googleAuthStateStorage = "google-auth-state.dat"
     
     var authState : OIDAuthState?
     var token : String?
     var googleCalendar : GoogleCalendar?
     
-    @IBAction func willSignIn(_ sender: Any) {
-        googleAuth.getConfigurations().then { config -> Promise<OIDAuthState> in
-            let request = OIDAuthorizationRequest(configuration: config
-                , clientId: self.kClientId, clientSecret: nil
-                , scopes: self.kScopes, redirectURL: self.kRedirectURI
-                , responseType: OIDResponseTypeCode, additionalParameters: nil)
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let (flow, promise) = self.googleAuth.authState(request: request, presenter: self)
-            appDelegate.googleAuthFlow = flow
-            return promise
-        }.then { authState -> Promise<Void> in
-            self.authState = authState
-            self.token = authState.lastTokenResponse?.accessToken
-            self.googleCalendar = GoogleCalendar(self.token!)
-            return self.googleCalendar!.loadAll()
+    func saveAuthState() {
+        if let state = authState {
+            NSKeyedArchiver.archiveRootObject(state, toFile: googleAuthStateStorage)
+        }
+    }
+    
+    func loadAuthState() {
+        guard let data = NSData(contentsOfFile: googleAuthStateStorage) else {
+            return
+        }
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data as Data)
+        unarchiver.requiresSecureCoding = true
+        self.authState = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as? OIDAuthState
+    }
+    
+    func afterLogin() -> Promise<Void> {
+        self.token = self.authState?.lastTokenResponse?.accessToken
+        self.googleCalendar = GoogleCalendar(self.token!)
+        return self.googleCalendar!.loadAll().then { x -> Void in
+            var realm = try! Realm()
+            for cal in realm.objects(CalendarModel.self) {
+                print(cal)
+            }
         }.catch { err -> Void in
             print("ERROR: ", err)
+        }
+    }
+    
+    @IBAction func willSignIn(_ sender: Any) {
+        loadAuthState()
+        if let authState = self.authState {
+            afterLogin()
+        } else {
+            googleAuth.getConfigurations().then { config -> Promise<OIDAuthState> in
+                let request = OIDAuthorizationRequest(configuration: config
+                    , clientId: self.kClientId, clientSecret: nil
+                    , scopes: self.kScopes, redirectURL: self.kRedirectURI
+                    , responseType: OIDResponseTypeCode, additionalParameters: nil)
+                
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let (flow, promise) = self.googleAuth.authState(request: request, presenter: self)
+                appDelegate.googleAuthFlow = flow
+                return promise
+            }.then { authState -> Promise<Void> in
+                self.authState = authState
+                self.saveAuthState()
+                return self.afterLogin()
+            }
         }
     }
     

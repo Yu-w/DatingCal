@@ -136,9 +136,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgJ-eV-ull">
-                                <rect key="frame" x="164" y="220" width="46" height="30"/>
+                                <rect key="frame" x="133" y="304" width="109" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Login to Google"/>
                                 <connections>
                                     <action selector="willSignIn:" destination="eEU-hA-G9T" eventType="touchUpInside" id="Pk7-1r-xsi"/>
                                 </connections>
