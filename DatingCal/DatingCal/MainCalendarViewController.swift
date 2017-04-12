@@ -1,9 +1,9 @@
 //
-//  FSCalendarScopeViewController.swift
-//  FSCalendarSwiftExample
+//  MainCalendarViewController
+//  DatingCal
 //
-//  Created by dingwenchao on 30/12/2016.
-//  Copyright © 2016 wenchao. All rights reserved.
+//  Created by Wang Yu on 4/9/17.
+//  Copyright © 2016 Yu Wang. All rights reserved.
 //
 
 import UIKit
@@ -16,11 +16,14 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
     
+    // lazy initializaed date formatter for converting date formats
     lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter
     }()
+    
+    // pan gesture recognizer for capturing swipe behavior
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
         let panGesture = UIPanGestureRecognizer(target: self.calendar, action: #selector(self.calendar.handleScopeGesture(_:)))
@@ -37,6 +40,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
             self.calendarHeightConstraint.constant = 400
         }
         
+        // test select date
         let nextDat = self.calendar.gregorian.date(byAdding: Calendar.Component.day, value: 3, to: Date())
         self.calendar.select(nextDat)
 
@@ -48,7 +52,6 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         
         // For UITest
         self.calendar.accessibilityIdentifier = "calendar"
-        
     }
 
     
@@ -58,6 +61,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         let shouldBegin = self.tableView.contentOffset.y <= -self.tableView.contentInset.top
         if shouldBegin {
             let velocity = self.scopeGesture.velocity(in: self.view)
+            // change calendar mode when swipe vertically
             switch self.calendar.scope {
             case .month:
                 return velocity.y < 0

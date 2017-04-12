@@ -3,7 +3,7 @@
 //  DatingCal
 //
 //  Created by Wang Yu on 4/9/17.
-//
+//  Copyright © 2016 Yu Wang. All rights reserved.
 //
 
 import UIKit

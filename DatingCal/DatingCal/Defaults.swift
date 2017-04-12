@@ -61,7 +61,7 @@ open class Defaults: NSObject {
         let classPrefix = String(describing: self).components(separatedBy: ".").first?.components(separatedBy: "<").last!
         
         guard let key = keyPath, key.range(of: ".") == nil else {
-            print("\(String(describing: self)): observeValueForKeyPath called with a keyPath of \"\(keyPath)\" we don't handle key paths; returning.")
+            print("\(String(describing: self)): observeValueForKeyPath called with a keyPath of \"\(String(describing: keyPath))\" we don't handle key paths; returning.")
             return
         }
         
