@@ -14,8 +14,8 @@ import SwiftDate
 class CalendarModel : Object {
     dynamic var id: String = ""
     dynamic var name: String = ""
-    dynamic var timeZone: String = ""
-    dynamic var bgColor: String = ""
+    dynamic var timeZone: String? = nil
+    dynamic var bgColor: String? = nil
     dynamic var isPrimary: Bool = false
     let events = List<EventModel>()
     
@@ -28,8 +28,8 @@ class CalendarModel : Object {
         var ans = CalendarModel()
         ans.id = json["id"].string!
         ans.name = json["summary"].string!
-        ans.timeZone = json["timeZone"].string!
-        ans.bgColor = json["backgroundColor"].string!
+        ans.timeZone = json["timeZone"].string
+        ans.bgColor = json["backgroundColor"].string
         ans.isPrimary = json["primary"].bool ?? false
         return ans
     }
