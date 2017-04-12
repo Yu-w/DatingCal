@@ -80,7 +80,7 @@ class GoogleSession {
                     fulfill()
                 })
             }.recover {err -> Promise<Void> in
-                print("Failed to refresh access token. Reason: ", err)
+                debugPrint("Failed to refresh access token. Reason: ", err)
                 return self.login(presenter: presenter)
             }
         } else {

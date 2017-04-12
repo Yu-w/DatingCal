@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // Accept token returned from Google through URL Scheme
-        print(url)
+        debugPrint(url)
         if let flow = googleAuthFlow, flow.resumeAuthorizationFlow(with: url) {
             googleAuthFlow = nil
             return true

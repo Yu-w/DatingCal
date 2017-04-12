@@ -23,21 +23,21 @@ class LoginViewController: UIViewController {
     
     @IBAction func willSignIn(_ sender: Any) {
         if pendingSignIn != nil {
-            print("Please wait for current login process to finish.")
+            debugPrint("Please wait for current login process to finish.")
             return
         }
         pendingSignIn = self.googleSession.ensureLogin(presenter: self).then { x -> Promise<Void> in
-            print("Sign in finished")
+            debugPrint("Sign in finished")
             self.googleCalendar = GoogleCalendar(self.googleSession.token!)
             return self.googleCalendar!.loadAll()
         }.then { x -> Void in
             let realm = try! Realm()
             for cal in realm.objects(CalendarModel.self) {
-                print(cal)
+                debugPrint(cal)
             }
             self.performSegue(withIdentifier: "afterLogin", sender: self)
         }.catch { err -> Void in
-            print("ERROR: ", err)
+            debugPrint("ERROR: ", err)
         }.always {
             self.pendingSignIn = nil
         }
