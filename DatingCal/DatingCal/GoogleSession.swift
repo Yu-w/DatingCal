@@ -48,25 +48,43 @@ class GoogleSession {
         self._authState = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as? OIDAuthState
     }
     
+    /// A helper function that actually does the login.
+    private func login(presenter: UIViewController) -> Promise<Void> {
+        return googleAuth.getConfigurations().then { config -> Promise<OIDAuthState> in
+            let request = OIDAuthorizationRequest(configuration: config
+                , clientId: self.kClientId, clientSecret: nil
+                , scopes: self.kScopes, redirectURL: self.kRedirectURI
+                , responseType: OIDResponseTypeCode, additionalParameters: nil)
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let (flow, promise) = self.googleAuth.authState(request: request, presenter: presenter)
+            appDelegate.googleAuthFlow = flow
+            return promise
+        }.then { authState -> Void in
+            self._authState = authState
+            self.saveAuthState()
+        }
+    }
+    
+    /// This function will ensure the user is logged in.
+    /// But rest assured, it will only call login() when necessary.
     func ensureLogin(presenter: UIViewController) -> Promise<Void> {
         loadAuthState()
-        if self.authState != nil {
-            return when(fulfilled: [])
-        } else {
-            return googleAuth.getConfigurations().then { config -> Promise<OIDAuthState> in
-                let request = OIDAuthorizationRequest(configuration: config
-                    , clientId: self.kClientId, clientSecret: nil
-                    , scopes: self.kScopes, redirectURL: self.kRedirectURI
-                    , responseType: OIDResponseTypeCode, additionalParameters: nil)
-                
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                let (flow, promise) = self.googleAuth.authState(request: request, presenter: presenter)
-                appDelegate.googleAuthFlow = flow
-                return promise
-            }.then { authState -> Void in
-                self._authState = authState
-                self.saveAuthState()
+        if let authState = self.authState {
+            return Promise { fulfill, reject in
+                authState.performAction(freshTokens: { token, id, err in
+                    if let err = err {
+                        reject(err)
+                        return
+                    }
+                    fulfill()
+                })
+            }.recover {err -> Promise<Void> in
+                print("Failed to refresh access token. Reason: ", err)
+                return self.login(presenter: presenter)
             }
+        } else {
+            return login(presenter: presenter)
         }
     }
     
