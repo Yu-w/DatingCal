@@ -47,6 +47,7 @@ class LoginViewController: UIViewController {
     // and initialize the Google Calendar API service
     override func viewDidLoad() {
         super.viewDidLoad()
+        debugPrint(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     override func didReceiveMemoryWarning() {

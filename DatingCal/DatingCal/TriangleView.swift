@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// view that display as a triangle shape
 class TriangleView: UIView {
     
     var triangleView: UIView = UIView()

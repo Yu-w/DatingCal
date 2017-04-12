@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -67,6 +68,17 @@
                                     <constraint firstAttribute="height" constant="54" id="dYE-N4-ppH"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7OD-JS-0oX">
+                                <rect key="frame" x="281" y="422" width="54" height="54"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="7OD-JS-0oX" secondAttribute="height" id="8jY-wK-IP0"/>
+                                    <constraint firstAttribute="width" constant="54" id="MOf-52-F1U"/>
+                                </constraints>
+                                <state key="normal" image="add">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DZK-ny-AgO">
                                 <rect key="frame" x="0.0" y="492" width="375" height="175"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -144,16 +156,19 @@
                             <constraint firstAttribute="trailing" secondItem="3n8-MO-zJO" secondAttribute="trailing" id="Rtm-99-B2H"/>
                             <constraint firstItem="DZK-ny-AgO" firstAttribute="leading" secondItem="yta-q3-fIO" secondAttribute="leading" id="X3P-Mx-JY8"/>
                             <constraint firstItem="yta-q3-fIO" firstAttribute="leading" secondItem="HXE-gn-vdf" secondAttribute="leading" id="YAx-Nh-BgQ"/>
+                            <constraint firstItem="7OD-JS-0oX" firstAttribute="top" secondItem="5QJ-Xm-f5o" secondAttribute="top" constant="-16" id="aZf-G9-pYF"/>
                             <constraint firstAttribute="trailing" secondItem="yta-q3-fIO" secondAttribute="trailing" id="fRI-AF-IS1"/>
                             <constraint firstItem="5QJ-Xm-f5o" firstAttribute="trailing" secondItem="DZK-ny-AgO" secondAttribute="trailing" id="jPc-xn-Wlz"/>
                             <constraint firstItem="5QJ-Xm-f5o" firstAttribute="leading" secondItem="DZK-ny-AgO" secondAttribute="leading" id="rim-aC-bIN"/>
                             <constraint firstItem="yta-q3-fIO" firstAttribute="top" secondItem="Dnc-3E-LMR" secondAttribute="bottom" id="w9T-Mf-QKN"/>
                             <constraint firstAttribute="leading" secondItem="3n8-MO-zJO" secondAttribute="leading" id="wPA-rr-xq2"/>
                             <constraint firstItem="5QJ-Xm-f5o" firstAttribute="bottom" secondItem="DZK-ny-AgO" secondAttribute="top" id="wzb-QT-Mzm"/>
+                            <constraint firstItem="7OD-JS-0oX" firstAttribute="trailing" secondItem="5QJ-Xm-f5o" secondAttribute="trailing" constant="-40" id="zcV-bi-3Yh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Dating Cal" id="Uo6-6d-WpM"/>
                     <connections>
+                        <outlet property="addButton" destination="7OD-JS-0oX" id="Feu-oX-JmB"/>
                         <outlet property="calendar" destination="yta-q3-fIO" id="lHz-Q4-3aj"/>
                         <outlet property="calendarHeightConstraint" destination="Lwm-Te-dns" id="n02-qB-BbI"/>
                         <outlet property="tableView" destination="DZK-ny-AgO" id="x7b-kh-59T"/>
@@ -162,6 +177,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="27x-32-DTI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1640.8" y="-226.23688155922042"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="he0-kf-yhV">
+            <objects>
+                <viewController id="0Xd-HI-D0n" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lFt-ra-b9X"/>
+                        <viewControllerLayoutGuide type="bottom" id="opo-ZQ-7G0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eWP-qA-kJQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="saU-YJ-Fvk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2422" y="-227"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="V3j-pS-pgj">
@@ -217,6 +250,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add" width="64" height="64"/>
         <image name="bg_1" width="520" height="763"/>
     </resources>
 </document>

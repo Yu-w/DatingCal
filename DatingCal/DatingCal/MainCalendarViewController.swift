@@ -13,6 +13,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var calendar: FSCalendar!
+    @IBOutlet weak var addButton: UIButton!
     
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
     
@@ -24,14 +25,14 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     }
     var tableRows = 0
     
-    // lazy initializaed date formatter for converting date formats
+    /// lazy initializaed date formatter for converting date formats
     lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter
     }()
     
-    // pan gesture recognizer for capturing swipe behavior
+    /// pan gesture recognizer for capturing swipe behavior
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
         let panGesture = UIPanGestureRecognizer(target: self.calendar, action: #selector(self.calendar.handleScopeGesture(_:)))
@@ -41,6 +42,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         return panGesture
     }()
     
+    /// set status bar to white color
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -53,6 +55,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
             self.calendarHeightConstraint.constant = 400
         }
         self.view.addGestureRecognizer(self.scopeGesture)
+        self.addButton.layer.cornerRadius = self.addButton.layer.bounds.width / 2
         
         calendarViewSetup()
         tableViewSetup()
@@ -66,7 +69,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         self.tableRows = 0
     }
     
-    // calendar setup
+    /// calendar setup
     func calendarViewSetup() {
         self.calendar.scope = .month
         self.calendar.backgroundColor = .clear
@@ -74,7 +77,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         
     }
     
-    // table setup
+    /// table setup
     func tableViewSetup() {
         self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
         self.tableView.emptyDataSetSource = self

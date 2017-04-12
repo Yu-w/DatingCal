@@ -11,13 +11,13 @@ import FSCalendar
 
 extension MainCalendarViewController: FSCalendarDataSource, FSCalendarDelegate {
     
-    // Update calendar view when layout changes
+    /// Update calendar view when layout changes
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         self.calendarHeightConstraint.constant = bounds.height
         self.view.layoutIfNeeded()
     }
     
-    // Handler for selecting dates
+    /// Handler for selecting dates
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         self.selectedDate = date
         
@@ -29,7 +29,7 @@ extension MainCalendarViewController: FSCalendarDataSource, FSCalendarDelegate {
         }
     }
     
-    // Handler for calendar page switching
+    /// Handler for calendar page switching
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         debugPrint("\(self.dateFormatter.string(from: calendar.currentPage))")
     }
