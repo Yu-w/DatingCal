@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -66,26 +67,65 @@
                                     <constraint firstAttribute="height" constant="54" id="dYE-N4-ppH"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="DZK-ny-AgO">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DZK-ny-AgO">
                                 <rect key="frame" x="0.0" y="492" width="375" height="175"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="cell" textLabel="BT3-yY-STD" rowHeight="80" style="IBUITableViewCellStyleDefault" id="Xf8-a0-MOQ">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MainCalendarEventTableViewCell" id="plx-7o-HVR" customClass="MainCalendarEventTableViewCell" customModule="DatingCal" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xf8-a0-MOQ" id="7az-XG-w4J">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="plx-7o-HVR" id="AoQ-mw-n5W">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Lorem ipsum dolor sit er elit lamet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BT3-yY-STD">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="80"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N0P-wO-5NW">
+                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="79.5"/>
+                                                    <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="8" id="oUe-Jr-Oi5"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HCL-gF-1Gd">
+                                                    <rect key="frame" x="24" y="8" width="335" height="63.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="8 P.M." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZdP-rQ-5PW">
+                                                            <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                                                            <color key="textColor" red="1" green="0.20000000000000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meeting with Romit Roy Choudhury" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93j-uA-FnB">
+                                                            <rect key="frame" x="0.0" y="20.5" width="335" height="23.5"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be prepared to discuss the paper given last week" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8l-Z6-gVT">
+                                                            <rect key="frame" x="0.0" y="44" width="335" height="19.5"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="14"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="N0P-wO-5NW" firstAttribute="leading" secondItem="AoQ-mw-n5W" secondAttribute="leading" id="64f-gb-7Qa"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="HCL-gF-1Gd" secondAttribute="trailing" constant="8" id="EFZ-jI-6Wn"/>
+                                                <constraint firstAttribute="bottom" secondItem="HCL-gF-1Gd" secondAttribute="bottom" constant="8" id="FCP-nH-Z31"/>
+                                                <constraint firstItem="N0P-wO-5NW" firstAttribute="top" secondItem="AoQ-mw-n5W" secondAttribute="top" id="ORP-tD-vKk"/>
+                                                <constraint firstItem="HCL-gF-1Gd" firstAttribute="leading" secondItem="N0P-wO-5NW" secondAttribute="trailing" constant="16" id="RWX-YV-G2K"/>
+                                                <constraint firstAttribute="bottom" secondItem="N0P-wO-5NW" secondAttribute="bottom" id="eKH-wF-hN2"/>
+                                                <constraint firstItem="HCL-gF-1Gd" firstAttribute="top" secondItem="AoQ-mw-n5W" secondAttribute="top" constant="8" id="gPH-KL-Gek"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="descLabel" destination="s8l-Z6-gVT" id="0Ne-f3-hFl"/>
+                                            <outlet property="leftBarView" destination="N0P-wO-5NW" id="krY-8m-lX8"/>
+                                            <outlet property="timeLabel" destination="ZdP-rQ-5PW" id="njJ-Aa-NYM"/>
+                                            <outlet property="titleLabel" destination="93j-uA-FnB" id="xz7-Sf-sCH"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
