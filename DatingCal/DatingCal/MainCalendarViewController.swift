@@ -41,9 +41,14 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         return panGesture
     }()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.setNeedsStatusBarAppearanceUpdate()
+
         if UIDevice.current.model.hasPrefix("iPad") {
             self.calendarHeightConstraint.constant = 400
         }
