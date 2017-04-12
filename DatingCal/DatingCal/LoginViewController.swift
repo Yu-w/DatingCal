@@ -35,6 +35,7 @@ class LoginViewController: UIViewController {
             for cal in realm.objects(CalendarModel.self) {
                 print(cal)
             }
+            self.performSegue(withIdentifier: "afterLogin", sender: self)
         }.catch { err -> Void in
             print("ERROR: ", err)
         }.always {

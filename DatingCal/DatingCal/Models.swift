@@ -74,7 +74,7 @@ class EventModel : Object {
         let start = parseDates(json["start"])
         let end = parseDates(json["end"])
         ans.id = json["id"].string!
-        ans.summary = json["summary"].string!
+        ans.summary = json["summary"].string ?? ""
         ans.desc = json["description"].string ?? ""
         ans.startDate = start.0
         ans.startTime = start.1

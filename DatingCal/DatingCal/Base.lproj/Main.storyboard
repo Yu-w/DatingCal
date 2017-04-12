@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2ev-gh-tU2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eEU-hA-G9T">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -175,9 +175,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgJ-eV-ull">
-                                <rect key="frame" x="133" y="304" width="109" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgJ-eV-ull">
+                                <rect key="frame" x="133" y="318.5" width="109" height="30"/>
                                 <state key="normal" title="Login to Google"/>
                                 <connections>
                                     <action selector="willSignIn:" destination="eEU-hA-G9T" eventType="touchUpInside" id="Pk7-1r-xsi"/>
@@ -185,11 +184,18 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UgJ-eV-ull" firstAttribute="centerX" secondItem="hlO-Gm-NT1" secondAttribute="centerX" id="2Wi-Jg-FLZ"/>
+                            <constraint firstItem="UgJ-eV-ull" firstAttribute="centerY" secondItem="hlO-Gm-NT1" secondAttribute="centerY" id="fe4-mo-Jai"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <segue destination="2ev-gh-tU2" kind="presentation" identifier="afterLogin" id="Kav-Ft-qh3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="deC-h9-lrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1449" y="501"/>
+            <point key="canvasLocation" x="86" y="-226"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XiM-Gr-YT8">
