@@ -27,6 +27,8 @@ extension MainCalendarViewController: FSCalendarDataSource, FSCalendarDelegate {
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
+        
+        self.tableView.reloadData()
     }
     
     // Handler for calendar page switching
