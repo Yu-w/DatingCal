@@ -32,6 +32,7 @@ PODS:
   - RealmSwift (2.5.1):
     - Realm (= 2.5.1)
   - SVProgressHUD (2.1.2)
+  - SwiftDate (4.1.1)
   - SwiftyJSON (3.1.4)
   - TextFieldEffects (1.3.2)
   - YYKit (1.0.9):
@@ -47,6 +48,7 @@ DEPENDENCIES:
   - PromiseKit (~> 4.0)
   - RealmSwift
   - SVProgressHUD
+  - SwiftDate (~> 4.0)
   - SwiftyJSON
   - TextFieldEffects
   - YYKit
@@ -62,10 +64,11 @@ SPEC CHECKSUMS:
   Realm: 32f86104d37c8521f864d4274050b38ba6190733
   RealmSwift: f719e7511c902b8908593e8f143f59e47931bdb6
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 6744d4fd3f7444edf823bd98bda19fa981e6fce0
+PODFILE CHECKSUM: 0c9ceb178a63e17f92a7b3b2645199e1eda2c066
 
 COCOAPODS: 1.2.0

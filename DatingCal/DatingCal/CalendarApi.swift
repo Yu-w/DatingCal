@@ -101,6 +101,7 @@ class GoogleCalendar {
                     let parsed = EventModel.parse(event)
                     try! realm.write {
                         realm.add(parsed, update: true)
+                        cal.events.append(parsed)
                     }
                 }
             }

@@ -17,6 +17,7 @@ pod 'GoogleAPIClientForREST/Calendar'
 pod 'AppAuth', "~> 0.9.0"
 pod "PromiseKit", "~> 4.0"
 pod 'RealmSwift' 
+pod 'SwiftDate', '~> 4.0'
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
