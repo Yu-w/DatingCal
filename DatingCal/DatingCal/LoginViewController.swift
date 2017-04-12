@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
             self.googleCalendar = GoogleCalendar(self.googleSession.token!)
             return self.googleCalendar!.loadAll()
         }.then { x -> Void in
-            var realm = try! Realm()
+            let realm = try! Realm()
             for cal in realm.objects(CalendarModel.self) {
                 print(cal)
             }

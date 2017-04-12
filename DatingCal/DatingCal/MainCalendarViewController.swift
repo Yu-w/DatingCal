@@ -16,6 +16,9 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
     
+    var selectedDate = Date()
+    var tableRows = 0
+    
     // lazy initializaed date formatter for converting date formats
     lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -39,19 +42,38 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         if UIDevice.current.model.hasPrefix("iPad") {
             self.calendarHeightConstraint.constant = 400
         }
+        self.view.addGestureRecognizer(self.scopeGesture)
+        
+        calendarViewSetup()
+        tableViewSetup()
         
         // test select date
         let nextDat = self.calendar.gregorian.date(byAdding: Calendar.Component.day, value: 3, to: Date())
         self.calendar.select(nextDat)
 
-        self.view.addGestureRecognizer(self.scopeGesture)
-        self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
+        // For UITest
+        self.calendar.accessibilityIdentifier = "calendar"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableRows = 0
+    }
+    
+    // calendar setup
+    func calendarViewSetup() {
         self.calendar.scope = .month
         self.calendar.backgroundColor = .clear
         self.calendar.bottomBorder.alpha = 0
         
-        // For UITest
-        self.calendar.accessibilityIdentifier = "calendar"
+    }
+    
+    // table setup
+    func tableViewSetup() {
+        self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
+        self.tableView.tableFooterView = UIView()
     }
 
     

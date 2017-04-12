@@ -19,6 +19,8 @@ extension MainCalendarViewController: FSCalendarDataSource, FSCalendarDelegate {
     
     // Handler for selecting dates
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        self.selectedDate = date
+        
         debugPrint("did select date \(self.dateFormatter.string(from: date))")
         let selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
         debugPrint("selected dates is \(selectedDates)")

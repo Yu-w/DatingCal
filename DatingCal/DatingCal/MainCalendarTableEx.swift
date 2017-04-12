@@ -17,7 +17,7 @@ extension MainCalendarViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.tableRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -26,11 +26,6 @@ extension MainCalendarViewController: UITableViewDataSource, UITableViewDelegate
             ) as! MainCalendarEventTableViewCell
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
     
     // MARK:- UITableViewDelegate
     
