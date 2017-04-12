@@ -16,7 +16,12 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
     
-    var selectedDate = Date()
+    var selectedDate = Date() {
+        didSet {
+            self.calendar.select(self.selectedDate)
+            self.tableView.reloadData()
+        }
+    }
     var tableRows = 0
     
     // lazy initializaed date formatter for converting date formats
@@ -46,10 +51,6 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         
         calendarViewSetup()
         tableViewSetup()
-        
-        // test select date
-        let nextDat = self.calendar.gregorian.date(byAdding: Calendar.Component.day, value: 3, to: Date())
-        self.calendar.select(nextDat)
 
         // For UITest
         self.calendar.accessibilityIdentifier = "calendar"
