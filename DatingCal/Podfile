@@ -19,6 +19,7 @@ pod "PromiseKit", "~> 4.0"
 pod 'RealmSwift'
 pod 'SwiftDate', '~> 4.0'
 pod 'DZNEmptyDataSet'
+pod 'DateTimePicker'
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
