@@ -8,6 +8,7 @@
 
 import UIKit
 import FSCalendar
+import PromiseKit
 
 class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -16,6 +17,9 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     @IBOutlet weak var addButton: UIButton!
     
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
+    
+    private let googleSession = GoogleSession()
+    private var googleCalendar : GoogleCalendar?
     
     var selectedDate = Date() {
         didSet {
@@ -49,6 +53,19 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // The following lines ensures that the user is logged in
+        //    and that his or her calendar has been synchronized
+        self.googleSession.ensureLogin(presenter: self).then { x -> Promise<Void> in
+            self.googleCalendar = GoogleCalendar(self.googleSession.token!)
+            return self.googleCalendar!.loadAll()
+        }.then { x -> Void in
+            debugPrint("Sign In finished.")
+        }.catch { err -> Void in
+            debugPrint("ERROR during Sign In: ", err)
+            // TODO: provide a retry button
+        }
+        
         self.setNeedsStatusBarAppearanceUpdate()
 
         if UIDevice.current.model.hasPrefix("iPad") {
