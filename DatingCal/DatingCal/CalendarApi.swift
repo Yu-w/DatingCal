@@ -51,7 +51,7 @@ class GoogleCalendar {
     }
     
     func listCalendarLists() -> Promise<JSON> {
-        return requestPromise(Alamofire.request("https://www.googleapis.com/calendar/v3/users/me/calendarList", method: .get, headers: getHeaders())).then { list -> JSON in
+        return requestPromise(request("https://www.googleapis.com/calendar/v3/users/me/calendarList", method: .get, headers: getHeaders())).then { list -> JSON in
             // Currently, don't handle etags.
             return list["items"]
         }
@@ -59,19 +59,18 @@ class GoogleCalendar {
     
     func listEventLists(_ calendarId: String) -> Promise<JSON> {
         let encodedId : String = calendarId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        return requestPromise(Alamofire.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, headers: getHeaders())).then { list -> JSON in
+        return requestPromise(request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, headers: getHeaders())).then { list -> JSON in
             // Currently, don't handle etags.
             return list["items"]
         }
-        
     }
     
     /// Fetch and save all calendar lists. This will not sync the events in the calendars.
     func loadAllCalendars() -> Promise<Void> {
         return listCalendarLists().then { list -> Void in
             let list = list.array ?? []
-            var realm = try! Realm()
-            var listAsSet = NSMutableSet(array: list)
+            let realm = try! Realm()
+            let listAsSet = NSMutableSet(array: list)
             
             for cal in realm.objects(CalendarModel.self) {
                 if !listAsSet.contains(cal) {
@@ -82,7 +81,8 @@ class GoogleCalendar {
             }
             
             for cal in list {
-                let parsed = CalendarModel.parse(cal)
+                let parsed = CalendarModel()
+                parsed.parse(cal)
                 try! realm.write {
                     realm.add(parsed, update: true)
                 }
@@ -92,13 +92,13 @@ class GoogleCalendar {
     
     /// Fetch and save all events. This will not sync new calendars.
     func loadAllEvents() -> Promise<Void> {
-        var promises : [Promise<Void>] = []
-        var realm = try! Realm()
+        let realm = try! Realm()
         return when(fulfilled: realm.objects(CalendarModel.self).map { cal in
             return listEventLists(cal.id).then { list -> Void in
                 var realm = try! Realm()
                 for event in (list.array ?? []) {
-                    let parsed = EventModel.parse(event)
+                    let parsed = EventModel()
+                    parsed.parse(event)
                     try! realm.write {
                         realm.add(parsed, update: true)
                         cal.events.append(parsed)
@@ -112,6 +112,19 @@ class GoogleCalendar {
     func loadAll() -> Promise<Void> {
         return loadAllCalendars().then { x in
             return self.loadAllEvents()
+        }
+    }
+    
+    func createEvent(_ event: EventModel, _ inCalendar: CalendarModel) -> Promise<Void> {
+        let encodedId : String = inCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        let params = event.unParse()
+        return requestPromise(request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, parameters: params, encoding: JSONEncoding.default, headers: getHeaders())).then { createdEvent -> Void in
+            // Currently, don't handle etags.
+            event.parse(createdEvent)
+            let realm = try! Realm()
+            try! realm.write {
+                realm.add(event, update:true)
+            }
         }
     }
 }

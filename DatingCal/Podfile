@@ -20,6 +20,7 @@ pod 'RealmSwift'
 pod 'SwiftDate', '~> 4.0'
 pod 'DZNEmptyDataSet'
 pod 'DateTimePicker'
+pod 'Swinject', '~> 2.0.0'
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
