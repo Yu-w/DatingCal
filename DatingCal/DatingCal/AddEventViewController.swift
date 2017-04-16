@@ -68,6 +68,7 @@ class AddEventViewController: UIViewController {
     }
     
     @IBAction func closeButtonDidClicked(_ sender: UIButton) {
+        print("*a")
         self.dismiss(animated: true, completion: nil)
     }
     
