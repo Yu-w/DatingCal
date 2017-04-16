@@ -36,7 +36,6 @@ extension MainCalendarViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDele
     func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
         let alertVC = UIAlertController(title: "Event Added!", message: nil, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "Test", style: .default))
-        self.tableRows += 1
         self.tableView.reloadData()
         self.present(alertVC, animated: true)
     }
