@@ -36,6 +36,7 @@ PODS:
   - SVProgressHUD (2.1.2)
   - SwiftDate (4.1.1)
   - SwiftyJSON (3.1.4)
+  - Swinject (2.0.0)
   - TextFieldEffects (1.3.2)
   - YYKit (1.0.9):
     - YYKit/no-arc (= 1.0.9)
@@ -54,6 +55,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwiftDate (~> 4.0)
   - SwiftyJSON
+  - Swinject (~> 2.0.0)
   - TextFieldEffects
   - YYKit
 
@@ -72,9 +74,10 @@ SPEC CHECKSUMS:
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Swinject: 2e964a80d70ab09b3949c99032711f89147bfd60
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 994fb723256263bae9f5c1d9b7c56248ff8fedeb
+PODFILE CHECKSUM: 9b499327ff5fe1da394413e0eadfb3202960baea
 
 COCOAPODS: 1.2.0
