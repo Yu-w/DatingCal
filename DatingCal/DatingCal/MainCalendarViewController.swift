@@ -9,6 +9,7 @@
 import UIKit
 import FSCalendar
 import PromiseKit
+import RealmSwift
 
 class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -21,13 +22,27 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     private let googleSession = GoogleSession()
     private var googleCalendar : GoogleCalendar?
     
-    var selectedDate = Date() {
+    var eventsToPresent = [EventModel]() {
         didSet {
-            self.calendar.select(self.selectedDate)
             self.tableView.reloadData()
         }
     }
-    var tableRows = 0
+    
+    var selectedDate = Date() {
+        didSet {
+            self.calendar.select(self.selectedDate)
+            let realm = try! Realm()
+            self.eventsToPresent = realm.objects(EventModel.self).filter { (event) -> Bool in
+                if let date = event.startDate {
+                    return self.calendar.gregorian.isDate(date, inSameDayAs: self.selectedDate)
+                } else if let date = event.startTime {
+                    return self.calendar.gregorian.isDate(date, inSameDayAs: self.selectedDate)
+                } else {
+                    return false
+                }
+            }
+        }
+    }
     
     /// lazy initializaed date formatter for converting date formats
     lazy var dateFormatter: DateFormatter = {
@@ -83,7 +98,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableRows = 0
+        self.selectedDate = Date()
     }
     
     /// calendar setup

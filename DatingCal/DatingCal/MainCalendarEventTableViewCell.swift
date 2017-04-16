@@ -15,11 +15,13 @@ class MainCalendarEventTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     
-    func configureData(event: EventModel, color: UIColor) {
+    func configureData(event: EventModel, color: UIColor?) {
         self.titleLabel.text = event.summary
         self.descLabel.text = event.desc
-        self.leftBarView.backgroundColor = color
-        self.timeLabel.textColor = color
+        if let color = color {
+            self.leftBarView.backgroundColor = color
+            self.timeLabel.textColor = color
+        }
     }
     
     override func awakeFromNib() {

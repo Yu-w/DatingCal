@@ -17,13 +17,14 @@ extension MainCalendarViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tableRows
+        return self.eventsToPresent.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: "MainCalendarEventTableViewCell", for: indexPath
             ) as! MainCalendarEventTableViewCell
+        cell.configureData(event: eventsToPresent[indexPath.row], color: nil)
         return cell
     }
     
