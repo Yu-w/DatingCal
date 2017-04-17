@@ -67,7 +67,7 @@ class GoogleCalendar {
         let realm = try! Realm()
         return when(fulfilled: realm.objects(CalendarModel.self).map { cal in
             return listEventLists(cal.id).then { list -> Void in
-                var realm = try! Realm()
+                let realm = try! Realm()
                 for event in (list.array ?? []) {
                     let parsed = EventModel()
                     parsed.parse(event)

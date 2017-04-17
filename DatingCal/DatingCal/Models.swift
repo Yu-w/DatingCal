@@ -77,7 +77,7 @@ class EventModel : Object, GoogleParsable {
             timeZone = json["timeZone"].string
         }
         if let startDate = json["date"].string {
-            var dateFormatter = DateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             date = dateFormatter.date(from: startDate)
         }
@@ -90,7 +90,7 @@ class EventModel : Object, GoogleParsable {
         ans["timeZone"] = timeZone
         
         if let timeZone = timeZone, let time = time {
-            var dateTimeFormat = ISO8601DateFormatter()
+            let dateTimeFormat = ISO8601DateFormatter()
             dateTimeFormat.timeZone = TimeZone(identifier: timeZone)
             ans["dateTime"] = dateTimeFormat.string(from: time)
         }
@@ -99,8 +99,8 @@ class EventModel : Object, GoogleParsable {
     
     func unParse() -> Parameters {
         var ans : Parameters = [:]
-        var startDict : Parameters = unParseDates(startDate, startTime, startTimeZone)
-        var endDict : Parameters = unParseDates(endDate, endTime, endTimeZone)
+        let startDict : Parameters = unParseDates(startDate, startTime, startTimeZone)
+        let endDict : Parameters = unParseDates(endDate, endTime, endTimeZone)
         ans["summary"] = summary
         ans["description"] = desc
         ans["start"] = startDict

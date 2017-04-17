@@ -331,40 +331,6 @@
             </objects>
             <point key="canvasLocation" x="2420" y="-226.23688155922042"/>
         </scene>
-        <!--Login View Controller-->
-        <scene sceneID="V3j-pS-pgj">
-            <objects>
-                <viewController id="eEU-hA-G9T" customClass="LoginViewController" customModule="DatingCal" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="afx-lu-W7R"/>
-                        <viewControllerLayoutGuide type="bottom" id="LE7-7N-KTl"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="hlO-Gm-NT1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgJ-eV-ull">
-                                <rect key="frame" x="133" y="318.5" width="109" height="30"/>
-                                <state key="normal" title="Login to Google"/>
-                                <connections>
-                                    <action selector="willSignIn:" destination="eEU-hA-G9T" eventType="touchUpInside" id="Pk7-1r-xsi"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="UgJ-eV-ull" firstAttribute="centerX" secondItem="hlO-Gm-NT1" secondAttribute="centerX" id="2Wi-Jg-FLZ"/>
-                            <constraint firstItem="UgJ-eV-ull" firstAttribute="centerY" secondItem="hlO-Gm-NT1" secondAttribute="centerY" id="fe4-mo-Jai"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <segue destination="2ev-gh-tU2" kind="presentation" identifier="afterLogin" id="Kav-Ft-qh3"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="deC-h9-lrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="86" y="-226"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="XiM-Gr-YT8">
             <objects>
