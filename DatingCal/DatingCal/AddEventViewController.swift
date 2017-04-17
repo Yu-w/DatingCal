@@ -58,6 +58,12 @@ class AddEventViewController: UIViewController {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        titleTextField.resignFirstResponder()
+        descTextField.resignFirstResponder()
+    }
+    
     @IBAction func doneButtonDidClicked(_ sender: UIButton) {
         if let startTime = self.startTime, let endTime = self.endTime, let title = titleTextField.text {
             let event = EventModel()
