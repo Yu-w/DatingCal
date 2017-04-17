@@ -396,7 +396,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your love one's birth date:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxH-Ty-biC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your loved ones' birth date:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxH-Ty-biC">
                                 <rect key="frame" x="0.0" y="87" width="375" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Ykr-7z-eyL"/>
@@ -434,6 +434,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="firstDatePicker" destination="iOA-RL-Jig" id="FVX-Le-qfu"/>
+                        <outlet property="secondDatePicker" destination="f8X-jK-1Yh" id="1FF-Y4-eae"/>
                         <segue destination="2ev-gh-tU2" kind="presentation" id="1x0-7d-cO4"/>
                     </connections>
                 </viewController>

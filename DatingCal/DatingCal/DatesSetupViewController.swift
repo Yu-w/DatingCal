@@ -10,6 +10,9 @@ import UIKit
 
 class DatesSetupViewController: UIViewController {
 
+    @IBOutlet weak var firstDatePicker: UIDatePicker!
+    @IBOutlet weak var secondDatePicker: UIDatePicker!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
