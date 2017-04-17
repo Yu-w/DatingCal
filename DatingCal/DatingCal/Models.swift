@@ -89,9 +89,11 @@ class EventModel : Object, GoogleParsable {
         ans["date"] = date?.string(format: DateFormat.custom("yyyy-MM-dd"))
         ans["timeZone"] = timeZone
         
-        if let timeZone = timeZone, let time = time {
+        if let time = time {
             let dateTimeFormat = ISO8601DateFormatter()
-            dateTimeFormat.timeZone = TimeZone(identifier: timeZone)
+            if let timeZone = timeZone {
+                dateTimeFormat.timeZone = TimeZone(identifier: timeZone)
+            }
             ans["dateTime"] = dateTimeFormat.string(from: time)
         }
         return ans

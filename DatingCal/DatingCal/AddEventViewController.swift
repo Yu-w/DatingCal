@@ -19,6 +19,8 @@ class AddEventViewController: UIViewController {
     var startTime: Date?
     var endTime: Date?
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = " hh:mm a MMM dd, yyyy"
@@ -58,18 +60,30 @@ class AddEventViewController: UIViewController {
     
     @IBAction func doneButtonDidClicked(_ sender: UIButton) {
         if let startTime = self.startTime, let endTime = self.endTime, let title = titleTextField.text {
-            let desc = descTextField.text
-            self.dismiss(animated: true, completion: nil)
+            let event = EventModel()
+            event.summary = title
+            event.desc = (descTextField.text) ?? ""
+            event.startTime = startTime
+            event.endTime = endTime
+            appDelegate.googleCalendar.createEvent(event).then { _ in
+                self.dismiss(animated: true, completion: nil)
+            }.catch { err in
+                self.showAlert("Error", "Cannot create event. Reason: " + err.localizedDescription)
+            }
         } else {
-            let alertVC = UIAlertController(title: "Warning", message: "Please fill title, start time, and end time before submitting!", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "Done", style: .default))
-            self.present(alertVC, animated: true)
+            showAlert("Warning", "Please fill title, start time, and end time before submitting!")
         }
     }
     
     @IBAction func closeButtonDidClicked(_ sender: UIButton) {
         print("*a")
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func showAlert(_ title: String, _ message: String) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Done", style: .default))
+        self.present(alertVC, animated: true)
     }
     
     

@@ -17,6 +17,7 @@ import RealmSwift
 class GoogleCalendar {
     
     let client: AbstractHTTPClient
+    let kNameOfOurCalendar = "DatingCal calendar";
     
     init(_ client: AbstractHTTPClient) {
         self.client = client
@@ -87,16 +88,40 @@ class GoogleCalendar {
         }
     }
     
-    func createEvent(_ event: EventModel, _ inCalendar: CalendarModel) -> Promise<Void> {
-        let encodedId : String = inCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        let params = event.unParse()
-        return client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, parameters: params).then { createdEvent -> Void in
+    func getOurCalendar() -> Promise<CalendarModel> {
+        let realm = try! Realm()
+        let ourCalendars = realm.objects(CalendarModel.self).filter({cal in
+            cal.name == self.kNameOfOurCalendar
+        })
+        if ourCalendars.count == 0 {
+            let result = CalendarModel()
+            result.name = kNameOfOurCalendar;
+            return client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { createdCalendar -> CalendarModel in
+                result.parse(createdCalendar)
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.add(result, update:true)
+                }
+                return result;
+            }
+        } else {
+            return Promise { fulfill,_ in fulfill(ourCalendars.first!) }
+        }
+    }
+    
+    func createEvent(_ event: EventModel) -> Promise<EventModel> {
+        return getOurCalendar().then { ourCalendar -> Promise<JSON> in
+            let encodedId : String = ourCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+            let params = event.unParse()
+            return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .post, parameters: params)
+        }.then { createdEvent -> EventModel in
             // Currently, don't handle etags.
             event.parse(createdEvent)
             let realm = try! Realm()
             try! realm.write {
                 realm.add(event, update:true)
             }
+            return event
         }
     }
 }

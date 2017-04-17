@@ -14,7 +14,16 @@ import AppAuth
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    let googleSession = GoogleSession()
+    lazy var googleClient : GoogleHTTPClient = { [unowned self] in
+        return GoogleHTTPClient(self.googleSession)
+    }()
+    
     var googleAuthFlow: OIDAuthorizationFlowSession?
+    lazy var googleCalendar : GoogleCalendar = { [unowned self] in
+        return GoogleCalendar(self.googleClient)
+    }()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
