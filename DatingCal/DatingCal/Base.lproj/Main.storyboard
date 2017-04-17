@@ -349,6 +349,98 @@
             </objects>
             <point key="canvasLocation" x="843.5" y="-225.5"/>
         </scene>
+        <!--Dates Setup View Controller-->
+        <scene sceneID="Myd-tx-W8y">
+            <objects>
+                <viewController id="lqx-4E-eBA" customClass="DatesSetupViewController" customModule="DatingCal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cbM-cv-iCQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="uFr-Np-Nad"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NFY-25-wWJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7e-XG-JpN">
+                                <rect key="frame" x="153.5" y="28" width="68" height="33"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iDA-vK-agp">
+                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Dg3-lu-7k6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonDidClicked:" destination="lqx-4E-eBA" eventType="touchUpInside" id="fsb-Do-wIL"/>
+                                </connections>
+                            </button>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8X-jK-1Yh">
+                                <rect key="frame" x="0.0" y="383" width="375" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="-347048078.63785303">
+                                    <!--1990-01-02 05:45:21 +0000-->
+                                </date>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The date you determine relationship:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3t-CD-Fea">
+                                <rect key="frame" x="0.0" y="343" width="375" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="egx-RE-OUK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your love one's birth date:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxH-Ty-biC">
+                                <rect key="frame" x="0.0" y="87" width="375" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="Ykr-7z-eyL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iOA-RL-Jig">
+                                <rect key="frame" x="0.0" y="127" width="375" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="-347048091.32477403">
+                                    <!--1990-01-02 05:45:08 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="iDA-vK-agp" firstAttribute="top" secondItem="f8X-jK-1Yh" secondAttribute="bottom" constant="8" id="1Ps-Jb-FOe"/>
+                            <constraint firstItem="m3t-CD-Fea" firstAttribute="leading" secondItem="NFY-25-wWJ" secondAttribute="leading" id="4f3-MT-Ty3"/>
+                            <constraint firstAttribute="trailing" secondItem="iDA-vK-agp" secondAttribute="trailing" id="7TU-K9-T5H"/>
+                            <constraint firstItem="T7e-XG-JpN" firstAttribute="centerX" secondItem="NFY-25-wWJ" secondAttribute="centerX" id="7YZ-si-3A1"/>
+                            <constraint firstAttribute="trailing" secondItem="f8X-jK-1Yh" secondAttribute="trailing" id="84v-Ll-eK4"/>
+                            <constraint firstItem="iOA-RL-Jig" firstAttribute="leading" secondItem="NFY-25-wWJ" secondAttribute="leading" id="96w-i2-5nz"/>
+                            <constraint firstAttribute="trailing" secondItem="HxH-Ty-biC" secondAttribute="trailing" id="FTw-Oh-n2D"/>
+                            <constraint firstAttribute="trailing" secondItem="m3t-CD-Fea" secondAttribute="trailing" id="FaC-To-n42"/>
+                            <constraint firstItem="f8X-jK-1Yh" firstAttribute="leading" secondItem="NFY-25-wWJ" secondAttribute="leading" id="NFI-7M-ZMg"/>
+                            <constraint firstItem="m3t-CD-Fea" firstAttribute="top" secondItem="iOA-RL-Jig" secondAttribute="bottom" id="Ram-rk-xZH"/>
+                            <constraint firstAttribute="trailing" secondItem="iOA-RL-Jig" secondAttribute="trailing" id="WjM-Ew-Bbn"/>
+                            <constraint firstItem="f8X-jK-1Yh" firstAttribute="top" secondItem="m3t-CD-Fea" secondAttribute="bottom" constant="8" id="ZAv-d3-Ugv"/>
+                            <constraint firstItem="HxH-Ty-biC" firstAttribute="leading" secondItem="NFY-25-wWJ" secondAttribute="leading" id="eq0-eH-3aN"/>
+                            <constraint firstItem="uFr-Np-Nad" firstAttribute="top" secondItem="iDA-vK-agp" secondAttribute="bottom" id="j8L-Lo-Goe"/>
+                            <constraint firstItem="T7e-XG-JpN" firstAttribute="top" secondItem="cbM-cv-iCQ" secondAttribute="bottom" constant="8" id="mZo-5w-2s1"/>
+                            <constraint firstItem="iOA-RL-Jig" firstAttribute="top" secondItem="HxH-Ty-biC" secondAttribute="bottom" constant="8" id="my9-4Y-IFs"/>
+                            <constraint firstItem="iDA-vK-agp" firstAttribute="leading" secondItem="NFY-25-wWJ" secondAttribute="leading" id="pqP-hY-5Hy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="2ev-gh-tU2" kind="presentation" id="1x0-7d-cO4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fQl-9e-1Hj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="68" y="-226"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add" width="64" height="64"/>
