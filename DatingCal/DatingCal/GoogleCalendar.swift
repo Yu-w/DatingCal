@@ -12,46 +12,18 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
-enum GoogleError : Error{
-    case ErrorInJson(JSON)
-}
-
 /// This is a HTTP client for Google Calendar API
 /// Currently, the official API doesn't work well with Swift 3
 class GoogleCalendar {
     
-    var accessToken : String
+    let client: AbstractHTTPClient
     
-    /// accessToken: the authorization token for this user, returned by Google OAuth2 protocol
-    init(_ accessToken: String) {
-        self.accessToken = accessToken
-    }
-    
-    func getHeaders() -> HTTPHeaders {
-        return ["Authorization":"Bearer " + accessToken]
-    }
-    
-    /// Wrap any Alamofire request in a Promise
-    /// (PromiseKit/Alamofire- isn't working...)
-    func requestPromise(_ request: DataRequest) -> Promise<JSON> {
-        return Promise {fulfill, reject in
-            request.responseJSON(completionHandler: { response in
-                if let err = response.error {
-                    reject(err)
-                } else if let data = response.data {
-                    let json = JSON(data: data)
-                    if let error = json.dictionary?["error"] {
-                        reject(GoogleError.ErrorInJson(error))
-                    } else {
-                        fulfill(json)
-                    }
-                }
-            })
-        }
+    init(_ client: AbstractHTTPClient) {
+        self.client = client
     }
     
     func listCalendarLists() -> Promise<JSON> {
-        return requestPromise(request("https://www.googleapis.com/calendar/v3/users/me/calendarList", method: .get, headers: getHeaders())).then { list -> JSON in
+        return client.request("https://www.googleapis.com/calendar/v3/users/me/calendarList", method: .get, parameters: nil).then { list -> JSON in
             // Currently, don't handle etags.
             return list["items"]
         }
@@ -59,7 +31,7 @@ class GoogleCalendar {
     
     func listEventLists(_ calendarId: String) -> Promise<JSON> {
         let encodedId : String = calendarId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        return requestPromise(request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, headers: getHeaders())).then { list -> JSON in
+        return client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, parameters: nil).then { list -> JSON in
             // Currently, don't handle etags.
             return list["items"]
         }
@@ -118,7 +90,7 @@ class GoogleCalendar {
     func createEvent(_ event: EventModel, _ inCalendar: CalendarModel) -> Promise<Void> {
         let encodedId : String = inCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         let params = event.unParse()
-        return requestPromise(request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, parameters: params, encoding: JSONEncoding.default, headers: getHeaders())).then { createdEvent -> Void in
+        return client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, parameters: params).then { createdEvent -> Void in
             // Currently, don't handle etags.
             event.parse(createdEvent)
             let realm = try! Realm()

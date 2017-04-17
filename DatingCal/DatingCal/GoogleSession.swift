@@ -15,7 +15,7 @@ import RealmSwift
 
 /// Manages a login session with some Google user.
 /// It manages the cache of login tokens and decide whether it's needed to start login process.
-class GoogleSession {
+class GoogleSession : AbstractSession {
     private let kScopes : [String]? = ["https://www.googleapis.com/auth/calendar"]
     private let kRedirectURI : URL = URL(string: "cs242.datingcal:/oauth2redirect/google")!
     private let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
@@ -29,9 +29,6 @@ class GoogleSession {
     }
     
     private var _authState : OIDAuthState?
-    
-    var authState : OIDAuthState? { get {return _authState} }
-    var token : String? { get {return authState?.lastTokenResponse?.accessToken} }
     
     private func saveAuthState() {
         if let state = _authState {
@@ -66,11 +63,40 @@ class GoogleSession {
         }
     }
     
+    /// A helper function that returns a promise to refresh the token stored in _authState
+    ///  authState: unwrapped value in self._authState
+    private func refreshToken(authState: OIDAuthState) -> Promise<String> {
+        return Promise { fulfill, reject in
+            authState.performAction(freshTokens: { token, id, err in
+                if let err = err {
+                    reject(err)
+                    return
+                }
+                fulfill(token!)
+            })
+        }
+    }
+    
+    var isLoggedIn : Bool {
+        get {
+            return _authState != nil
+        }
+    }
+    
+    var token : Promise<String> {
+        return firstly {
+            guard let authState = self._authState else {
+                throw GoogleError.NotLoggedIn
+            }
+            return refreshToken(authState: authState)
+        }
+    }
+    
     /// This function will ensure the user is logged in.
     /// But rest assured, it will only call login() when necessary.
     func ensureLogin(presenter: UIViewController) -> Promise<Void> {
         loadAuthState()
-        if let authState = self.authState {
+        if let authState = self._authState {
             return Promise { fulfill, reject in
                 authState.performAction(freshTokens: { token, id, err in
                     if let err = err {
@@ -85,12 +111,6 @@ class GoogleSession {
             }
         } else {
             return login(presenter: presenter)
-        }
-    }
-    
-    var isLoggedIn : Bool {
-        get {
-            return authState != nil
         }
     }
     

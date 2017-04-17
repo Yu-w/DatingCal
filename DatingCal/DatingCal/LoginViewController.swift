@@ -17,7 +17,12 @@ import RealmSwift
 class LoginViewController: UIViewController {
     
     private let googleSession = GoogleSession()
-    private var googleCalendar : GoogleCalendar?
+    private lazy var googleClient : GoogleHTTPClient = { [unowned self] in
+        return GoogleHTTPClient(self.googleSession)
+    }()
+    private lazy var googleCalendar : GoogleCalendar = { [unowned self] in
+        return GoogleCalendar(self.googleClient)
+    }()
     
     private var pendingSignIn : Promise<Void>?
     
@@ -28,8 +33,7 @@ class LoginViewController: UIViewController {
         }
         pendingSignIn = self.googleSession.ensureLogin(presenter: self).then { x -> Promise<Void> in
             debugPrint("Sign in finished")
-            self.googleCalendar = GoogleCalendar(self.googleSession.token!)
-            return self.googleCalendar!.loadAll()
+            return self.googleCalendar.loadAll()
         }.then { x -> Void in
             let realm = try! Realm()
             for cal in realm.objects(CalendarModel.self) {

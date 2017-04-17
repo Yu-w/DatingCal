@@ -20,7 +20,12 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
     
     private let googleSession = GoogleSession()
-    private var googleCalendar : GoogleCalendar?
+    private lazy var googleClient : GoogleHTTPClient = { [unowned self] in
+        return GoogleHTTPClient(self.googleSession)
+    }()
+    private lazy var googleCalendar : GoogleCalendar = { [unowned self] in
+        return GoogleCalendar(self.googleClient)
+    }()
     
     var eventsToPresent = [EventModel]() {
         didSet {
@@ -72,8 +77,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         // The following lines ensures that the user is logged in
         //    and that his or her calendar has been synchronized
         self.googleSession.ensureLogin(presenter: self).then { x -> Promise<Void> in
-            self.googleCalendar = GoogleCalendar(self.googleSession.token!)
-            return self.googleCalendar!.loadAll()
+            return self.googleCalendar.loadAll()
         }.then { x -> Void in
             debugPrint("Sign In finished.")
         }.catch { err -> Void in

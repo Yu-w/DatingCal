@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A28AEFA1E9C607F007665F0 /* Models.swift */; };
-		4A3E6BA41E9C3B7B00E1644A /* CalendarApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E6BA31E9C3B7B00E1644A /* CalendarApi.swift */; };
+		4A2A228B1EA4309A001B6906 /* AbstractHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A228A1EA4309A001B6906 /* AbstractHTTPClient.swift */; };
+		4A2A228D1EA432B4001B6906 /* AbstractSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A228C1EA432B4001B6906 /* AbstractSession.swift */; };
+		4A2A228F1EA434A7001B6906 /* GoogleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A228E1EA434A7001B6906 /* GoogleError.swift */; };
+		4A3E6BA41E9C3B7B00E1644A /* GoogleCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E6BA31E9C3B7B00E1644A /* GoogleCalendar.swift */; };
 		4A3FA03E1E9D6B45004ECF64 /* GoogleSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3FA03D1E9D6B45004ECF64 /* GoogleSession.swift */; };
 		4A7758DA1E9AEF0B00C1DDDB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */; };
 		4A7758DC1E9B1D6900C1DDDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */; };
 		4A7758DD1E9B1DAC00C1DDDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */; };
 		4A7758DE1E9B1DAC00C1DDDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */; };
 		4A7758E11E9BD0EB00C1DDDB /* AppAuthPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7758E01E9BD0EB00C1DDDB /* AppAuthPromise.swift */; };
+		4AC169121EA44602006F79E3 /* GoogleHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC169111EA44602006F79E3 /* GoogleHTTPClient.swift */; };
 		88442BC81E9C350F00DC23A3 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC71E9C350F00DC23A3 /* TriangleView.swift */; };
 		88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC91E9C415500DC23A3 /* Defaults.swift */; };
 		88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */; };
@@ -52,11 +56,15 @@
 /* Begin PBXFileReference section */
 		14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.debug.xcconfig"; sourceTree = "<group>"; };
 		4A28AEFA1E9C607F007665F0 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		4A3E6BA31E9C3B7B00E1644A /* CalendarApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarApi.swift; sourceTree = "<group>"; };
+		4A2A228A1EA4309A001B6906 /* AbstractHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractHTTPClient.swift; sourceTree = "<group>"; };
+		4A2A228C1EA432B4001B6906 /* AbstractSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractSession.swift; sourceTree = "<group>"; };
+		4A2A228E1EA434A7001B6906 /* GoogleError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleError.swift; sourceTree = "<group>"; };
+		4A3E6BA31E9C3B7B00E1644A /* GoogleCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCalendar.swift; sourceTree = "<group>"; };
 		4A3FA03D1E9D6B45004ECF64 /* GoogleSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleSession.swift; sourceTree = "<group>"; };
 		4A7758D91E9AEF0B00C1DDDB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4A7758E01E9BD0EB00C1DDDB /* AppAuthPromise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAuthPromise.swift; sourceTree = "<group>"; };
+		4AC169111EA44602006F79E3 /* GoogleHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleHTTPClient.swift; sourceTree = "<group>"; };
 		88442BC71E9C350F00DC23A3 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		88442BC91E9C415500DC23A3 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -119,9 +127,13 @@
 		4A7758DF1E9BD0B100C1DDDB /* GoogleHelpers */ = {
 			isa = PBXGroup;
 			children = (
+				4A2A228A1EA4309A001B6906 /* AbstractHTTPClient.swift */,
+				4A2A228C1EA432B4001B6906 /* AbstractSession.swift */,
 				4A7758E01E9BD0EB00C1DDDB /* AppAuthPromise.swift */,
-				4A3E6BA31E9C3B7B00E1644A /* CalendarApi.swift */,
+				4A3E6BA31E9C3B7B00E1644A /* GoogleCalendar.swift */,
+				4AC169111EA44602006F79E3 /* GoogleHTTPClient.swift */,
 				4A3FA03D1E9D6B45004ECF64 /* GoogleSession.swift */,
+				4A2A228E1EA434A7001B6906 /* GoogleError.swift */,
 			);
 			name = GoogleHelpers;
 			sourceTree = "<group>";
@@ -403,15 +415,19 @@
 				88F104221E9AED5D0047F308 /* MainCalendarTableEx.swift in Sources */,
 				4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */,
 				88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */,
+				4A2A228B1EA4309A001B6906 /* AbstractHTTPClient.swift in Sources */,
+				4A2A228F1EA434A7001B6906 /* GoogleError.swift in Sources */,
 				88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */,
 				88F1041E1E9AE8EF0047F308 /* MainCalendarViewController.swift in Sources */,
 				88F104201E9AED300047F308 /* MainCalendarFSEx.swift in Sources */,
+				4A2A228D1EA432B4001B6906 /* AbstractSession.swift in Sources */,
 				88442BC81E9C350F00DC23A3 /* TriangleView.swift in Sources */,
 				4A7758DA1E9AEF0B00C1DDDB /* LoginViewController.swift in Sources */,
 				4A3FA03E1E9D6B45004ECF64 /* GoogleSession.swift in Sources */,
-				4A3E6BA41E9C3B7B00E1644A /* CalendarApi.swift in Sources */,
+				4A3E6BA41E9C3B7B00E1644A /* GoogleCalendar.swift in Sources */,
 				88D65D391E9F0BAB00E80595 /* AddEventViewController.swift in Sources */,
 				88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */,
+				4AC169121EA44602006F79E3 /* GoogleHTTPClient.swift in Sources */,
 				4A7758E11E9BD0EB00C1DDDB /* AppAuthPromise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
