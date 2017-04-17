@@ -15,7 +15,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
     var googleSession : AbstractSession
     
     /// accessToken: the authorization token for this user, returned by Google OAuth2 protocol
-    required init(_ googleSession: AbstractSession) {
+    init(_ googleSession: AbstractSession) {
         self.googleSession = googleSession
     }
     

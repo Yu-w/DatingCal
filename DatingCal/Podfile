@@ -2,25 +2,34 @@
 platform :ios, '9.0'
 use_frameworks!
 
+def shared_pods
+	swift_version = "3.0"
+	pod 'Alamofire'
+	pod 'SwiftyJSON'
+	pod 'GoogleAPIClientForREST/Calendar'
+	pod 'AppAuth', "~> 0.9.0"
+	pod "PromiseKit", "~> 4.0"
+	pod 'RealmSwift'
+	pod 'SwiftDate', '~> 4.0'
+	pod 'Swinject', '~> 2.0.0'
+end
+
+target 'DatingCalTests' do
+shared_pods
+end
+
 target 'DatingCal' do
 
-swift_version = "3.0"
+shared_pods
 
-pod 'Alamofire'
+swift_version = "3.0"
 pod 'ChameleonFramework'
 pod 'SVProgressHUD'
-pod 'SwiftyJSON'
 pod 'TextFieldEffects'
 pod 'YYKit'
 pod 'FSCalendar'
-pod 'GoogleAPIClientForREST/Calendar'
-pod 'AppAuth', "~> 0.9.0"
-pod "PromiseKit", "~> 4.0"
-pod 'RealmSwift'
-pod 'SwiftDate', '~> 4.0'
 pod 'DZNEmptyDataSet'
 pod 'DateTimePicker'
-pod 'Swinject', '~> 2.0.0'
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

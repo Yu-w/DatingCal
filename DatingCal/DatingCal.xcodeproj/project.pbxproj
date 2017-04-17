@@ -18,6 +18,8 @@
 		4A7758DE1E9B1DAC00C1DDDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */; };
 		4A7758E11E9BD0EB00C1DDDB /* AppAuthPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7758E01E9BD0EB00C1DDDB /* AppAuthPromise.swift */; };
 		4AC169121EA44602006F79E3 /* GoogleHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC169111EA44602006F79E3 /* GoogleHTTPClient.swift */; };
+		4AC169141EA4829C006F79E3 /* FakeHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC169131EA4829C006F79E3 /* FakeHTTPClient.swift */; };
+		66BCFC77BDF4C3ABEB746EC7 /* Pods_DatingCalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D314118D80B2A41AEAE1A87E /* Pods_DatingCalTests.framework */; };
 		88442BC81E9C350F00DC23A3 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC71E9C350F00DC23A3 /* TriangleView.swift */; };
 		88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC91E9C415500DC23A3 /* Defaults.swift */; };
 		88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */; };
@@ -54,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.debug.xcconfig"; sourceTree = "<group>"; };
+		294C7979DC7819CEE71FD3A3 /* Pods-DatingCalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCalTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCalTests/Pods-DatingCalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4A28AEFA1E9C607F007665F0 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		4A2A228A1EA4309A001B6906 /* AbstractHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractHTTPClient.swift; sourceTree = "<group>"; };
 		4A2A228C1EA432B4001B6906 /* AbstractSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractSession.swift; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4A7758E01E9BD0EB00C1DDDB /* AppAuthPromise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAuthPromise.swift; sourceTree = "<group>"; };
 		4AC169111EA44602006F79E3 /* GoogleHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleHTTPClient.swift; sourceTree = "<group>"; };
+		4AC169131EA4829C006F79E3 /* FakeHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHTTPClient.swift; sourceTree = "<group>"; };
 		88442BC71E9C350F00DC23A3 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		88442BC91E9C415500DC23A3 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 		88F104211E9AED5D0047F308 /* MainCalendarTableEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarTableEx.swift; sourceTree = "<group>"; };
 		C3B87019FB7411A7235D57BD /* Pods_DatingCal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatingCal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCD3225477F11CAFB04E765 /* Pods-DatingCal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.release.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.release.xcconfig"; sourceTree = "<group>"; };
+		D314118D80B2A41AEAE1A87E /* Pods_DatingCalTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatingCalTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF238F5860B5BB4511ADED39 /* Pods-DatingCalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCalTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCalTests/Pods-DatingCalTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66BCFC77BDF4C3ABEB746EC7 /* Pods_DatingCalTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				C3B87019FB7411A7235D57BD /* Pods_DatingCal.framework */,
+				D314118D80B2A41AEAE1A87E /* Pods_DatingCalTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -195,6 +203,7 @@
 			children = (
 				88F104011E9AE1DA0047F308 /* DatingCalTests.swift */,
 				88F104031E9AE1DA0047F308 /* Info.plist */,
+				4AC169131EA4829C006F79E3 /* FakeHTTPClient.swift */,
 			);
 			path = DatingCalTests;
 			sourceTree = "<group>";
@@ -213,6 +222,8 @@
 			children = (
 				14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */,
 				CCCD3225477F11CAFB04E765 /* Pods-DatingCal.release.xcconfig */,
+				294C7979DC7819CEE71FD3A3 /* Pods-DatingCalTests.debug.xcconfig */,
+				FF238F5860B5BB4511ADED39 /* Pods-DatingCalTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -244,9 +255,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88F104141E9AE1DA0047F308 /* Build configuration list for PBXNativeTarget "DatingCalTests" */;
 			buildPhases = (
+				039A091EEAD0A9DD3D4B069A /* [CP] Check Pods Manifest.lock */,
 				88F103F91E9AE1DA0047F308 /* Sources */,
 				88F103FA1E9AE1DA0047F308 /* Frameworks */,
 				88F103FB1E9AE1DA0047F308 /* Resources */,
+				2AAB29F2ADC7799770212D3C /* [CP] Embed Pods Frameworks */,
+				9A38AFFC7B6B659A0C7221B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -293,13 +307,12 @@
 					};
 					88F103FC1E9AE1DA0047F308 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = BLNBM6S947;
+						DevelopmentTeam = 4EYD34WAXU;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 88F103E81E9AE1D90047F308;
 					};
 					88F104071E9AE1DA0047F308 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = BLNBM6S947;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 88F103E81E9AE1D90047F308;
 					};
@@ -356,6 +369,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		039A091EEAD0A9DD3D4B069A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		11BED101D1FC92875D3AA9F9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -371,6 +399,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		2AAB29F2ADC7799770212D3C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DatingCalTests/Pods-DatingCalTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		8DF6FEBB02633FC3EF95D88C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +427,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A38AFFC7B6B659A0C7221B9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DatingCalTests/Pods-DatingCalTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DF957A2673BC39A06BFFE9BB /* [CP] Check Pods Manifest.lock */ = {
@@ -433,6 +491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88F104021E9AE1DA0047F308 /* DatingCalTests.swift in Sources */,
+				4AC169141EA4829C006F79E3 /* FakeHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,10 +668,11 @@
 		};
 		88F104151E9AE1DA0047F308 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 294C7979DC7819CEE71FD3A3 /* Pods-DatingCalTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = BLNBM6S947;
+				DEVELOPMENT_TEAM = 4EYD34WAXU;
 				INFOPLIST_FILE = DatingCalTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cs242.DatingCalTests;
@@ -624,10 +684,11 @@
 		};
 		88F104161E9AE1DA0047F308 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF238F5860B5BB4511ADED39 /* Pods-DatingCalTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = BLNBM6S947;
+				DEVELOPMENT_TEAM = 4EYD34WAXU;
 				INFOPLIST_FILE = DatingCalTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cs242.DatingCalTests;
@@ -641,7 +702,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = BLNBM6S947;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = DatingCalUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cs242.DatingCalUITests;
@@ -655,7 +716,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = BLNBM6S947;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = DatingCalUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cs242.DatingCalUITests;
