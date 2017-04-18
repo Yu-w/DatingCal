@@ -28,6 +28,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.1.7):
     - PromiseKit/CorePromise
+  - ReachabilitySwift (3)
   - Realm (2.5.1):
     - Realm/Headers (= 2.5.1)
   - Realm/Headers (2.5.1)
@@ -51,7 +52,8 @@ DEPENDENCIES:
   - FSCalendar
   - GoogleAPIClientForREST/Calendar
   - PromiseKit (~> 4.0)
-  - RealmSwift
+  - ReachabilitySwift (~> 3)
+  - RealmSwift (~> 2.5.1)
   - SVProgressHUD
   - SwiftDate (~> 4.0)
   - SwiftyJSON
@@ -69,6 +71,7 @@ SPEC CHECKSUMS:
   GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
+  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   Realm: 32f86104d37c8521f864d4274050b38ba6190733
   RealmSwift: f719e7511c902b8908593e8f143f59e47931bdb6
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
@@ -78,6 +81,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: e41b64f55165bbe2dac89679f9784807215886d0
+PODFILE CHECKSUM: df38cc6e6701266ebcc455ff745e3d64ed53c1db
 
 COCOAPODS: 1.2.0
