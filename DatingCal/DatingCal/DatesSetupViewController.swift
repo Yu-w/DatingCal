@@ -24,6 +24,11 @@ class DatesSetupViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func doneButtonDidClicked(_ sender: UIButton) {
+        let birthDate = firstDatePicker.date
+        let relationshipDate = secondDatePicker.date
+        self.performSegue(withIdentifier: "doneSetup", sender: self)
+    }
 
     /*
     // MARK: - Navigation
