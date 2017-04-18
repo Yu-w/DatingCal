@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var googleAuthFlow: OIDAuthorizationFlowSession?
     lazy var googleCalendar : GoogleCalendar = { [unowned self] in
-        return GoogleCalendar(self.googleClient)
+        return GoogleCalendar(self.googleClient, BusinessRealmProvider())
     }()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {

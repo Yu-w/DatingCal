@@ -17,20 +17,22 @@ import RealmSwift
 class GoogleCalendar {
     
     let client: AbstractHTTPClient
+    let realmProvider : AbstractRealmProvider
     let kNameOfOurCalendar = "DatingCal calendar";
     
-    init(_ client: AbstractHTTPClient) {
+    init(_ client: AbstractHTTPClient, _ realmProvider: AbstractRealmProvider) {
         self.client = client
+        self.realmProvider = realmProvider
     }
     
-    func listCalendarLists() -> Promise<JSON> {
+    private func listCalendarLists() -> Promise<JSON> {
         return client.request("https://www.googleapis.com/calendar/v3/users/me/calendarList", method: .get, parameters: nil).then { list -> JSON in
             // Currently, don't handle etags.
             return list["items"]
         }
     }
     
-    func listEventLists(_ calendarId: String) -> Promise<JSON> {
+    private func listEventLists(_ calendarId: String) -> Promise<JSON> {
         let encodedId : String = calendarId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         return client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, parameters: nil).then { list -> JSON in
             // Currently, don't handle etags.
@@ -39,10 +41,10 @@ class GoogleCalendar {
     }
     
     /// Fetch and save all calendar lists. This will not sync the events in the calendars.
-    func loadAllCalendars() -> Promise<Void> {
+    private func loadAllCalendars() -> Promise<Void> {
         return listCalendarLists().then { list -> Void in
             let list = list.array ?? []
-            let realm = try! Realm()
+            let realm = self.realmProvider.realm()
             let listAsSet = NSMutableSet(array: list)
             
             for cal in realm.objects(CalendarModel.self) {
@@ -64,11 +66,11 @@ class GoogleCalendar {
     }
     
     /// Fetch and save all events. This will not sync new calendars.
-    func loadAllEvents() -> Promise<Void> {
-        let realm = try! Realm()
+    private func loadAllEvents() -> Promise<Void> {
+        let realm = self.realmProvider.realm()
         return when(fulfilled: realm.objects(CalendarModel.self).map { cal in
             return listEventLists(cal.id).then { list -> Void in
-                let realm = try! Realm()
+                let realm = self.realmProvider.realm()
                 for event in (list.array ?? []) {
                     let parsed = EventModel()
                     parsed.parse(event)
@@ -89,7 +91,7 @@ class GoogleCalendar {
     }
     
     func getOurCalendar() -> Promise<CalendarModel> {
-        let realm = try! Realm()
+        let realm = self.realmProvider.realm()
         let ourCalendars = realm.objects(CalendarModel.self).filter({cal in
             cal.name == self.kNameOfOurCalendar
         })
@@ -98,7 +100,7 @@ class GoogleCalendar {
             result.name = kNameOfOurCalendar;
             return client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { createdCalendar -> CalendarModel in
                 result.parse(createdCalendar)
-                let realm = try! Realm()
+                let realm = self.realmProvider.realm()
                 try! realm.write {
                     realm.add(result, update:true)
                 }
@@ -117,7 +119,7 @@ class GoogleCalendar {
         }.then { createdEvent -> EventModel in
             // Currently, don't handle etags.
             event.parse(createdEvent)
-            let realm = try! Realm()
+            let realm = self.realmProvider.realm()
             try! realm.write {
                 realm.add(event, update:true)
             }
