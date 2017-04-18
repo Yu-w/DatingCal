@@ -20,5 +20,8 @@ class AsyncTests : XCTestCase {
         }.always {
             isFinished[0] = true
         }
+        while !isFinished[0] {
+            RunLoop.current.run(mode: .defaultRunLoopMode, before: .distantFuture)
+        }
     }
 }
