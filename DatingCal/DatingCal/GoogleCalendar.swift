@@ -91,23 +91,25 @@ class GoogleCalendar {
     }
     
     func getOurCalendar() -> Promise<CalendarModel> {
-        let realm = self.realmProvider.realm()
-        let ourCalendars = realm.objects(CalendarModel.self).filter({cal in
-            cal.name == self.kNameOfOurCalendar
-        })
-        if ourCalendars.count == 0 {
-            let result = CalendarModel()
-            result.name = kNameOfOurCalendar;
-            return client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { createdCalendar -> CalendarModel in
-                result.parse(createdCalendar)
-                let realm = self.realmProvider.realm()
-                try! realm.write {
-                    realm.add(result, update:true)
+        return loadAllCalendars().then {
+            let realm = self.realmProvider.realm()
+            let ourCalendars = realm.objects(CalendarModel.self).filter({cal in
+                cal.name == self.kNameOfOurCalendar
+            })
+            if ourCalendars.count == 0 {
+                let result = CalendarModel()
+                result.name = self.kNameOfOurCalendar;
+                return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { createdCalendar -> CalendarModel in
+                    result.parse(createdCalendar)
+                    let realm = self.realmProvider.realm()
+                    try! realm.write {
+                        realm.add(result, update:true)
+                    }
+                    return result;
                 }
-                return result;
+            } else {
+                return Promise { fulfill,_ in fulfill(ourCalendars.first!) }
             }
-        } else {
-            return Promise { fulfill,_ in fulfill(ourCalendars.first!) }
         }
     }
     

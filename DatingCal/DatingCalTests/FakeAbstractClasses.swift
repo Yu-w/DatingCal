@@ -36,12 +36,15 @@ class FakeHTTPClient : AbstractHTTPClient {
 }
 
 class FakeRealmProvider : AbstractRealmProvider {
-    func realm() -> Realm {
-        let config = Realm.Configuration(
+    private static let _config = Realm.Configuration(
             fileURL: nil,
             inMemoryIdentifier: "test",
             syncConfiguration: nil
         )
-        return try! Realm(configuration: config)
+    private static var _realm : Realm = {
+        return try! Realm(configuration: FakeRealmProvider._config)
+    }()
+    func realm() -> Realm {
+        return FakeRealmProvider._realm
     }
 }
