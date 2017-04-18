@@ -12,6 +12,15 @@ import XCTest
 
 class AsyncTests : XCTestCase {
     
+    /// Clean up the in-memory singleton databse after each test case
+    override func tearDown() {
+        super.tearDown()
+        let realm = FakeRealmProvider().realm()
+        try! realm.write {
+            realm.deleteAll()
+        }
+    }
+    
     /// Complete a test case by waiting for a promise
     func testPromise<T>(_ promise: Promise<T>) {
         var isFinished = [false]

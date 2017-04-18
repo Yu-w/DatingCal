@@ -90,26 +90,32 @@ class GoogleCalendar {
         }
     }
     
+    private func getOurCalendarLocally() -> CalendarModel? {
+        let realm = self.realmProvider.realm()
+        let ourCalendars = realm.objects(CalendarModel.self).filter({cal in
+            cal.name == self.kNameOfOurCalendar
+        })
+        return ourCalendars.first
+    }
+    
     /// Get the calendar where we should all events created by DatingCal
     func getOurCalendar() -> Promise<CalendarModel> {
+        if let ans = getOurCalendarLocally() {
+            return Promise(value: ans)
+        }
         return loadAllCalendars().then {
-            let realm = self.realmProvider.realm()
-            let ourCalendars = realm.objects(CalendarModel.self).filter({cal in
-                cal.name == self.kNameOfOurCalendar
-            })
-            if ourCalendars.count == 0 {
-                let result = CalendarModel()
-                result.name = self.kNameOfOurCalendar;
-                return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { createdCalendar -> CalendarModel in
-                    result.parse(createdCalendar)
-                    let realm = self.realmProvider.realm()
-                    try! realm.write {
-                        realm.add(result, update:true)
-                    }
-                    return result;
+            if let ans = self.getOurCalendarLocally() {
+                return Promise(value: ans)
+            }
+            let result = CalendarModel()
+            result.name = self.kNameOfOurCalendar;
+            return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { json -> CalendarModel in
+                result.parse(json)
+                let realm = self.realmProvider.realm()
+                try! realm.write {
+                    realm.add(result, update:true)
                 }
-            } else {
-                return Promise { fulfill,_ in fulfill(ourCalendars.first!) }
+                return result;
             }
         }
     }
