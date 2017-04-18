@@ -27,17 +27,4 @@ extension MainCalendarViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDele
         return UIImage(named: "calendar")
     }
     
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControlState) -> NSAttributedString? {
-        let str = "Add Event"
-        let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
-    func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
-        let alertVC = UIAlertController(title: "Event Added!", message: nil, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "Test", style: .default))
-        self.tableView.reloadData()
-        self.present(alertVC, animated: true)
-    }
-    
 }
