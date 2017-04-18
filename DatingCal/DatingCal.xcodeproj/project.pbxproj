@@ -22,6 +22,7 @@
 		4AC522021EA5C89A00448202 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC522011EA5C89A00448202 /* RealmProvider.swift */; };
 		4AC522041EA5D94B00448202 /* AsyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC522031EA5D94B00448202 /* AsyncTests.swift */; };
 		4AC522061EA6A49C00448202 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC522051EA6A49C00448202 /* NetworkMonitor.swift */; };
+		4AC522081EA6BBBA00448202 /* SequentialPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC522071EA6BBBA00448202 /* SequentialPromise.swift */; };
 		66BCFC77BDF4C3ABEB746EC7 /* Pods_DatingCalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D314118D80B2A41AEAE1A87E /* Pods_DatingCalTests.framework */; };
 		88442BC81E9C350F00DC23A3 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC71E9C350F00DC23A3 /* TriangleView.swift */; };
 		88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC91E9C415500DC23A3 /* Defaults.swift */; };
@@ -75,6 +76,7 @@
 		4AC522011EA5C89A00448202 /* RealmProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		4AC522031EA5D94B00448202 /* AsyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncTests.swift; sourceTree = "<group>"; };
 		4AC522051EA6A49C00448202 /* NetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkMonitor.swift; path = ../NetworkMonitor.swift; sourceTree = "<group>"; };
+		4AC522071EA6BBBA00448202 /* SequentialPromise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequentialPromise.swift; sourceTree = "<group>"; };
 		88442BC71E9C350F00DC23A3 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		88442BC91E9C415500DC23A3 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -194,7 +196,6 @@
 				88D65D381E9F0BAB00E80595 /* AddEventViewController.swift */,
 				88F103EC1E9AE1D90047F308 /* AppDelegate.swift */,
 				88D65D3A1EA4832300E80595 /* DatesSetupViewController.swift */,
-				88442BC91E9C415500DC23A3 /* Defaults.swift */,
 				88F1041D1E9AE8EE0047F308 /* MainCalendarViewController.swift */,
 				88F1041F1E9AED300047F308 /* MainCalendarFSEx.swift */,
 				88F104211E9AED5D0047F308 /* MainCalendarTableEx.swift */,
@@ -209,6 +210,7 @@
 				88F103F31E9AE1DA0047F308 /* Assets.xcassets */,
 				88F103F81E9AE1DA0047F308 /* Info.plist */,
 				88F1041A1E9AE7DC0047F308 /* DatingCal-Bridging-Header.h */,
+				4AC522071EA6BBBA00448202 /* SequentialPromise.swift */,
 			);
 			path = DatingCal;
 			sourceTree = "<group>";
@@ -489,6 +491,7 @@
 				4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */,
 				88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */,
 				88D65D3D1EA6B29800E80595 /* Configurations.swift in Sources */,
+				4AC522081EA6BBBA00448202 /* SequentialPromise.swift in Sources */,
 				4A2A228B1EA4309A001B6906 /* AbstractHTTPClient.swift in Sources */,
 				4A2A228F1EA434A7001B6906 /* GoogleError.swift in Sources */,
 				88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */,

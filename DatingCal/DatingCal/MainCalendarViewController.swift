@@ -68,17 +68,6 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // The following lines ensures that the user is logged in
-        //    and that his or her calendar has been synchronized
-        appDelegate.googleSession.ensureLogin(presenter: self).then { x -> Promise<Void> in
-            return self.appDelegate.googleCalendar.loadAll()
-        }.then { x -> Void in
-            debugPrint("Sign In finished.")
-        }.catch { err -> Void in
-            debugPrint("ERROR during Sign In: ", err)
-            // TODO: provide a retry button
-        }
-        
         self.setNeedsStatusBarAppearanceUpdate()
 
         if UIDevice.current.model.hasPrefix("iPad") {
@@ -97,6 +86,19 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.selectedDate = Date()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // These lines ensure that the user is logged in
+        //   and that his or her calendar has been synchronized
+        appDelegate.googleSession.ensureLogin(presenter: self).then { x -> Promise<Void> in
+            return self.appDelegate.googleCalendar.loadAll()
+        }.then { x -> Void in
+            debugPrint("Sign In finished.")
+        }.catch { err -> Void in
+            debugPrint("ERROR during Sign In: ", err)
+            // TODO: provide a retry button
+        }
     }
     
     /// calendar setup

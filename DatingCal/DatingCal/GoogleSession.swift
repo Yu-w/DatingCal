@@ -92,11 +92,16 @@ class GoogleSession : AbstractSession {
         }
     }
     
+    let sequentialLogin = SequentialPromise<Void>()
+    
     /// This function will ensure the user is logged in.
     /// But rest assured, it will only call login() when necessary.
     func ensureLogin(presenter: UIViewController) -> Promise<Void> {
         loadAuthState()
-        if let authState = self._authState {
+        return sequentialLogin.neverAppend {
+            guard let authState = self._authState else {
+                return self.login(presenter: presenter)
+            }
             return Promise { fulfill, reject in
                 authState.performAction(freshTokens: { token, id, err in
                     if let err = err {
@@ -109,8 +114,6 @@ class GoogleSession : AbstractSession {
                 debugPrint("Failed to refresh access token. Reason: ", err)
                 return self.login(presenter: presenter)
             }
-        } else {
-            return login(presenter: presenter)
         }
     }
     
