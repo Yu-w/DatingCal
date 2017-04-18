@@ -7,28 +7,18 @@
 //
 
 import Foundation
+import PromiseKit
 import XCTest
 
 class AsyncTests : XCTestCase {
     
-    var isFinished = false
-    
-    override func setUp() {
-        super.setUp()
-        isFinished = false
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        
-        /// Wait until the current test method is finished
-        while !isFinished {
-            RunLoop.current.run(mode: .defaultRunLoopMode, before: .distantFuture)
+    /// Complete a test case by waiting for a promise
+    func testPromise<T>(_ promise: Promise<T>) {
+        var isFinished = [false]
+        promise.catch { err in
+            XCTFail("Exception was thrown: " + err.localizedDescription)
+        }.always {
+            isFinished[0] = true
         }
-    }
-    
-    /// Notify that the current test method has finished execution
-    func finishTest() {
-        isFinished = true
     }
 }

@@ -90,6 +90,7 @@ class GoogleCalendar {
         }
     }
     
+    /// Get the calendar where we should all events created by DatingCal
     func getOurCalendar() -> Promise<CalendarModel> {
         return loadAllCalendars().then {
             let realm = self.realmProvider.realm()
@@ -113,6 +114,7 @@ class GoogleCalendar {
         }
     }
     
+    /// Create an event in the 'DatingCal' calendar
     func createEvent(_ event: EventModel) -> Promise<EventModel> {
         return getOurCalendar().then { ourCalendar -> Promise<JSON> in
             let encodedId : String = ourCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
