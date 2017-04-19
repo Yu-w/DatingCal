@@ -29,4 +29,12 @@ class Configurations: Defaults {
     func relationshipDate(id: String=Configurations.sharedInstance.currentId()!) -> Date? {
         return Configurations.sharedInstance.relationshipDate[id]
     }
+    
+    func setBirthDate(date: Date) {
+        Configurations.sharedInstance.birthDate[Configurations.sharedInstance.currentId()!] = date
+    }
+    
+    func setRelationshipDate(date: Date) {
+        Configurations.sharedInstance.relationshipDate[Configurations.sharedInstance.currentId()!] = date
+    }
 }

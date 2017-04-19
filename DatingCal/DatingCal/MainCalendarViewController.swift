@@ -98,6 +98,11 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
             return self.appDelegate.googleClient.userId
         }.then { userId -> Void in
             debugPrint("Google OAuth2 User ID = " + userId)
+            Configurations.sharedInstance.currentIdString = userId
+            if Configurations.sharedInstance.birthDate(id: userId) == nil
+                || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
+                self.performSegue(withIdentifier: "goSetup", sender: self)
+            }
         }.catch { err -> Void in
             debugPrint("ERROR during Sign In: ", err)
             // TODO: provide a retry button

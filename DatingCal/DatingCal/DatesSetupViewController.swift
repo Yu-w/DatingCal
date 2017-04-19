@@ -32,6 +32,8 @@ class DatesSetupViewController: UIViewController {
         let birthDate = firstDatePicker.date - 1.days
         let relationshipDate = secondDatePicker.date - 1.days
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
+        Configurations.sharedInstance.setBirthDate(date: birthDate)
+        Configurations.sharedInstance.setRelationshipDate(date: relationshipDate)
         self.dismiss(animated: true, completion: nil)
     }
 
