@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftDate
 
 class DatesSetupViewController: UIViewController {
 
@@ -15,7 +16,7 @@ class DatesSetupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        firstDatePicker.timeZone = TimeZone.ReferenceType.local
+        firstDatePicker.timeZone = TimeZone.current
         firstDatePicker.calendar = Calendar.current
         secondDatePicker.timeZone = TimeZone.current
         secondDatePicker.calendar = Calendar.current
@@ -28,9 +29,8 @@ class DatesSetupViewController: UIViewController {
     }
     
     @IBAction func doneButtonDidClicked(_ sender: UIButton) {
-        let birthDate = firstDatePicker.date
-        print(birthDate)
-        let relationshipDate = secondDatePicker.date
+        let birthDate = firstDatePicker.date - 1.days
+        let relationshipDate = secondDatePicker.date - 1.days
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
         self.dismiss(animated: true, completion: nil)
     }
