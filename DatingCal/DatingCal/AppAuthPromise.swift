@@ -10,48 +10,43 @@ import Foundation
 import AppAuth
 import PromiseKit
 
-/// OIDPromise: wrap OID* classes in promises.
-class OIDPromise {
-    
-    var issuer : URL
-    var config : OIDServiceConfiguration?
-    
-    init(issuer: URL) {
-        self.issuer = issuer
-    }
-    
-    private func generateCallback<T>(_ fulfill : @escaping (T) -> Void, _ reject : @escaping (Error) -> Void)  -> ((T?,Error?)->Void) {
-        return { _ans, _err in
-            if let err = _err {
-                reject(err)
-            } else {
-                fulfill(_ans!)
-            }
+/// This is a helper function to generate a callback function that complies with PromiseKit
+fileprivate func generateCallback<T>(_ fulfill : @escaping (T) -> Void, _ reject : @escaping (Error) -> Void)  -> ((T?,Error?)->Void) {
+    return { _ans, _err in
+        if let err = _err {
+            reject(err)
+        } else {
+            fulfill(_ans!)
         }
     }
+}
+
+
+extension OIDAuthorizationService {
+    private static var cachedConfig: OIDServiceConfiguration?
     
-    func getConfigurations() -> Promise<OIDServiceConfiguration> {
+    static func getConfigurations(issuer: URL) -> Promise<OIDServiceConfiguration> {
         return Promise<OIDServiceConfiguration> { fulfill, reject in
-            if let config = self.config {
+            if let config = cachedConfig {
                 fulfill(config)
             } else {
                 OIDAuthorizationService.discoverConfiguration(forIssuer: issuer, completion: generateCallback(fulfill, reject))
             }
         }.then{ config -> OIDServiceConfiguration in
-            self.config = config
+            cachedConfig = config
             return config
         }
     }
-    
-    func authState(request: OIDAuthorizationRequest, presenter: UIViewController) -> (OIDAuthorizationFlowSession, Promise<OIDAuthState>) {
+}
+
+extension OIDAuthState {
+    static func authState(request: OIDAuthorizationRequest, presenter: UIViewController) -> (OIDAuthorizationFlowSession, Promise<OIDAuthState>) {
         let (promise, fulfill, reject) = Promise<OIDAuthState>.pending()
         let session = OIDAuthState.authState(byPresenting: request, presenting: presenter, callback: generateCallback(fulfill, reject))
 
         return (session, promise)
     }
-}
-
-extension OIDAuthState {
+    
     func performAction() -> Promise<(String?, String?)> {
         return Promise { fulfill, reject in
             self.performAction(freshTokens: { token,id,err in

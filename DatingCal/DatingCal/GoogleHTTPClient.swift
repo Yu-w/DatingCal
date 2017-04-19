@@ -35,8 +35,8 @@ class GoogleHTTPClient : AbstractHTTPClient {
     ]
     private let kRedirectURI : URL = URL(string: "cs242.datingcal:/oauth2redirect/google")!
     private let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
+    private let kIssuer = URL(string: "https://accounts.google.com")!
     
-    private let googleAuth = OIDPromise(issuer: URL(string: "https://accounts.google.com")!)
     private var googleAuthStateStorage : String {
         get {
             let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
@@ -66,14 +66,14 @@ class GoogleHTTPClient : AbstractHTTPClient {
     
     /// A helper function that actually does the login.
     private func login(presenter: UIViewController) -> Promise<Void> {
-        return googleAuth.getConfigurations().then { config -> Promise<OIDAuthState> in
+        return OIDAuthorizationService.getConfigurations(issuer: kIssuer).then { config -> Promise<OIDAuthState> in
             let request = OIDAuthorizationRequest(configuration: config
                 , clientId: self.kClientId, clientSecret: nil
                 , scopes: self.kScopes, redirectURL: self.kRedirectURI
                 , responseType: OIDResponseTypeCode, additionalParameters: nil)
             
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let (flow, promise) = self.googleAuth.authState(request: request, presenter: presenter)
+            let (flow, promise) = OIDAuthState.authState(request: request, presenter: presenter)
             appDelegate.googleAuthFlow = flow
             return promise
         }.then { authState -> Void in
