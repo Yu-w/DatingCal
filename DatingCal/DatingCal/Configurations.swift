@@ -22,11 +22,11 @@ class Configurations: Defaults {
             : Configurations.sharedInstance.currentIdString
     }
     
-    func birthDate(id: String) -> Date? {
+    func birthDate(id: String=Configurations.sharedInstance.currentId()!) -> Date? {
         return Configurations.sharedInstance.birthDate[id]
     }
     
-    func relationshipDate(id: String) -> Date? {
+    func relationshipDate(id: String=Configurations.sharedInstance.currentId()!) -> Date? {
         return Configurations.sharedInstance.relationshipDate[id]
     }
 }
