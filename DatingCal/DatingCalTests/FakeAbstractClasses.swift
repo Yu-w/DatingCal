@@ -16,6 +16,7 @@ import RealmSwift
 enum FakeHTTPError : Error {
     case ResultNotSet
     case InvalidOperation
+    case NetworkError
 }
 
 class FakeHTTPClient : AbstractHTTPClient {
