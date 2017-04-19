@@ -108,6 +108,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
                 }
             }.catch { err -> Void in
                 debugPrint("ERROR during Sign In: ", err)
+                self.showAlert("Error", "Cannot Login. Please re-enter the app. Reason: " + err.localizedDescription)
                 // TODO: provide a retry button
             }
         }

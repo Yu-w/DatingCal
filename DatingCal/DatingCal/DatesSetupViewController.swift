@@ -8,11 +8,14 @@
 
 import UIKit
 import SwiftDate
+import PromiseKit
 
 class DatesSetupViewController: UIViewController {
 
     @IBOutlet weak var firstDatePicker: UIDatePicker!
     @IBOutlet weak var secondDatePicker: UIDatePicker!
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +35,15 @@ class DatesSetupViewController: UIViewController {
         let birthDate = firstDatePicker.date - 1.days
         let relationshipDate = secondDatePicker.date - 1.days
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
+        when(fulfilled: events.map { event in
+            self.appDelegate.googleCalendar.createEvent(event)
+        }).then { _ in
+            self.dismiss(animated: true, completion: nil)
+        }.catch { err in
+            self.showAlert("Error", "Cannot create events. Reason: " + err.localizedDescription)
+        }
         Configurations.sharedInstance.setBirthDate(date: birthDate)
         Configurations.sharedInstance.setRelationshipDate(date: relationshipDate)
-        self.dismiss(animated: true, completion: nil)
     }
 
     /*

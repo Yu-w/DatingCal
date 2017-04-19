@@ -86,12 +86,6 @@ class AddEventViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func showAlert(_ title: String, _ message: String) {
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "Done", style: .default))
-        self.present(alertVC, animated: true)
-    }
-    
     
     /*
     // MARK: - Navigation
