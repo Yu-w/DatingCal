@@ -27,13 +27,14 @@ class NetworkMonitor {
     ///   action later when there is connection.
     /// :param replayer: A function to replay the same command that
     ///   the failed promise was trying to execute.
-    func handleNoInternet(_ replayer: @escaping Replayer) {
+    func handleNoInternet(_ replayer: @escaping Replayer) -> Bool {
         if(Reachability.init()!.currentReachabilityStatus != .notReachable) {
-            return
+            return false
         }
         self.lockQueue.sync {
             self.commandsToReplay.append(replayer)
         }
+        return true
     }
     
     /// Background refresh and timers should call this function
