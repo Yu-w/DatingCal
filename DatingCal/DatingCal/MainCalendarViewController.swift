@@ -93,8 +93,11 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         //   and that his or her calendar has been synchronized
         appDelegate.googleSession.ensureLogin(presenter: self).then { x -> Promise<Void> in
             return self.appDelegate.googleCalendar.loadAll()
-        }.then { x -> Void in
+        }.then { x -> Promise<String> in
             debugPrint("Sign In finished.")
+            return self.appDelegate.googleClient.userId
+        }.then { userId -> Void in
+            debugPrint("Google OAuth2 User ID = " + userId)
         }.catch { err -> Void in
             debugPrint("ERROR during Sign In: ", err)
             // TODO: provide a retry button

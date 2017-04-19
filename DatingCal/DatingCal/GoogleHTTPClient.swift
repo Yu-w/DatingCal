@@ -47,4 +47,16 @@ class GoogleHTTPClient : AbstractHTTPClient {
             }
         }
     }
+    
+    var userId : Promise<String> {
+        get {
+            return self.googleSession.token.then { token -> Promise<String> in
+                self.request("https://www.googleapis.com/plus/v1/people/me",
+                             method: .get,
+                             parameters: nil).then { json -> String in
+                    json["id"].string!
+                }
+            }
+        }
+    }
 }

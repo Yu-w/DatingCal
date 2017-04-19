@@ -16,7 +16,10 @@ import RealmSwift
 /// Manages a login session with some Google user.
 /// It manages the cache of login tokens and decide whether it's needed to start login process.
 class GoogleSession : AbstractSession {
-    private let kScopes : [String]? = ["https://www.googleapis.com/auth/calendar"]
+    private let kScopes : [String]? = [
+        "https://www.googleapis.com/auth/calendar",         // Manage calendars
+        "https://www.googleapis.com/auth/plus.me"           // Get unique user ID
+    ]
     private let kRedirectURI : URL = URL(string: "cs242.datingcal:/oauth2redirect/google")!
     private let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
     
@@ -63,20 +66,6 @@ class GoogleSession : AbstractSession {
         }
     }
     
-    /// A helper function that returns a promise to refresh the token stored in _authState
-    ///  authState: unwrapped value in self._authState
-    private func refreshToken(authState: OIDAuthState) -> Promise<String> {
-        return Promise { fulfill, reject in
-            authState.performAction(freshTokens: { token, id, err in
-                if let err = err {
-                    reject(err)
-                    return
-                }
-                fulfill(token!)
-            })
-        }
-    }
-    
     var isLoggedIn : Bool {
         get {
             return _authState != nil
@@ -84,11 +73,13 @@ class GoogleSession : AbstractSession {
     }
     
     var token : Promise<String> {
-        return firstly {
+        return firstly { _ -> Promise<(String?, String?)> in
             guard let authState = self._authState else {
                 throw GoogleError.NotLoggedIn
             }
-            return refreshToken(authState: authState)
+            return authState.performAction()
+        }.then { (token ,id) -> String in
+            return token!
         }
     }
     
