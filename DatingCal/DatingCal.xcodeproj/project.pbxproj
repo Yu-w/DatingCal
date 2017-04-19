@@ -193,13 +193,13 @@
 				88D65D3E1EA7147500E80595 /* DatesGenerator.swift */,
 				88442BC71E9C350F00DC23A3 /* TriangleView.swift */,
 				88D65D3C1EA6B29800E80595 /* Configurations.swift */,
+				4AC5220B1EA72FA200448202 /* AlertExtension.swift */,
 				88442BC91E9C415500DC23A3 /* Defaults.swift */,
 				88F103F01E9AE1DA0047F308 /* Main.storyboard */,
 				88F103F51E9AE1DA0047F308 /* LaunchScreen.storyboard */,
 				88F103F31E9AE1DA0047F308 /* Assets.xcassets */,
 				88F103F81E9AE1DA0047F308 /* Info.plist */,
 				88F1041A1E9AE7DC0047F308 /* DatingCal-Bridging-Header.h */,
-				4AC5220B1EA72FA200448202 /* AlertExtension.swift */,
 			);
 			path = DatingCal;
 			sourceTree = "<group>";

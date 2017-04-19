@@ -51,7 +51,7 @@ class DatesGenerator {
             KeyDate(date: relationshipDate + 1000.days, "A thousand days from determining the relationship")
         ]
         datesToExpand.forEach { d in
-            datesToAdd.append(contentsOf: d.datesInManyYears(1)) // Currently, this will upset Google. Should use repeated events.
+            datesToAdd.append(contentsOf: d.datesInManyYears(2)) // Currently, this will upset Google. Should use repeated events.
         }
         return datesToAdd.map { x in x.toEventModel() }
     }

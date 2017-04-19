@@ -33,8 +33,8 @@ class DatesSetupViewController: UIViewController {
     }
     
     @IBAction func doneButtonDidClicked(_ sender: UIButton) {
-        let birthDate = firstDatePicker.date - 1.days
-        let relationshipDate = secondDatePicker.date - 1.days
+        let birthDate = firstDatePicker.date
+        let relationshipDate = secondDatePicker.date
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
         print(events)
         self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<[ThreadSafeReference<EventModel>]> in
