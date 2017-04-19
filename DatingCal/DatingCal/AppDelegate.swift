@@ -16,12 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let googleSession = GoogleSession()
-    lazy var googleClient : GoogleHTTPClient = { [unowned self] in
-        return GoogleHTTPClient(self.googleSession)
-    }()
-    
+    let googleClient = GoogleHTTPClient()
     var googleAuthFlow: OIDAuthorizationFlowSession?
+    
     lazy var googleCalendar : GoogleCalendar = { [unowned self] in
         return GoogleCalendar(self.googleClient, BusinessRealmProvider())
     }()

@@ -91,7 +91,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     override func viewDidAppear(_ animated: Bool) {
         // These lines ensure that the user is logged in
         //   and that his or her calendar has been synchronized
-        appDelegate.googleSession.ensureLogin(presenter: self).then { x -> Promise<Void> in
+        appDelegate.googleClient.ensureLogin(presenter: self).then { x -> Promise<Void> in
             return self.appDelegate.googleCalendar.loadAll()
         }.then { x -> Promise<String> in
             debugPrint("Sign In finished.")
