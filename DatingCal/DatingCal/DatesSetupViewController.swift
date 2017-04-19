@@ -35,9 +35,11 @@ class DatesSetupViewController: UIViewController {
         let birthDate = firstDatePicker.date - 1.days
         let relationshipDate = secondDatePicker.date - 1.days
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
-        when(fulfilled: events.map { event in
-            self.appDelegate.googleCalendar.createEvent(event)
-        }).then { _ in
+        self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<[EventModel]> in
+            when(fulfilled: events.map { event in
+                self.appDelegate.googleCalendar.createEvent(event)
+            })
+        }.then { _ in
             self.dismiss(animated: true, completion: nil)
         }.catch { err in
             self.showAlert("Error", "Cannot create events. Reason: " + err.localizedDescription)
