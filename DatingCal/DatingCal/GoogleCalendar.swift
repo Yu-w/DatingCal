@@ -99,41 +99,58 @@ class GoogleCalendar {
     }
     
     /// Get the calendar where we should all events created by DatingCal
-    func getOurCalendar() -> Promise<CalendarModel> {
+    func getOurCalendar() -> Promise<ThreadSafeReference<CalendarModel>> {
         if let ans = getOurCalendarLocally() {
-            return Promise(value: ans)
+            return Promise(value: ThreadSafeReference(to: ans))
         }
         return loadAllCalendars().then {
             if let ans = self.getOurCalendarLocally() {
-                return Promise(value: ans)
+                return Promise(value: ThreadSafeReference(to: ans))
             }
             let result = CalendarModel()
             result.name = self.kNameOfOurCalendar;
-            return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { json -> CalendarModel in
+            return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { json -> ThreadSafeReference<CalendarModel> in
+                let result = CalendarModel()
                 result.parse(json)
                 let realm = self.realmProvider.realm()
                 try! realm.write {
                     realm.add(result, update:true)
                 }
-                return result;
+                return ThreadSafeReference(to: result)
             }
         }
     }
     
     /// Create an event in the 'DatingCal' calendar
     func createEvent(_ event: EventModel) -> Promise<EventModel> {
-        return getOurCalendar().then { ourCalendar -> Promise<JSON> in
+        return getOurCalendar().then { calendarRef -> Promise<JSON> in
+            let realm = self.realmProvider.realm()
+            let ourCalendar = realm.resolve(calendarRef)!
             let encodedId : String = ourCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
             let params = event.unParse()
             return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .post, parameters: params)
         }.then { createdEvent -> EventModel in
             // Currently, don't handle etags.
+            let event = EventModel()
             event.parse(createdEvent)
             let realm = self.realmProvider.realm()
             try! realm.write {
                 realm.add(event, update:true)
             }
             return event
+        }.catch { err in
+            // Need to make a copy of the current event
+            // to prevent threading issues
+            let eventCopy = event.createCopy()
+            
+            let realm = self.realmProvider.realm()
+            try! realm.write {
+                event.shouldCreate = true
+                realm.add(event, update:true)
+            }
+            NetworkMonitor.shared.handleNoInternet {
+                self.createEvent(eventCopy).asVoid()
+            }
         }
     }
 }

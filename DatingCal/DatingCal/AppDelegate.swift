@@ -8,6 +8,7 @@
 
 import UIKit
 import AppAuth
+import PromiseKit
 
 
 @UIApplicationMain
@@ -25,15 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return GoogleCalendar(self.googleClient, BusinessRealmProvider())
     }()
     
-    let networkMonitor = NetworkMonitor()
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }
     
+    // Accept token returned from Google through URL Scheme
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        // Accept token returned from Google through URL Scheme
         debugPrint(url)
         if let flow = googleAuthFlow, flow.resumeAuthorizationFlow(with: url) {
             googleAuthFlow = nil
@@ -41,6 +40,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             return false
         }
+    }
+    
+    func application(_ application: UIApplication,
+                     willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        return true;
+    }
+    
+    func doBackgroundRefresh(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        _ = NetworkMonitor.shared.replayCommand().then { hasNext -> Void in
+            if(hasNext) {
+                self.doBackgroundRefresh(completionHandler)
+            }
+        }.always {
+            debugPrint("Background refresh finished")
+            completionHandler(.newData)
+        }
+    }
+    
+    // Perform background refresh.
+    // This is also our only method to detect change in network reachability.
+    func application(_ application: UIApplication,
+                     performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        debugPrint("Background refresh started")
+        doBackgroundRefresh(completionHandler)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

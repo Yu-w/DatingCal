@@ -133,14 +133,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4A28AEF91E9C6069007665F0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				4A28AEFA1E9C607F007665F0 /* Models.swift */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		4A7758DF1E9BD0B100C1DDDB /* GoogleHelpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +143,8 @@
 				4AC169111EA44602006F79E3 /* GoogleHTTPClient.swift */,
 				4A3FA03D1E9D6B45004ECF64 /* GoogleSession.swift */,
 				4A2A228E1EA434A7001B6906 /* GoogleError.swift */,
+				4A28AEFA1E9C607F007665F0 /* Models.swift */,
+				4AC522051EA6A49C00448202 /* NetworkMonitor.swift */,
 				4AC522011EA5C89A00448202 /* RealmProvider.swift */,
 			);
 			name = GoogleHelpers;
@@ -190,7 +184,6 @@
 		88F103EB1E9AE1D90047F308 /* DatingCal */ = {
 			isa = PBXGroup;
 			children = (
-				4A28AEF91E9C6069007665F0 /* Models */,
 				4A7758DF1E9BD0B100C1DDDB /* GoogleHelpers */,
 				4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */,
 				88D65D381E9F0BAB00E80595 /* AddEventViewController.swift */,
@@ -201,7 +194,6 @@
 				88F104211E9AED5D0047F308 /* MainCalendarTableEx.swift */,
 				88D65D2E1E9DF92200E80595 /* MainCalendarEmptyTableEx.swift */,
 				88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */,
-				4AC522051EA6A49C00448202 /* NetworkMonitor.swift */,
 				88442BC71E9C350F00DC23A3 /* TriangleView.swift */,
 				88D65D3C1EA6B29800E80595 /* Configurations.swift */,
 				88442BC91E9C415500DC23A3 /* Defaults.swift */,
