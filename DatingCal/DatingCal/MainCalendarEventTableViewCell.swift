@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftDate
 
 class MainCalendarEventTableViewCell: UITableViewCell {
     
@@ -18,6 +19,16 @@ class MainCalendarEventTableViewCell: UITableViewCell {
     func configureData(event: EventModel, color: UIColor?) {
         self.titleLabel.text = event.summary
         self.descLabel.text = event.desc
+        if let _ = event.startDate {
+            self.timeLabel.text = "All Day"
+        } else if let date = event.startTime {
+            self.timeLabel.text = "\(date.hour):\(date.minute) AM"
+            if let endTime = event.endTime {
+                if endTime.day == date.day {
+                    self.timeLabel.text = "\(self.timeLabel.text!) - \(endTime.hour):\(endTime.minute) AM"
+                }
+            }
+        }
         if let color = color {
             self.leftBarView.backgroundColor = color
             self.timeLabel.textColor = color
