@@ -45,13 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true;
     }
     
-    func doBackgroundRefresh(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func doSynchronization(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         _ = NetworkMonitor.shared.replayCommand().then { hasNext -> Void in
             if(hasNext) {
-                self.doBackgroundRefresh(completionHandler)
+                self.doSynchronization(completionHandler)
             }
         }.always {
-            debugPrint("Background refresh finished")
+            debugPrint("Sync finished")
             completionHandler(.newData)
         }
     }
@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         debugPrint("Background refresh started")
-        doBackgroundRefresh(completionHandler)
+        doSynchronization(completionHandler)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -73,6 +73,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
+    
+    var isSyncScheduled = false
+    func scheduleSyncTimer() {
+        if isSyncScheduled {
+            return
+        }
+        isSyncScheduled = true
+        Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: {_ in
+            self.doSynchronization({ _ in
+                self.isSyncScheduled = false
+                self.scheduleSyncTimer()
+            })
+        })
+    }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
@@ -80,6 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        self.scheduleSyncTimer()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
