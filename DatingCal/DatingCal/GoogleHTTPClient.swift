@@ -111,28 +111,24 @@ class GoogleHTTPClient : AbstractHTTPClient {
         }
     }
     
-    private let sequentialLogin = SequentialPromise<Void>()
-    
     /// This function will ensure the user is logged in.
     /// But rest assured, it will only call login() when necessary.
     func ensureLogin(presenter: UIViewController) -> Promise<Void> {
         loadAuthState()
-        return sequentialLogin.neverAppend {
-            guard let authState = self._authState else {
-                return self.login(presenter: presenter)
-            }
-            return Promise { fulfill, reject in
-                authState.performAction(freshTokens: { token, id, err in
-                    if let err = err {
-                        reject(err)
-                        return
-                    }
-                    fulfill()
-                })
-            }.recover {err -> Promise<Void> in
-                debugPrint("Failed to refresh access token. Reason: ", err)
-                return self.login(presenter: presenter)
-            }
+        guard let authState = self._authState else {
+            return self.login(presenter: presenter)
+        }
+        return Promise { fulfill, reject in
+            authState.performAction(freshTokens: { token, id, err in
+                if let err = err {
+                    reject(err)
+                    return
+                }
+                fulfill()
+            })
+        }.recover {err -> Promise<Void> in
+            debugPrint("Failed to refresh access token. Reason: ", err)
+            return self.login(presenter: presenter)
         }
     }
     

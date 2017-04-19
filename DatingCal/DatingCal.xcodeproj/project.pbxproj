@@ -139,6 +139,7 @@
 				4A28AEFA1E9C607F007665F0 /* Models.swift */,
 				4AC522051EA6A49C00448202 /* NetworkMonitor.swift */,
 				4AC522011EA5C89A00448202 /* RealmProvider.swift */,
+				4AC522071EA6BBBA00448202 /* SequentialPromise.swift */,
 			);
 			name = GoogleHelpers;
 			sourceTree = "<group>";
@@ -187,7 +188,6 @@
 				88F104211E9AED5D0047F308 /* MainCalendarTableEx.swift */,
 				88D65D2E1E9DF92200E80595 /* MainCalendarEmptyTableEx.swift */,
 				88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */,
-				4AC522051EA6A49C00448202 /* NetworkMonitor.swift */,
 				88D65D3E1EA7147500E80595 /* DatesGenerator.swift */,
 				88442BC71E9C350F00DC23A3 /* TriangleView.swift */,
 				88D65D3C1EA6B29800E80595 /* Configurations.swift */,
@@ -197,7 +197,6 @@
 				88F103F31E9AE1DA0047F308 /* Assets.xcassets */,
 				88F103F81E9AE1DA0047F308 /* Info.plist */,
 				88F1041A1E9AE7DC0047F308 /* DatingCal-Bridging-Header.h */,
-				4AC522071EA6BBBA00448202 /* SequentialPromise.swift */,
 			);
 			path = DatingCal;
 			sourceTree = "<group>";

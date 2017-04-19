@@ -88,24 +88,28 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         self.selectedDate = Date()
     }
     
+    private let sequentialLogin = SequentialPromise<Void>()
+    
     override func viewDidAppear(_ animated: Bool) {
         // These lines ensure that the user is logged in
         //   and that his or her calendar has been synchronized
-        appDelegate.googleClient.ensureLogin(presenter: self).then { x -> Promise<Void> in
-            return self.appDelegate.googleCalendar.loadAll()
-        }.then { x -> Promise<String> in
-            debugPrint("Sign In finished.")
-            return self.appDelegate.googleClient.userId
-        }.then { userId -> Void in
-            debugPrint("Google OAuth2 User ID = " + userId)
-            Configurations.sharedInstance.currentIdString = userId
-            if Configurations.sharedInstance.birthDate(id: userId) == nil
-                || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
-                self.performSegue(withIdentifier: "goSetup", sender: self)
+        _ = sequentialLogin.neverAppend {
+            self.appDelegate.googleClient.ensureLogin(presenter: self).then { x -> Promise<Void> in
+                return self.appDelegate.googleCalendar.loadAll()
+            }.then { x -> Promise<String> in
+                debugPrint("Sign In finished.")
+                return self.appDelegate.googleClient.userId
+            }.then { userId -> Void in
+                debugPrint("Google OAuth2 User ID = " + userId)
+                Configurations.sharedInstance.currentIdString = userId
+                if Configurations.sharedInstance.birthDate(id: userId) == nil
+                    || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
+                    self.performSegue(withIdentifier: "goSetup", sender: self)
+                }
+            }.catch { err -> Void in
+                debugPrint("ERROR during Sign In: ", err)
+                // TODO: provide a retry button
             }
-        }.catch { err -> Void in
-            debugPrint("ERROR during Sign In: ", err)
-            // TODO: provide a retry button
         }
     }
     
