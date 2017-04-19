@@ -46,11 +46,12 @@ class DatesGenerator {
             ]
         var datesToAdd: [KeyDate] = [
             KeyDate(date: relationshipDate + 1.month, "One month from determining the relationship"),
+            KeyDate(date: relationshipDate + 50.days, "50th day from determining the relationship"),
             KeyDate(date: relationshipDate + 100.days, "100th day from determining the relationship"),
             KeyDate(date: relationshipDate + 1000.days, "A thousand days from determining the relationship")
         ]
         datesToExpand.forEach { d in
-            datesToAdd.append(contentsOf: d.datesIn70Years())
+            datesToAdd.append(contentsOf: d.datesInManyYears(0)) // Currently, this will upset Google. Should use repeated events.
         }
         return datesToAdd.map { x in x.toEventModel() }
     }
@@ -63,14 +64,15 @@ extension KeyDate {
     func toEventModel() -> EventModel {
         let e = EventModel()
         e.startDate = self.date
+        e.endDate = self.date
         e.summary = self.title
         e.desc = self.desc
         return e
     }
     
-    func datesIn70Years() -> [KeyDate] {
+    func datesInManyYears(_ numYears: Int) -> [KeyDate] {
         var dates: [KeyDate] = []
-        for i in 0..<70 {
+        for i in 0..<numYears {
             var copy = self
             copy.date = copy.date + i.year
             dates.append(copy)
