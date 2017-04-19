@@ -53,9 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if(hasNext) {
                     self.doSynchronization(completionHandler)
                 }
+            }.then {
+                debugPrint("Sync finished")
             }
         }.always {
-            debugPrint("Sync finished")
             completionHandler(.newData)
         }
     }
@@ -79,17 +80,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sequential = SequentialPromise<Void>()
     }
     
-    var isSyncScheduled = false
     func scheduleSyncTimer() {
-        if isSyncScheduled {
-            return
-        }
-        isSyncScheduled = true
-        Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: {_ in
-            self.doSynchronization({ _ in
-                self.isSyncScheduled = false
-                self.scheduleSyncTimer()
-            })
+        Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: {_ in
+            self.doSynchronization({ _ in })
         })
     }
 
