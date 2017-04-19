@@ -50,3 +50,16 @@ class OIDPromise {
         return (session, promise)
     }
 }
+
+extension OIDAuthState {
+    func performAction() -> Promise<(String?, String?)> {
+        return Promise { fulfill, reject in
+            self.performAction(freshTokens: { token,id,err in
+                if let err = err {
+                    reject(err)
+                }
+                fulfill((token, id))
+            })
+        }
+    }
+}

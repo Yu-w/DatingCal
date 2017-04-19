@@ -62,6 +62,11 @@ class EventModel : Object, GoogleParsable {
     dynamic var endTime: Date? = nil
     dynamic var endTimeZone: String? = nil
     
+    /// This indicates whether the event should be
+    ///    sent to Google again, because it's not
+    ///    created in upstream yet.
+    dynamic var shouldCreate: Bool = false
+    
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -69,6 +74,7 @@ class EventModel : Object, GoogleParsable {
     /// A helper function that parses any substructure that represents a time/date
     ///   json: Please pass in the substructure that directly contains "dateTime" or "date"
     private func parseDates(_ json: JSON) -> (Date?, Date?, String?) {
+        let originalId = id
         var date : Date? = nil
         var time : Date? = nil
         var timeZone : String? = nil
@@ -80,6 +86,10 @@ class EventModel : Object, GoogleParsable {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             date = dateFormatter.date(from: startDate)
+        }
+        
+        if originalId != id {
+            shouldCreate = false
         }
         return (date, time, timeZone)
     }
@@ -123,5 +133,14 @@ class EventModel : Object, GoogleParsable {
         endDate = end.0
         endTime = end.1
         endTimeZone = end.2
+    }
+    
+    /// Create a copy of this object which is not thread-confined.
+    func createCopy() -> EventModel {
+        let ans = EventModel()
+        var params = unParse()
+        params["id"] = ""
+        ans.parse(JSON(params))
+        return ans
     }
 }

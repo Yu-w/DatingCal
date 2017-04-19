@@ -9,6 +9,7 @@
 import XCTest
 import SwiftyJSON
 import PromiseKit
+import RealmSwift
 @testable import DatingCal
 
 /// Test the "GoogleCalendar" class.
@@ -56,9 +57,10 @@ class CalendarTests: AsyncTests {
         /// First, respond to 'list calendars' API
         setClientForCreatingCalendar(false, createdId, [])
         
-        testPromise(googleCalendar.getOurCalendar().then { calendar -> Void in
+        testPromise(googleCalendar.getOurCalendar().then { calendarRef -> Void in
             /// Read from database to make sure calendar is cached
             let realm = self.realmProvider.realm()
+            let calendar = realm.resolve(calendarRef)!
             let result = realm.objects(CalendarModel.self).filter({
                 cal in cal.name == wantedName
             })
@@ -79,7 +81,9 @@ class CalendarTests: AsyncTests {
         let createdId = "123"
         setClientForCreatingCalendar(false, originalId, [])
         
-        testPromise(googleCalendar.getOurCalendar().then { calendar -> Promise<CalendarModel> in
+        testPromise(googleCalendar.getOurCalendar().then { calendarRef -> Promise<ThreadSafeReference<CalendarModel>> in
+            let realm = self.realmProvider.realm()
+            let calendar = realm.resolve(calendarRef)!
             XCTAssertEqual(calendar.id, originalId)
             
             /// Try calling getOurCalendar() again
