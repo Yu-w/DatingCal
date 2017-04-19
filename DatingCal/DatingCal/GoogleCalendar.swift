@@ -122,14 +122,14 @@ class GoogleCalendar {
     }
     
     /// Create an event in the 'DatingCal' calendar
-    func createEvent(_ event: EventModel) -> Promise<EventModel> {
+    func createEvent(_ event: EventModel) -> Promise<ThreadSafeReference<EventModel>> {
         return getOurCalendar().then { calendarRef -> Promise<JSON> in
             let realm = self.realmProvider.realm()
             let ourCalendar = realm.resolve(calendarRef)!
             let encodedId : String = ourCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
             let params = event.unParse()
             return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .post, parameters: params)
-        }.then { createdEvent -> EventModel in
+        }.then { createdEvent -> ThreadSafeReference<EventModel> in
             // Currently, don't handle etags.
             let event = EventModel()
             event.parse(createdEvent)
@@ -137,7 +137,7 @@ class GoogleCalendar {
             try! realm.write {
                 realm.add(event, update:true)
             }
-            return event
+            return ThreadSafeReference(to: event)
         }.catch { err in
             // Need to make a copy of the current event
             // to prevent threading issues

@@ -9,6 +9,7 @@
 import UIKit
 import SwiftDate
 import PromiseKit
+import RealmSwift
 
 class DatesSetupViewController: UIViewController {
 
@@ -35,7 +36,7 @@ class DatesSetupViewController: UIViewController {
         let birthDate = firstDatePicker.date - 1.days
         let relationshipDate = secondDatePicker.date - 1.days
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
-        self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<[EventModel]> in
+        self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<[ThreadSafeReference<EventModel>]> in
             when(fulfilled: events.map { event in
                 self.appDelegate.googleCalendar.createEvent(event)
             })
