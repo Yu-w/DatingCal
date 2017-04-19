@@ -75,7 +75,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         }
         self.view.addGestureRecognizer(self.scopeGesture)
         self.addButton.layer.cornerRadius = self.addButton.layer.bounds.width / 2
-        
+
         calendarViewSetup()
         tableViewSetup()
 
