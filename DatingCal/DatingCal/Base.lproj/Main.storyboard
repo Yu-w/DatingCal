@@ -175,6 +175,7 @@
                         <outlet property="calendar" destination="yta-q3-fIO" id="lHz-Q4-3aj"/>
                         <outlet property="calendarHeightConstraint" destination="Lwm-Te-dns" id="n02-qB-BbI"/>
                         <outlet property="tableView" destination="DZK-ny-AgO" id="x7b-kh-59T"/>
+                        <segue destination="lqx-4E-eBA" kind="presentation" identifier="goSetup" id="07I-nY-NA4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="27x-32-DTI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -436,12 +437,11 @@
                     <connections>
                         <outlet property="firstDatePicker" destination="iOA-RL-Jig" id="FVX-Le-qfu"/>
                         <outlet property="secondDatePicker" destination="f8X-jK-1Yh" id="1FF-Y4-eae"/>
-                        <segue destination="2ev-gh-tU2" kind="presentation" identifier="doneSetup" id="1x0-7d-cO4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fQl-9e-1Hj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="68" y="-226"/>
+            <point key="canvasLocation" x="842" y="533"/>
         </scene>
     </scenes>
     <resources>

@@ -27,7 +27,7 @@ class DatesSetupViewController: UIViewController {
     @IBAction func doneButtonDidClicked(_ sender: UIButton) {
         let birthDate = firstDatePicker.date
         let relationshipDate = secondDatePicker.date
-        self.performSegue(withIdentifier: "doneSetup", sender: self)
+        self.dismiss(animated: true, completion: nil)
     }
 
     /*
