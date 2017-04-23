@@ -45,13 +45,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true;
     }
     
+    var sequential = SequentialPromise<Void>()
+    
     func doSynchronization(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        _ = NetworkMonitor.shared.replayCommand().then { hasNext -> Void in
-            if(hasNext) {
-                self.doSynchronization(completionHandler)
+        _ = sequential.neverAppend {
+            NetworkMonitor.shared.replayCommand().then { (hasNext:Bool) -> Void in
+                if(hasNext) {
+                    self.doSynchronization(completionHandler)
+                }
+            }.then {
+                debugPrint("Sync finished")
             }
         }.always {
-            debugPrint("Sync finished")
             completionHandler(.newData)
         }
     }
@@ -72,19 +77,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        sequential = SequentialPromise<Void>()
     }
     
-    var isSyncScheduled = false
     func scheduleSyncTimer() {
-        if isSyncScheduled {
-            return
-        }
-        isSyncScheduled = true
-        Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: {_ in
-            self.doSynchronization({ _ in
-                self.isSyncScheduled = false
-                self.scheduleSyncTimer()
-            })
+        Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: {_ in
+            self.doSynchronization({ _ in })
         })
     }
 

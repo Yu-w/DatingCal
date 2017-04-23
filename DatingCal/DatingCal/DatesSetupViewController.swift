@@ -37,7 +37,7 @@ class DatesSetupViewController: UIViewController {
         let relationshipDate = secondDatePicker.date
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
         print(events)
-        self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<[ThreadSafeReference<EventModel>]> in
+        self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<Void> in
             when(fulfilled: events.map { event in
                 self.appDelegate.googleCalendar.createEvent(event)
             })
