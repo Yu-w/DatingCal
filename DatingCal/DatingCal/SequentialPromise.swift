@@ -31,9 +31,8 @@ class SequentialPromise<T> {
         if let prevPromise = currPromise {
             return prevPromise
         }
-        currPromise = task().then { x -> T in
+        currPromise = task().always { x in
             self.currPromise = nil
-            return x
         }
         return currPromise!
     }

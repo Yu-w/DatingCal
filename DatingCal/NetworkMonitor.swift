@@ -68,4 +68,21 @@ class NetworkMonitor {
         }
         return hasNext[0]
     }
+    
+    /// This variable is by replayAllCommands()
+    var sequentialReplayAll = SequentialPromise<Bool>()
+    
+    /// This wraps replayCommand to try to replay all commands.
+    /// It returns a promise
+    func replayAllCommands() -> Promise<Void> {
+        return sequentialReplayAll.neverAppend {
+            self.replayCommand()
+        }.then { (hasNext:Bool) -> Promise<Void> in
+            if(hasNext) {
+                return self.replayAllCommands()
+            } else {
+                return Promise<Void>(value: ())
+            }
+        }
+    }
 }
