@@ -39,7 +39,7 @@ class DatesSetupViewController: UIViewController {
         print(events)
         self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<Void> in
             when(fulfilled: events.map { event in
-                self.appDelegate.googleCalendar.createEvent(event)
+                self.appDelegate.googleCalendar.createSingleEvent(event)
             })
         }.then { _ in
             self.dismiss(animated: true, completion: nil)

@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func scheduleSyncTimer() {
         Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: {_ in
-            NetworkMonitor.shared.replayAllCommands().then {
+            _ = NetworkMonitor.shared.replayAllCommands().then {
                 debugPrint("Timer Sync succeeded")
             }
         })

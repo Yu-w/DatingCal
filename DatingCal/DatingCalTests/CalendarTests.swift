@@ -119,12 +119,12 @@ class CalendarTests: AsyncTests {
         testPromise(googleCalendar.getOurCalendar())
     }
     
-    /// ------------------- TEST: createEvent
+    /// ------------------- TEST: createSingleEvent
     
     /// A helper function to fake google APIs.
     /// Make sure to handle getOurCalendar() first, before using this handler.
     /// :param createdId: the id of any created event
-    private func setClientForCreatingEvent(_ createdId: String) {
+    private func setClientForCreatingSingleEvent(_ createdId: String) {
         self.client.setHandler { url, method, params in
             /// Then, respond to 'create calendar' API
             XCTAssertNotNil(params)
@@ -134,13 +134,13 @@ class CalendarTests: AsyncTests {
         }
     }
     
-    func testCreateEventResultExists() {
+    func testCreateSingleEventResultExists() {
         let calendarId = "123"
         let eventId = "234"
         
         /// First, respond to 'list calendars' API
         setClientForCreatingCalendar(false, calendarId, [], {
-            self.setClientForCreatingEvent(eventId)
+            self.setClientForCreatingSingleEvent(eventId)
         })
         
         let wantedEvent = EventModel()
@@ -149,7 +149,7 @@ class CalendarTests: AsyncTests {
         wantedEvent.startTime = Date()
         wantedEvent.endTime = Date() + TimeInterval(Date().day)
         
-        testPromise(googleCalendar.createEvent(wantedEvent).then { _ -> Void in
+        testPromise(googleCalendar.createSingleEvent(wantedEvent).then { _ -> Void in
             /// Read from database to make sure calendar is cached
             let realm = self.realmProvider.realm()
             let result = realm.objects(EventModel.self).filter({

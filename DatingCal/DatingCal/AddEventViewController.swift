@@ -71,7 +71,7 @@ class AddEventViewController: UIViewController {
             event.desc = (descTextField.text) ?? ""
             event.startTime = startTime
             event.endTime = endTime
-            appDelegate.googleCalendar.createEvent(event).then { _ in
+            appDelegate.googleCalendar.createSingleEvent(event).then { _ in
                 self.dismiss(animated: true, completion: nil)
             }.catch { err in
                 self.showAlert("Error", "Cannot create event. Reason: " + err.localizedDescription)

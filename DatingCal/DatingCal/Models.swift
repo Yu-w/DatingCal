@@ -13,8 +13,52 @@ import SwiftDate
 import Alamofire
 
 protocol GoogleParsable {
+    /// Parse and update this model object
+    ///    with a json from Google.
+    /// NOTE: If the id in json is NOT the id of
+    ///    the current object, and if your subclass
+    ///    includes internal states not fetched from Google,
+    ///    then this should create a new model with
+    ///    with a new set of internal states, and
+    ///    should not interfere with the old model.
     func parse(_ json: JSON)
+    
+    /// Turn this model object into a 'Parameters'
+    ///    dictionary whose key names comply with Google
+    ///    API's standard.
+    /// NOTE: If your subclass includes internal
+    ///    states which were not fetched from Google,
+    ///    then the result should not include internal states.
     func unParse() -> Parameters
+}
+
+class UserModel : Object, GoogleParsable {
+    dynamic var id: String = ""
+    dynamic var name: String = ""
+    
+    /// Path to a file in local storage.
+    /// This file contains serialized authorization 
+    ///     tokens for this user.
+    var authStorage: String {
+        get {
+            return "google-auth-" + id + ".dat"
+        }
+    }
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+    
+    func unParse() -> Parameters {
+        var ans : Parameters = [:]
+        ans["displayName"] = name
+        return ans
+    }
+    
+    func parse(_ json: JSON) {
+        id = json["id"].string!
+        name = json["displayName"].string!
+    }
 }
 
 class CalendarModel : Object, GoogleParsable {
