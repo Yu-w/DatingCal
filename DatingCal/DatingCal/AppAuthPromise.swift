@@ -13,7 +13,8 @@ import PromiseKit
 /// These are information about Google API
 fileprivate let kScopes : [String]? = [
     "https://www.googleapis.com/auth/calendar",         // Manage calendars
-    "https://www.googleapis.com/auth/plus.me"           // Get unique user ID
+    "https://www.googleapis.com/auth/plus.me",           // Get unique user ID
+    "https://www.googleapis.com/auth/plus.login"        // Get user name
 ]
 fileprivate let kRedirectURI : URL = URL(string: "cs242.datingcal:/oauth2redirect/google")!
 fileprivate let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"

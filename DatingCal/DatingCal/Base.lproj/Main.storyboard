@@ -475,6 +475,9 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Login to more accounts"/>
+                                <connections>
+                                    <action selector="willLoginNewAccount:" destination="xbM-dg-vqd" eventType="touchUpInside" id="WQP-48-s2v"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Yy-qH-dCW">
                                 <rect key="frame" x="0.0" y="617" width="375" height="30"/>
@@ -490,7 +493,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2HL-Gr-skk" customClass="SettingsUserCellView" customModule="DatingCal" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsUserCellView" id="2HL-Gr-skk" customClass="SettingsUserCellView" customModule="DatingCal" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2HL-Gr-skk" id="Fwo-xC-P3v">
@@ -519,10 +522,17 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="xbM-dg-vqd" id="fwX-35-82b"/>
+                                    <outlet property="delegate" destination="xbM-dg-vqd" id="iUz-s1-gUC"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="d5I-TJ-7YB" id="sW7-xX-G1q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yJa-Ji-L5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

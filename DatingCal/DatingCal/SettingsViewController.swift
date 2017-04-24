@@ -12,6 +12,18 @@ import DateTimePicker
 import TextFieldEffects
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    @IBOutlet var tableView: UITableView!
+    
+    @IBAction func willLoginNewAccount(_ sender: Any) {
+        _ = appDelegate.googleClient.acceptNewUser(self).then { _ -> Void in
+            self.dismiss(animated: true, completion: nil)
+        }.catch { err -> Void in
+            self.showAlert("Error", "Login Failed")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +32,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         userModels = BusinessRealmProvider().realm().objects(UserModel.self)
+        tableView.dataSource = self
+        tableView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
