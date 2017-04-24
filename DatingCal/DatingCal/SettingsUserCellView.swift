@@ -15,7 +15,11 @@ class SettingsUserCellView: UITableViewCell {
     
     /// update the cell's content with a model object
     func configureData(user: UserModel) {
-        userNameLabel.text = user.name
+        var name = user.name
+        if user.isPrimary {
+            name = name + " (current user)"
+        }
+        userNameLabel.text = name
     }
     
     @IBAction func willLogout(_ sender: Any) {
