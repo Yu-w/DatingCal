@@ -32,13 +32,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
             self.calendar.select(self.selectedDate)
             let realm = try! Realm()
             self.eventsToPresent = realm.objects(EventModel.self).filter { (event) -> Bool in
-                if let date = event.startTime {
-                    return self.calendar.gregorian.isDate(date, inSameDayAs: self.selectedDate)
-                } else if let date = event.startDate {
-                    return self.calendar.gregorian.isDate(date, inSameDayAs: self.selectedDate)
-                } else {
-                    return false
-                }
+                return event.shouldShowAtDate(self.selectedDate, self.calendar.gregorian)
             }
         }
     }

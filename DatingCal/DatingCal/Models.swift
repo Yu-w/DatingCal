@@ -149,39 +149,6 @@ class EventModel : Object, GoogleParsable {
         return ans
     }
     
-    /// getter for a conceptual variable "recurrence: [String]?"
-    /// "recurrence" is a list of rules about how the event should repeat
-    ///     I can't really declare this as a var {get {}}
-    ///     , because Realm will be upset
-    func getRecurrence() -> [String]? {
-        guard let recurrString = _recurrence else {
-            return nil
-        }
-        guard let recurrList = JSON(parseJSON: recurrString).array else {
-            return nil
-        }
-        var ans : [String] = []
-        for rule in recurrList {
-            guard let ruleStr = rule.string else {
-                return nil
-            }
-            ans.append(ruleStr)
-        }
-        return ans
-    }
-    
-    /// setter for a conceptual variable "recurrence: [String]?"
-    /// "recurrence" is a list of rules about how the event should repeat
-    ///     I can't really declare this as a var {set {}}
-    ///     , because Realm will be upset
-    func setRecurrence(newValue: [String]?) {
-        guard let newValue = newValue else {
-            _recurrence = nil
-            return
-        }
-        _recurrence = JSON(newValue).rawString()
-    }
-    
     func unParse() -> Parameters {
         var ans : Parameters = [:]
         let startDict : Parameters = unParseDates(startDate, startTime, startTimeZone)
@@ -222,5 +189,67 @@ class EventModel : Object, GoogleParsable {
         params["id"] = ""
         ans.parse(JSON(params))
         return ans
+    }
+    
+    /// getter for a conceptual variable "recurrence: [String]?"
+    /// "recurrence" is a list of rules about how the event should repeat
+    ///     I can't really declare this as a var {get {}}
+    ///     , because Realm will be upset
+    func getRecurrence() -> [String]? {
+        guard let recurrString = _recurrence else {
+            return nil
+        }
+        guard let recurrList = JSON(parseJSON: recurrString).array else {
+            return nil
+        }
+        var ans : [String] = []
+        for rule in recurrList {
+            guard let ruleStr = rule.string else {
+                return nil
+            }
+            ans.append(ruleStr)
+        }
+        return ans
+    }
+    
+    /// setter for a conceptual variable "recurrence: [String]?"
+    /// "recurrence" is a list of rules about how the event should repeat
+    ///     I can't really declare this as a var {set {}}
+    ///     , because Realm will be upset
+    func setRecurrence(newValue: [String]?) {
+        guard let newValue = newValue else {
+            _recurrence = nil
+            return
+        }
+        _recurrence = JSON(newValue).rawString()
+    }
+    
+    func isYearly() -> Bool {
+        guard let recurrence = getRecurrence() else {
+            return false
+        }
+        let regex = try! NSRegularExpression(pattern: "freq[ \\t]*=[ \\t]*yearly", options: [.caseInsensitive])
+        for rule in recurrence {
+            let matches = regex.matches(in: rule, options: [], range: NSRange(location: 0, length: rule.characters.count))
+            if matches.count > 0 {
+                return true
+            }
+        }
+        return false
+    }
+    
+    /// A functiont that helps decide whether to show an event on a given date.
+    func shouldShowAtDate(_ dateToShow: Date, _ calendar: Calendar) -> Bool {
+        /// These code were copied from MainCalendarViewController.swift during a refactoring.
+        ///   It was originally created by Yu Wang.
+        let eitherDate = startTime != nil ? startTime : startDate
+        guard var date = eitherDate else {
+            return false
+        }
+        let deltaYear = dateToShow.year - date.year
+        if isYearly() && deltaYear >= 0 {
+            date = date + deltaYear.year
+        }
+        return calendar.isDate(date, inSameDayAs: dateToShow)
     }
 }
