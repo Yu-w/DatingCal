@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2ev-gh-tU2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2ev-gh-tU2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,13 +24,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_1" translatesAutoresizingMaskIntoConstraints="NO" id="3n8-MO-zJO">
-                                <rect key="frame" x="0.0" y="20" width="375" height="440"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="400"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yta-q3-fIO" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="20" width="375" height="440"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="400"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="440" id="Lwm-Te-dns"/>
+                                    <constraint firstAttribute="height" constant="400" id="Lwm-Te-dns"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="fakedSelectedDay">
@@ -62,14 +62,14 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5QJ-Xm-f5o" customClass="TriangleView" customModule="DatingCal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="438" width="375" height="54"/>
+                                <rect key="frame" x="0.0" y="442" width="375" height="54"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="dYE-N4-ppH"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7OD-JS-0oX">
-                                <rect key="frame" x="281" y="422" width="54" height="54"/>
+                                <rect key="frame" x="281" y="426" width="54" height="54"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="7OD-JS-0oX" secondAttribute="height" id="8jY-wK-IP0"/>
@@ -83,7 +83,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DZK-ny-AgO">
-                                <rect key="frame" x="0.0" y="492" width="375" height="175"/>
+                                <rect key="frame" x="0.0" y="496" width="375" height="171"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -148,14 +148,6 @@
                                     <outlet property="delegate" destination="QHj-xg-hze" id="tu3-E3-WDh"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uge-bA-GTg">
-                                <rect key="frame" x="330" y="28" width="45" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="settings"/>
-                                <connections>
-                                    <segue destination="xbM-dg-vqd" kind="presentation" id="TYp-8J-cpD"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -177,7 +169,18 @@
                             <constraint firstItem="7OD-JS-0oX" firstAttribute="trailing" secondItem="5QJ-Xm-f5o" secondAttribute="trailing" constant="-40" id="zcV-bi-3Yh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Dating Cal" id="Uo6-6d-WpM"/>
+                    <navigationItem key="navigationItem" title="Dating Cal" id="Uo6-6d-WpM">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Izy-iA-1Bc">
+                            <connections>
+                                <segue destination="xbM-dg-vqd" kind="presentation" id="tn5-gu-T2U"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="XNt-MK-IBX">
+                            <connections>
+                                <segue destination="310-Hj-0N8" kind="presentation" id="iGT-c9-Mqo"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="7OD-JS-0oX" id="Feu-oX-JmB"/>
                         <outlet property="calendar" destination="yta-q3-fIO" id="lHz-Q4-3aj"/>
@@ -343,7 +346,7 @@
         <!--Navigation Controller-->
         <scene sceneID="XiM-Gr-YT8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="2ev-gh-tU2" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2ev-gh-tU2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oc4-aZ-TQD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -497,7 +500,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2HL-Gr-skk" id="Fwo-xC-P3v">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJe-wU-NYW">
@@ -538,11 +541,84 @@
             </objects>
             <point key="canvasLocation" x="1968.8" y="545.57721139430294"/>
         </scene>
+        <!--Special Dates View Controller-->
+        <scene sceneID="BfR-y0-ddh">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="310-Hj-0N8" customClass="SpecialDatesViewController" customModule="DatingCal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3sa-hd-wAq"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nc2-t1-3Qv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QK4-0A-TRg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="CnH-MG-dne">
+                                <rect key="frame" x="0.0" y="-24" width="375" height="691"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZ0-XP-ahx">
+                                <rect key="frame" x="172" y="626.5" width="31" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.85882352939999995" green="0.86666666670000003" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="CnH-MG-dne" firstAttribute="top" secondItem="3sa-hd-wAq" secondAttribute="bottom" constant="-44" id="Gfr-Jk-oys"/>
+                            <constraint firstItem="Nc2-t1-3Qv" firstAttribute="top" secondItem="CnH-MG-dne" secondAttribute="bottom" id="Pz8-yU-lE0"/>
+                            <constraint firstItem="Nc2-t1-3Qv" firstAttribute="top" secondItem="iZ0-XP-ahx" secondAttribute="bottom" constant="20" id="TpU-ed-usz"/>
+                            <constraint firstItem="iZ0-XP-ahx" firstAttribute="centerX" secondItem="QK4-0A-TRg" secondAttribute="centerX" id="eCy-74-B9U"/>
+                            <constraint firstItem="CnH-MG-dne" firstAttribute="leading" secondItem="QK4-0A-TRg" secondAttribute="leading" id="gbb-Gf-2Hy"/>
+                            <constraint firstAttribute="trailing" secondItem="CnH-MG-dne" secondAttribute="trailing" id="oto-Sw-0FD"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bRF-mc-fD8">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="searchIcon" id="UjW-iq-cef"/>
+                        <view key="titleView" contentMode="scaleToFill" id="lbs-SC-y6W">
+                            <rect key="frame" x="67.5" y="5.5" width="240" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Title" translatesAutoresizingMaskIntoConstraints="NO" id="myC-1a-b0X">
+                                    <rect key="frame" x="94.5" y="8.5" width="51" height="16"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="51" id="mPL-gn-v2t"/>
+                                        <constraint firstAttribute="height" constant="16" id="pQE-yX-Pw1"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="myC-1a-b0X" firstAttribute="centerY" secondItem="lbs-SC-y6W" secondAttribute="centerY" id="2OV-ys-J4N"/>
+                                <constraint firstItem="myC-1a-b0X" firstAttribute="centerX" secondItem="lbs-SC-y6W" secondAttribute="centerX" id="fN8-nA-g7t"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="fM8-RB-7Qv" customClass="AnimatingBarButton" customModule="DatingCal" customModuleProvider="target">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="normalImageName" value="locationButton"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="CloseButton"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                    <real key="value" value="0.29999999999999999"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="pageLabel" destination="iZ0-XP-ahx" id="1lR-lP-cAe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NT5-cd-a2K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1641" y="-914"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="BackgroundImage" width="375" height="667"/>
+        <image name="Title" width="16" height="16"/>
         <image name="add" width="64" height="64"/>
         <image name="bg_1" width="520" height="763"/>
         <image name="close" width="16" height="16"/>
-        <image name="settings" width="150" height="150"/>
+        <image name="searchIcon" width="16" height="16"/>
     </resources>
 </document>

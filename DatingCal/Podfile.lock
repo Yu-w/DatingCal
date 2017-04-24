@@ -6,6 +6,7 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - DateTimePicker (1.1.1)
   - DZNEmptyDataSet (1.8.1)
+  - expanding-collection (1.0.4)
   - FSCalendar (2.7.4)
   - GoogleAPIClientForREST/Calendar (1.2.1):
     - GoogleAPIClientForREST/Core
@@ -17,16 +18,16 @@ PODS:
   - GTMSessionFetcher/Core (1.1.9)
   - GTMSessionFetcher/Full (1.1.9):
     - GTMSessionFetcher/Core (= 1.1.9)
-  - PromiseKit (4.1.7):
-    - PromiseKit/Foundation (= 4.1.7)
-    - PromiseKit/QuartzCore (= 4.1.7)
-    - PromiseKit/UIKit (= 4.1.7)
-  - PromiseKit/CorePromise (4.1.7)
-  - PromiseKit/Foundation (4.1.7):
+  - PromiseKit (4.2.0):
+    - PromiseKit/Foundation (= 4.2.0)
+    - PromiseKit/QuartzCore (= 4.2.0)
+    - PromiseKit/UIKit (= 4.2.0)
+  - PromiseKit/CorePromise (4.2.0)
+  - PromiseKit/Foundation (4.2.0):
     - PromiseKit/CorePromise
-  - PromiseKit/QuartzCore (4.1.7):
+  - PromiseKit/QuartzCore (4.2.0):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (4.1.7):
+  - PromiseKit/UIKit (4.2.0):
     - PromiseKit/CorePromise
   - ReachabilitySwift (3)
   - Realm (2.5.1):
@@ -49,6 +50,7 @@ DEPENDENCIES:
   - ChameleonFramework
   - DateTimePicker
   - DZNEmptyDataSet
+  - expanding-collection (~> 1.0.3)
   - FSCalendar
   - GoogleAPIClientForREST/Calendar
   - PromiseKit (~> 4.0)
@@ -67,10 +69,11 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DateTimePicker: 1905792f424b712258c1059165f86f9e82bdbf4a
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  expanding-collection: be78b5822d7382d3da02b52d52273f4661567a64
   FSCalendar: e95995a746acae531c4a7dd636b8393233125ec5
   GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
-  PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
+  PromiseKit: 08dfb783c161ddcd95b7912421f14c5113fd8318
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   Realm: 32f86104d37c8521f864d4274050b38ba6190733
   RealmSwift: f719e7511c902b8908593e8f143f59e47931bdb6
@@ -81,6 +84,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: df38cc6e6701266ebcc455ff745e3d64ed53c1db
+PODFILE CHECKSUM: 30b9b370806bdf26d11e03876daf61b1f9846cca
 
 COCOAPODS: 1.2.0
