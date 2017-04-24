@@ -36,6 +36,9 @@ class UserModel : Object, GoogleParsable {
     dynamic var id: String = ""
     dynamic var name: String = ""
     
+    /// This is an internal state of our app
+    dynamic var isPrimary: Bool = false
+    
     /// Path to a file in local storage.
     /// This file contains serialized authorization 
     ///     tokens for this user.
@@ -56,8 +59,12 @@ class UserModel : Object, GoogleParsable {
     }
     
     func parse(_ json: JSON) {
+        let originalId = id
         id = json["id"].string!
         name = json["displayName"].string!
+        if originalId != id {
+            isPrimary = false
+        }
     }
 }
 

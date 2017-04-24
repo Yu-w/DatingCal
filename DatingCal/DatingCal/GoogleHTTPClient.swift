@@ -29,56 +29,113 @@ protocol AbstractHTTPClient {
 }
 
 class GoogleHTTPClient : AbstractHTTPClient {
-    private let kScopes : [String]? = [
-        "https://www.googleapis.com/auth/calendar",         // Manage calendars
-        "https://www.googleapis.com/auth/plus.me"           // Get unique user ID
-    ]
-    private let kRedirectURI : URL = URL(string: "cs242.datingcal:/oauth2redirect/google")!
-    private let kClientId = "674497672844-d33bqapee8lm5l90l021sml0nsbvu3qp.apps.googleusercontent.com"
-    private let kIssuer = URL(string: "https://accounts.google.com")!
     
-    private var googleAuthStateStorage : String {
-        get {
-            let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
-            return library + "/google-auth-state.dat"
-        }
-    }
+    private var _userId : String?
+    private let realmProvider = BusinessRealmProvider()
     
     /// This object stores all the tokens and login states
     private var _authState : OIDAuthState?
     
-    /// Save login state to hard drive
-    private func saveAuthState() {
-        if let state = _authState {
-            NSKeyedArchiver.archiveRootObject(state, toFile: googleAuthStateStorage)
+    /// We have to fetch a new UserModel every time
+    ///    because otherwise, realm will require threadsafe references
+    private var user : UserModel? {
+        get {
+            guard let id = _userId else {
+                return nil
+            }
+            let realm = realmProvider.realm()
+            return realm.objects(UserModel.self).filter({u in u.id == id}).first
+        }
+        
+        set {
+            guard let user = newValue else {
+                _userId = nil
+                return
+            }
+            _userId = user.id
         }
     }
     
-    /// Load login state from hard drive
-    private func loadAuthState() {
-        guard let data = NSData(contentsOfFile: googleAuthStateStorage) else {
+    /// Getter for path to tokens stored in iPhone hard drive
+    private var googleAuthStateStorage : String? {
+        get {
+            guard let user = self.user else {
+                return nil
+            }
+            let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
+            return library + user.authStorage
+        }
+    }
+    
+    init() {
+        let realm = realmProvider.realm()
+        let primary = realm.objects(UserModel.self).filter({u in u.isPrimary})
+        guard let primaryFirst = primary.first else {
+            user = nil
             return
         }
-        let unarchiver = NSKeyedUnarchiver(forReadingWith: data as Data)
-        unarchiver.requiresSecureCoding = false
-        self._authState = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as? OIDAuthState
+        self.user = primaryFirst
     }
     
     /// A helper function that actually does the login.
     private func login(presenter: UIViewController) -> Promise<Void> {
-        return OIDAuthorizationService.getConfigurations(issuer: kIssuer).then { config -> Promise<OIDAuthState> in
-            let request = OIDAuthorizationRequest(configuration: config
-                , clientId: self.kClientId, clientSecret: nil
-                , scopes: self.kScopes, redirectURL: self.kRedirectURI
-                , responseType: OIDResponseTypeCode, additionalParameters: nil)
-            
+        return OIDAuthorizationService.getConfigurations().then { config -> Promise<OIDAuthState> in
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let (flow, promise) = OIDAuthState.authState(request: request, presenter: presenter)
+            let (flow, promise) = OIDAuthState.startLogin(config, presenter)
             appDelegate.googleAuthFlow = flow
             return promise
-        }.then { authState -> Void in
+        }.then { authState -> Promise<Void> in
             self._authState = authState
-            self.saveAuthState()
+            return self.refreshUser()
+        }.then { _ -> Void in
+            self._authState!.save(self.googleAuthStateStorage!)
+        }
+    }
+    
+    /// A helper function to refresh/synchronize self.user
+    private func refreshUser() -> Promise<Void> {
+        return self.token.then { token -> Promise<Void> in
+            self.request("https://www.googleapis.com/plus/v1/people/me",
+                         method: .get,
+                         parameters: nil).then { json -> Void in
+                let ans = UserModel()
+                ans.parse(json)
+                let realm = self.realmProvider.realm()
+                try! realm.write {
+                    realm.add(ans, update: true)
+                }
+                self.user = ans
+            }
+        }
+    }
+    
+    /// This function will ensure the user is logged in.
+    /// But rest assured, it will only call login() when necessary.
+    func ensureLogin(presenter: UIViewController) -> Promise<Void> {
+        guard let storagePath = googleAuthStateStorage else {
+            return self.login(presenter: presenter)
+        }
+        self._authState = OIDAuthState.load(storagePath)
+        guard let authState = self._authState else {
+            return self.login(presenter: presenter)
+        }
+        return authState.performRefresh().asVoid().recover {err -> Promise<Void> in
+            debugPrint("Failed to refresh access token. Reason: ", err)
+            return self.login(presenter: presenter)
+        }
+    }
+    
+    func logout() {
+        self._authState = nil
+        if let storagePath = googleAuthStateStorage {
+            try? FileManager.default.removeItem(atPath: storagePath)
+        }
+        guard let user = self.user else {
+            return
+        }
+        let realm = realmProvider.realm()
+        try? realm.write {
+            realm.delete(user)
         }
     }
     
@@ -89,12 +146,10 @@ class GoogleHTTPClient : AbstractHTTPClient {
     }
     
     var token : Promise<String> {
-        return firstly { _ -> Promise<(String?, String?)> in
-            guard let authState = self._authState else {
-                throw GoogleError.NotLoggedIn
-            }
-            return authState.performAction()
-        }.then { (token ,id) -> String in
+        guard let authState = self._authState else {
+            return Promise<String>(error: GoogleError.NotLoggedIn)
+        }
+        return authState.performRefresh() .then { (token ,id) -> String in
             return token!
         }
     }
@@ -111,32 +166,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
         }
     }
     
-    /// This function will ensure the user is logged in.
-    /// But rest assured, it will only call login() when necessary.
-    func ensureLogin(presenter: UIViewController) -> Promise<Void> {
-        loadAuthState()
-        guard let authState = self._authState else {
-            return self.login(presenter: presenter)
-        }
-        return Promise { fulfill, reject in
-            authState.performAction(freshTokens: { token, id, err in
-                if let err = err {
-                    reject(err)
-                    return
-                }
-                fulfill()
-            })
-        }.recover {err -> Promise<Void> in
-            debugPrint("Failed to refresh access token. Reason: ", err)
-            return self.login(presenter: presenter)
-        }
-    }
-    
-    func logout() {
-        self._authState = nil
-        try? FileManager.default.removeItem(atPath: googleAuthStateStorage)
-    }
-    
+    /// Please refer to documentation of protocol: "AbstractHTTPClient"
     func request(_ url: URLConvertible,
                  method: HTTPMethod,
                  parameters: Parameters?) -> Promise<JSON> {
