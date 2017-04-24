@@ -105,6 +105,7 @@ class EventModel : Object, GoogleParsable {
     dynamic var endDate: Date? = nil
     dynamic var endTime: Date? = nil
     dynamic var endTimeZone: String? = nil
+    private dynamic var _recurrence: String? = nil
     
     /// This indicates whether the event should be
     ///    sent to Google again, because it's not
@@ -118,7 +119,6 @@ class EventModel : Object, GoogleParsable {
     /// A helper function that parses any substructure that represents a time/date
     ///   json: Please pass in the substructure that directly contains "dateTime" or "date"
     private func parseDates(_ json: JSON) -> (Date?, Date?, String?) {
-        let originalId = id
         var date : Date? = nil
         var time : Date? = nil
         var timeZone : String? = nil
@@ -130,10 +130,6 @@ class EventModel : Object, GoogleParsable {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             date = dateFormatter.date(from: startDate)
-        }
-        
-        if originalId != id {
-            shouldCreate = false
         }
         return (date, time, timeZone)
     }
@@ -153,6 +149,39 @@ class EventModel : Object, GoogleParsable {
         return ans
     }
     
+    /// getter for a conceptual variable "recurrence: [String]?"
+    /// "recurrence" is a list of rules about how the event should repeat
+    ///     I can't really declare this as a var {get {}}
+    ///     , because Realm will be upset
+    func getRecurrence() -> [String]? {
+        guard let recurrString = _recurrence else {
+            return nil
+        }
+        guard let recurrList = JSON(parseJSON: recurrString).array else {
+            return nil
+        }
+        var ans : [String] = []
+        for rule in recurrList {
+            guard let ruleStr = rule.string else {
+                return nil
+            }
+            ans.append(ruleStr)
+        }
+        return ans
+    }
+    
+    /// setter for a conceptual variable "recurrence: [String]?"
+    /// "recurrence" is a list of rules about how the event should repeat
+    ///     I can't really declare this as a var {set {}}
+    ///     , because Realm will be upset
+    func setRecurrence(newValue: [String]?) {
+        guard let newValue = newValue else {
+            _recurrence = nil
+            return
+        }
+        _recurrence = JSON(newValue).rawString()
+    }
+    
     func unParse() -> Parameters {
         var ans : Parameters = [:]
         let startDict : Parameters = unParseDates(startDate, startTime, startTimeZone)
@@ -161,11 +190,13 @@ class EventModel : Object, GoogleParsable {
         ans["description"] = desc
         ans["start"] = startDict
         ans["end"] = endDict
+        ans["recurrence"] = getRecurrence()
         return ans
     }
     
     /// Create a EventModel from a JSON returned from Google
     func parse(_ json: JSON) {
+        let originalId = id
         let start = parseDates(json["start"])
         let end = parseDates(json["end"])
         id = json["id"].string!
@@ -177,6 +208,11 @@ class EventModel : Object, GoogleParsable {
         endDate = end.0
         endTime = end.1
         endTimeZone = end.2
+        _recurrence = json["_recurrence"].rawString()
+        
+        if originalId != id {
+            shouldCreate = false
+        }
     }
     
     /// Create a copy of this object which is not thread-confined.

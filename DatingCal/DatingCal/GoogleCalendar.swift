@@ -121,8 +121,8 @@ class GoogleCalendar {
         }
     }
     
-    /// Create a non-recurring event in the 'DatingCal' calendar
-    func createSingleEvent(_ event: EventModel) -> Promise<Void> {
+    /// Create any kind of event in the 'DatingCal' calendar
+    func createEvent(_ event: EventModel) -> Promise<Void> {
         return getOurCalendar().then { calendarRef -> Promise<JSON> in
             /// Send requests to Google
             let realm = self.realmProvider.realm()
@@ -152,46 +152,7 @@ class GoogleCalendar {
                 realm.add(event, update:true)
             }
             let hasNoInternet = NetworkMonitor.shared.handleNoInternet {
-                self.createSingleEvent(eventCopy).asVoid()
-            }
-            if !hasNoInternet {
-                throw err
-            }
-        }
-    }
-    
-    /// Create a event that repeats onece a year, in the 'DatingCal' calendar
-    func createYearlyEvent(_ event: EventModel) -> Promise<Void> {
-        return getOurCalendar().then { calendarRef -> Promise<JSON> in
-            /// Send requests to Google
-            let realm = self.realmProvider.realm()
-            let ourCalendar = realm.resolve(calendarRef)!
-            let encodedId : String = ourCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-            let params = event.unParse()
-            return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .post, parameters: params)
-        }.then { createdEvent -> Void in
-            /// If successful, we store the results in DB.
-            let event = EventModel()
-            event.parse(createdEvent)
-            let realm = self.realmProvider.realm()
-            try! realm.write {
-                realm.add(event, update:true)
-            }
-        }.recover { err -> Void in
-            /// Handle errors, especially if it's due to
-            ///     Intenet connection issues
-            
-            // Need to make a copy of the current event
-            // to prevent threading issues
-            let eventCopy = event.createCopy()
-            
-            let realm = self.realmProvider.realm()
-            try! realm.write {
-                event.shouldCreate = true
-                realm.add(event, update:true)
-            }
-            let hasNoInternet = NetworkMonitor.shared.handleNoInternet {
-                self.createSingleEvent(eventCopy).asVoid()
+                self.createEvent(eventCopy).asVoid()
             }
             if !hasNoInternet {
                 throw err

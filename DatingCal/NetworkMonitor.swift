@@ -49,7 +49,7 @@ class NetworkMonitor {
             return replayer().then { _ -> Bool in
                 return !self.commandsToReplay.isEmpty
             }.catch { err in
-                self.handleNoInternet(replayer)
+                _ = self.handleNoInternet(replayer)
             }
         })
     }
