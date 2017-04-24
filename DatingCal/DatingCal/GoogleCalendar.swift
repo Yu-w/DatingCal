@@ -32,11 +32,26 @@ class GoogleCalendar {
         }
     }
     
-    private func listEventLists(_ calendarId: String) -> Promise<JSON> {
+    /// Fetch list of events from the calendar with specified id.
+    /// :param pageToken: If nil, fetch all pages. 
+    ///     Otherwise, fetch everything IN&AFTER this page.
+    private func listEventLists(_ calendarId: String, _ pageToken: String?=nil) -> Promise<[JSON]> {
         let encodedId : String = calendarId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        return client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .get, parameters: nil).then { list -> JSON in
+        let url = "https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events"
+        var params : Parameters = [:]
+        if let pageToken = pageToken {
+            params["pageToken"] = pageToken
+        }
+        return client.request(url, method: .get, parameters: params).then { list -> Promise<[JSON]> in
             // Currently, don't handle etags.
-            return list["items"]
+            var currAns = list["items"].array ?? []
+            guard let nextPage = list["nextPageToken"].string else {
+                return Promise(value: currAns)
+            }
+            return self.listEventLists(calendarId, nextPage).then { moreEvents -> [JSON] in
+                currAns.append(contentsOf: moreEvents)
+                return currAns
+            }
         }
     }
     
@@ -71,7 +86,7 @@ class GoogleCalendar {
         return when(fulfilled: realm.objects(CalendarModel.self).map { cal in
             return listEventLists(cal.id).then { list -> Void in
                 let realm = self.realmProvider.realm()
-                for event in (list.array ?? []) {
+                for event in list {
                     let parsed = EventModel()
                     parsed.parse(event)
                     try! realm.write {

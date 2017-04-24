@@ -206,7 +206,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
                  parameters: Parameters?) -> Promise<JSON> {
         return self.token.then { _token in
             let headers : HTTPHeaders = ["Authorization":"Bearer " + _token]
-            let encoding : ParameterEncoding = parameters==nil ? URLEncoding.default : JSONEncoding.default
+            let encoding : ParameterEncoding = (parameters==nil||method==(.get)) ? URLEncoding.default : JSONEncoding.default
             let requested = Alamofire.request(url, method: method,
                                               parameters: parameters,
                                               encoding: encoding,
