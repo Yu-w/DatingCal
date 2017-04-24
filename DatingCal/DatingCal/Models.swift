@@ -208,7 +208,7 @@ class EventModel : Object, GoogleParsable {
         endDate = end.0
         endTime = end.1
         endTimeZone = end.2
-        _recurrence = json["_recurrence"].rawString()
+        _recurrence = json["recurrence"].rawString()
         
         if originalId != id {
             shouldCreate = false
