@@ -102,6 +102,10 @@ class GoogleHTTPClient : AbstractHTTPClient {
                 ans.parse(json)
                 let realm = self.realmProvider.realm()
                 try! realm.write {
+                    let primaries = realm.objects(UserModel.self).filter({x in x.isPrimary})
+                    if primaries.count == 0 {
+                        ans.isPrimary = true
+                    }
                     realm.add(ans, update: true)
                 }
                 self.user = ans
@@ -125,6 +129,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
         }
     }
     
+    /// Logout the current user and DELETE its tokens
     func logout() {
         self._authState = nil
         if let storagePath = googleAuthStateStorage {
@@ -137,6 +142,33 @@ class GoogleHTTPClient : AbstractHTTPClient {
         try? realm.write {
             realm.delete(user)
         }
+    }
+    
+    /// Change current user to another user
+    /// It returns a promise that fulfills when credentials are ready
+    /// :param presenter: Necessary in case google wants to display a login page
+    func changeUser(_ toUser: UserModel, _ presenter: UIViewController) -> Promise<Void> {
+        self.user = toUser
+        self._authState = nil
+        return self.ensureLogin(presenter: presenter).then { _ -> Void in
+            let realm = self.realmProvider.realm()
+            try! realm.write {
+                self.user!.isPrimary = true
+                let primaries = realm.objects(UserModel.self).filter({x in x.isPrimary})
+                for primary in primaries {
+                    primary.isPrimary = false
+                }
+            }
+        }
+    }
+    
+    /// Login to a completely new account, and
+    ///  replace current user with this account.
+    /// :param presenter: Necessary because google wants to display a login page
+    func acceptNewUser(_ presenter: UIViewController) -> Promise<Void> {
+        self.user = nil
+        self._authState = nil
+        return self.ensureLogin(presenter: presenter)
     }
     
     var isLoggedIn : Bool {

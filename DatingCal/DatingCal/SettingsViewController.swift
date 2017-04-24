@@ -19,6 +19,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        userModels = BusinessRealmProvider().realm().objects(UserModel.self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +32,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // -------------------- Functions below are related to TABLE VIEW
     
-    lazy var userModels = BusinessRealmProvider().realm().objects(UserModel.self)
+    var userModels = BusinessRealmProvider().realm().objects(UserModel.self)
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
