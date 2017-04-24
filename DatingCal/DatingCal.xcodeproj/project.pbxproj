@@ -24,6 +24,10 @@
 		4AE954C51EAD9D3100E6B224 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954C41EAD9D3100E6B224 /* SettingsViewController.swift */; };
 		4AE954C71EADACBA00E6B224 /* SettingsUserCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954C61EADACBA00E6B224 /* SettingsUserCellView.swift */; };
 		66BCFC77BDF4C3ABEB746EC7 /* Pods_DatingCalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D314118D80B2A41AEAE1A87E /* Pods_DatingCalTests.framework */; };
+		88366A8B1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */; };
+		88366A8C1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88366A891EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib */; };
+		88366A8D1EAE85CD00880F36 /* SpecialDatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A8A1EAE85CD00880F36 /* SpecialDatesViewController.swift */; };
+		88366A8F1EAE87C900880F36 /* ConfigurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A8E1EAE87C900880F36 /* ConfigurationHelper.swift */; };
 		88442BC81E9C350F00DC23A3 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC71E9C350F00DC23A3 /* TriangleView.swift */; };
 		88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC91E9C415500DC23A3 /* Defaults.swift */; };
 		88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */; };
@@ -78,6 +82,10 @@
 		4AC5220B1EA72FA200448202 /* AlertExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertExtension.swift; sourceTree = "<group>"; };
 		4AE954C41EAD9D3100E6B224 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4AE954C61EADACBA00E6B224 /* SettingsUserCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserCellView.swift; sourceTree = "<group>"; };
+		88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecialDatesCollectionViewCell.swift; path = DemoViewController/Cells/SpecialDatesCollectionViewCell.swift; sourceTree = "<group>"; };
+		88366A891EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SpecialDatesCollectionViewCell.xib; path = DemoViewController/Cells/SpecialDatesCollectionViewCell.xib; sourceTree = "<group>"; };
+		88366A8A1EAE85CD00880F36 /* SpecialDatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecialDatesViewController.swift; path = DemoViewController/SpecialDatesViewController.swift; sourceTree = "<group>"; };
+		88366A8E1EAE87C900880F36 /* ConfigurationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationHelper.swift; sourceTree = "<group>"; };
 		88442BC71E9C350F00DC23A3 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		88442BC91E9C415500DC23A3 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -194,6 +202,9 @@
 				88F104211E9AED5D0047F308 /* MainCalendarTableEx.swift */,
 				88D65D2E1E9DF92200E80595 /* MainCalendarEmptyTableEx.swift */,
 				88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */,
+				88366A8A1EAE85CD00880F36 /* SpecialDatesViewController.swift */,
+				88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */,
+				88366A891EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib */,
 				88D65D3E1EA7147500E80595 /* DatesGenerator.swift */,
 				88442BC71E9C350F00DC23A3 /* TriangleView.swift */,
 				88D65D3C1EA6B29800E80595 /* Configurations.swift */,
@@ -206,6 +217,7 @@
 				88F1041A1E9AE7DC0047F308 /* DatingCal-Bridging-Header.h */,
 				4AE954C41EAD9D3100E6B224 /* SettingsViewController.swift */,
 				4AE954C61EADACBA00E6B224 /* SettingsUserCellView.swift */,
+				88366A8E1EAE87C900880F36 /* ConfigurationHelper.swift */,
 			);
 			path = DatingCal;
 			sourceTree = "<group>";
@@ -356,6 +368,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88366A8C1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib in Resources */,
 				88F103F71E9AE1DA0047F308 /* LaunchScreen.storyboard in Resources */,
 				4A7758DC1E9B1D6900C1DDDB /* GoogleService-Info.plist in Resources */,
 				88F103F41E9AE1DA0047F308 /* Assets.xcassets in Resources */,
@@ -483,11 +496,13 @@
 				88D65D2F1E9DF92200E80595 /* MainCalendarEmptyTableEx.swift in Sources */,
 				88F104221E9AED5D0047F308 /* MainCalendarTableEx.swift in Sources */,
 				4AC522021EA5C89A00448202 /* RealmProvider.swift in Sources */,
+				88366A8F1EAE87C900880F36 /* ConfigurationHelper.swift in Sources */,
 				88D65D3F1EA7147500E80595 /* DatesGenerator.swift in Sources */,
 				4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */,
 				88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */,
 				88D65D3D1EA6B29800E80595 /* Configurations.swift in Sources */,
 				4AC522081EA6BBBA00448202 /* SequentialPromise.swift in Sources */,
+				88366A8D1EAE85CD00880F36 /* SpecialDatesViewController.swift in Sources */,
 				4A2A228F1EA434A7001B6906 /* GoogleError.swift in Sources */,
 				88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */,
 				88F1041E1E9AE8EF0047F308 /* MainCalendarViewController.swift in Sources */,
@@ -498,6 +513,7 @@
 				88442BC81E9C350F00DC23A3 /* TriangleView.swift in Sources */,
 				4A3E6BA41E9C3B7B00E1644A /* GoogleCalendar.swift in Sources */,
 				88D65D391E9F0BAB00E80595 /* AddEventViewController.swift in Sources */,
+				88366A8B1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift in Sources */,
 				88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */,
 				4AC522061EA6A49C00448202 /* NetworkMonitor.swift in Sources */,
 				4AC169121EA44602006F79E3 /* GoogleHTTPClient.swift in Sources */,

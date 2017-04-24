@@ -175,7 +175,11 @@
                                 <segue destination="xbM-dg-vqd" kind="presentation" id="tn5-gu-T2U"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="XNt-MK-IBX"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="XNt-MK-IBX">
+                            <connections>
+                                <segue destination="310-Hj-0N8" kind="presentation" id="iGT-c9-Mqo"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="7OD-JS-0oX" id="Feu-oX-JmB"/>
@@ -527,10 +531,84 @@
             </objects>
             <point key="canvasLocation" x="1968.8" y="545.57721139430294"/>
         </scene>
+        <!--Special Dates View Controller-->
+        <scene sceneID="BfR-y0-ddh">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="310-Hj-0N8" customClass="SpecialDatesViewController" customModule="DatingCal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3sa-hd-wAq"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nc2-t1-3Qv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QK4-0A-TRg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="CnH-MG-dne">
+                                <rect key="frame" x="0.0" y="-24" width="375" height="691"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZ0-XP-ahx">
+                                <rect key="frame" x="172" y="626.5" width="31" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.85882352939999995" green="0.86666666670000003" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="CnH-MG-dne" firstAttribute="top" secondItem="3sa-hd-wAq" secondAttribute="bottom" constant="-44" id="Gfr-Jk-oys"/>
+                            <constraint firstItem="Nc2-t1-3Qv" firstAttribute="top" secondItem="CnH-MG-dne" secondAttribute="bottom" id="Pz8-yU-lE0"/>
+                            <constraint firstItem="Nc2-t1-3Qv" firstAttribute="top" secondItem="iZ0-XP-ahx" secondAttribute="bottom" constant="20" id="TpU-ed-usz"/>
+                            <constraint firstItem="iZ0-XP-ahx" firstAttribute="centerX" secondItem="QK4-0A-TRg" secondAttribute="centerX" id="eCy-74-B9U"/>
+                            <constraint firstItem="CnH-MG-dne" firstAttribute="leading" secondItem="QK4-0A-TRg" secondAttribute="leading" id="gbb-Gf-2Hy"/>
+                            <constraint firstAttribute="trailing" secondItem="CnH-MG-dne" secondAttribute="trailing" id="oto-Sw-0FD"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bRF-mc-fD8">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="searchIcon" id="UjW-iq-cef"/>
+                        <view key="titleView" contentMode="scaleToFill" id="lbs-SC-y6W">
+                            <rect key="frame" x="67.5" y="5.5" width="240" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Title" translatesAutoresizingMaskIntoConstraints="NO" id="myC-1a-b0X">
+                                    <rect key="frame" x="94.5" y="8.5" width="51" height="16"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="51" id="mPL-gn-v2t"/>
+                                        <constraint firstAttribute="height" constant="16" id="pQE-yX-Pw1"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="myC-1a-b0X" firstAttribute="centerY" secondItem="lbs-SC-y6W" secondAttribute="centerY" id="2OV-ys-J4N"/>
+                                <constraint firstItem="myC-1a-b0X" firstAttribute="centerX" secondItem="lbs-SC-y6W" secondAttribute="centerX" id="fN8-nA-g7t"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="fM8-RB-7Qv" customClass="AnimatingBarButton" customModule="DatingCal" customModuleProvider="target">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="normalImageName" value="locationButton"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="CloseButton"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                    <real key="value" value="0.29999999999999999"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="pageLabel" destination="iZ0-XP-ahx" id="1lR-lP-cAe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NT5-cd-a2K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1641" y="-914"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="BackgroundImage" width="375" height="667"/>
+        <image name="Title" width="16" height="16"/>
         <image name="add" width="64" height="64"/>
         <image name="bg_1" width="520" height="763"/>
         <image name="close" width="16" height="16"/>
+        <image name="searchIcon" width="16" height="16"/>
     </resources>
 </document>
