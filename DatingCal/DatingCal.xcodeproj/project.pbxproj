@@ -186,8 +186,8 @@
 			children = (
 				4A7758DF1E9BD0B100C1DDDB /* GoogleHelpers */,
 				4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */,
-				88D65D381E9F0BAB00E80595 /* AddEventViewController.swift */,
 				88F103EC1E9AE1D90047F308 /* AppDelegate.swift */,
+				88D65D381E9F0BAB00E80595 /* AddEventViewController.swift */,
 				88D65D3A1EA4832300E80595 /* DatesSetupViewController.swift */,
 				88F1041D1E9AE8EE0047F308 /* MainCalendarViewController.swift */,
 				88F1041F1E9AED300047F308 /* MainCalendarFSEx.swift */,

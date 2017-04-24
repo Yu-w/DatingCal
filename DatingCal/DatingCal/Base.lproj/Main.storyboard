@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2ev-gh-tU2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2ev-gh-tU2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,13 +24,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_1" translatesAutoresizingMaskIntoConstraints="NO" id="3n8-MO-zJO">
-                                <rect key="frame" x="0.0" y="20" width="375" height="440"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="400"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yta-q3-fIO" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="20" width="375" height="440"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="400"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="440" id="Lwm-Te-dns"/>
+                                    <constraint firstAttribute="height" constant="400" id="Lwm-Te-dns"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="fakedSelectedDay">
@@ -62,14 +62,14 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5QJ-Xm-f5o" customClass="TriangleView" customModule="DatingCal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="438" width="375" height="54"/>
+                                <rect key="frame" x="0.0" y="442" width="375" height="54"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="dYE-N4-ppH"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7OD-JS-0oX">
-                                <rect key="frame" x="281" y="422" width="54" height="54"/>
+                                <rect key="frame" x="281" y="426" width="54" height="54"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="7OD-JS-0oX" secondAttribute="height" id="8jY-wK-IP0"/>
@@ -83,7 +83,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DZK-ny-AgO">
-                                <rect key="frame" x="0.0" y="492" width="375" height="175"/>
+                                <rect key="frame" x="0.0" y="496" width="375" height="171"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -148,14 +148,6 @@
                                     <outlet property="delegate" destination="QHj-xg-hze" id="tu3-E3-WDh"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uge-bA-GTg">
-                                <rect key="frame" x="330" y="28" width="45" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="settings"/>
-                                <connections>
-                                    <segue destination="xbM-dg-vqd" kind="presentation" id="TYp-8J-cpD"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -177,7 +169,14 @@
                             <constraint firstItem="7OD-JS-0oX" firstAttribute="trailing" secondItem="5QJ-Xm-f5o" secondAttribute="trailing" constant="-40" id="zcV-bi-3Yh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Dating Cal" id="Uo6-6d-WpM"/>
+                    <navigationItem key="navigationItem" title="Dating Cal" id="Uo6-6d-WpM">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Izy-iA-1Bc">
+                            <connections>
+                                <segue destination="xbM-dg-vqd" kind="presentation" id="tn5-gu-T2U"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="XNt-MK-IBX"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="7OD-JS-0oX" id="Feu-oX-JmB"/>
                         <outlet property="calendar" destination="yta-q3-fIO" id="lHz-Q4-3aj"/>
@@ -343,7 +342,7 @@
         <!--Navigation Controller-->
         <scene sceneID="XiM-Gr-YT8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="2ev-gh-tU2" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2ev-gh-tU2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oc4-aZ-TQD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -494,7 +493,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2HL-Gr-skk" id="Fwo-xC-P3v">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJe-wU-NYW">
@@ -533,6 +532,5 @@
         <image name="add" width="64" height="64"/>
         <image name="bg_1" width="520" height="763"/>
         <image name="close" width="16" height="16"/>
-        <image name="settings" width="150" height="150"/>
     </resources>
 </document>
