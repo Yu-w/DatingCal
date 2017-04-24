@@ -35,7 +35,7 @@ class GoogleCalendar {
     /// Fetch list of events from the calendar with specified id.
     /// :param pageToken: If nil, fetch all pages. 
     ///     Otherwise, fetch everything IN&AFTER this page.
-    private func listEventLists(_ calendarId: String, _ pageToken: String?=nil) -> Promise<[JSON]> {
+    func listEventLists(_ calendarId: String, _ pageToken: String?=nil) -> Promise<[JSON]> {
         let encodedId : String = calendarId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         let url = "https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events"
         var params : Parameters = [:]

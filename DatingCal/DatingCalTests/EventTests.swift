@@ -10,6 +10,7 @@ import XCTest
 import SwiftyJSON
 import PromiseKit
 import RealmSwift
+import Alamofire
 @testable import DatingCal
 
 class EventTests : GoogleTests {
@@ -43,18 +44,36 @@ class EventTests : GoogleTests {
             })
             XCTAssertEqual(result.count, 1)
             XCTAssertEqual(result.first!.id, eventId)
-            XCTAssertEqual(result.first!.summary, wantedEvent.summary)
-            XCTAssertEqual(result.first!.desc, wantedEvent.desc)
             XCTAssertNotNil(result.first!.startTime)
             XCTAssertNotNil(result.first!.endTime)
-            XCTAssertTrue(result.first!.startTime!.similar(wantedEvent.startTime!))
-            XCTAssertTrue(result.first!.endTime!.similar(wantedEvent.endTime!))
+            result.first!.assertEqual(wantedEvent)
         })
     }
-}
-
-extension Date {
-    func similar(_ date: Date) -> Bool {
-        return string() == date.string()
+    
+    /// ------------------- TEST: createEvent
+    
+    /// Test whether all events listed by the API is correctly parsed
+    /// This does not test the usage of "nextPageToken"
+    func testListAllEventsInCalendar1() {
+        let calendarId = "123"
+        
+        var wantedEvents : [Parameters] = []
+        var wantedEvent : Parameters = [:]
+        wantedEvent["summary"] = "ABC"
+        wantedEvent["desc"] = "TEST"
+        wantedEvent["startTime"] = Date()
+        wantedEvent["endTime"] = Date() + TimeInterval(Date().day)
+        for i in 1...10 {
+            var copy = wantedEvent
+            copy["id"] = "\(i)"
+            wantedEvents.append(wantedEvent)
+        }
+        
+        self.setClientForListingEvents(wantedEvents)
+        
+        testPromise(googleCalendar.listEventLists(calendarId).then { list -> Void in
+            XCTAssertEqual(list.count, wantedEvents.count)
+            XCTAssertEqual(list, wantedEvents.map(JSON.init))
+        })
     }
 }

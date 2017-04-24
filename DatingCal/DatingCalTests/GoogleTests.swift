@@ -9,7 +9,9 @@
 import Foundation
 import SwiftyJSON
 import PromiseKit
+import Alamofire
 import XCTest
+@testable import DatingCal
 
 /// This is supposed to be used as a base class.
 class GoogleTests : AsyncTests {
@@ -56,11 +58,62 @@ class GoogleTests : AsyncTests {
     /// :param createdId: the id of any created event
     func setClientForCreatingEvent(_ createdId: String) {
         self.client.setHandler { url, method, params in
-            /// Then, respond to 'create calendar' API
             XCTAssertNotNil(params)
             var json = JSON(params!)
             json["id"].string = createdId
             return Promise(value: json)
         }
+    }
+    
+    /// A helper function to fake APIs that fetch the complete list of events.
+    func setClientForListingEvents(_ events: [Parameters], _ testMultiPage: Bool=false) {
+        let nextPageToken = "A ToKeN"
+        let half = events.count / 2
+        let first = events.dropFirst(half)
+        let second = events.dropLast(events.count - half)
+        self.client.setHandler { url, method, params in
+            var result : Parameters = [:]
+            if testMultiPage {
+                result["items"] = first
+                result["nextPageToken"] = nextPageToken
+                self.client.setHandler { url,method,params in
+                    XCTAssertNotNil(params!)
+                    XCTAssertTrue(params!.keys.contains("pageToken"))
+                    let pageToken = params!["pageToken"] as! String
+                    XCTAssertEqual(nextPageToken, pageToken)
+                    return Promise(value: JSON(["results": second]))
+                }
+            } else {
+                result["items"] = events
+            }
+            let json = JSON(result)
+            return Promise(value: json)
+        }
+    }
+}
+
+extension EventModel {
+    func assertEqual(_ event: EventModel) {
+        XCTAssertEqual(self.summary, event.summary)
+        XCTAssertEqual(self.desc, event.desc)
+        if let startTime = self.startTime {
+            XCTAssertTrue(startTime.similar(event.startTime!))
+        }
+        if let endTime = self.endTime {
+            XCTAssertTrue(endTime.similar(event.endTime!))
+        }
+        if let startDate = self.startDate {
+            XCTAssertTrue(startDate.similar(event.startDate!))
+        }
+        if let endDate = self.endDate {
+            XCTAssertTrue(endDate.similar(event.endDate!))
+        }
+        XCTAssertTrue(self.endTime!.similar(event.endTime!))
+    }
+}
+
+extension Date {
+    func similar(_ date: Date) -> Bool {
+        return string() == date.string()
     }
 }
