@@ -36,6 +36,14 @@ class UserModel : Object, GoogleParsable {
     dynamic var id: String = ""
     dynamic var name: String = ""
     
+    /// This is a "GET-only" state
+    private dynamic var _email: String = ""
+    var email : String {
+        get {
+            return _email
+        }
+    }
+    
     /// This is an internal state of our app
     dynamic var isPrimary: Bool = false
     
@@ -58,10 +66,29 @@ class UserModel : Object, GoogleParsable {
         return ans
     }
     
+    private func parseEmail(_ json: JSON) -> String {
+        guard let emails = json["emails"].array else {
+            return ""
+        }
+        for email in emails {
+            guard let value = email["value"].string else {
+                continue
+            }
+            guard let type = email["type"].string else {
+                continue
+            }
+            if type == "account" {
+                return value
+            }
+        }
+        return ""
+    }
+    
     func parse(_ json: JSON) {
         let originalId = id
         id = json["id"].string!
         name = json["displayName"].string!
+        _email = parseEmail(json)
         if originalId != id {
             isPrimary = false
         }

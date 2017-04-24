@@ -11,15 +11,11 @@ import UIKit
 
 class SettingsUserCellView: UITableViewCell {
     
-    @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var userEmailLabel: UILabel!
     
     /// update the cell's content with a model object
     func configureData(user: UserModel) {
-        var name = user.name
-        if user.isPrimary {
-            name = name + " (current user)"
-        }
-        userNameLabel.text = name
+        userEmailLabel.text = user.email
     }
     
     @IBAction func willLogout(_ sender: Any) {
