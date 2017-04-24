@@ -238,9 +238,9 @@ class EventModel : Object, GoogleParsable {
         return false
     }
     
-    /// A functiont that helps decide whether to show an event on a given date.
+    /// A function that helps decide whether to show an event on a given date.
     func shouldShowAtDate(_ dateToShow: Date, _ calendar: Calendar) -> Bool {
-        /// These code were copied from MainCalendarViewController.swift during a refactoring.
+        /// These code were copied from MainCalendarViewController.swift during a refactoring (by Mark Yu).
         ///   It was originally created by Yu Wang.
         let eitherDate = startTime != nil ? startTime : startDate
         guard var date = eitherDate else {
