@@ -93,6 +93,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
     }
     
     /// A helper function to refresh/synchronize self.user
+    ///   Note that this will set current user as the default user
     private func refreshUser() -> Promise<Void> {
         return self.token.then { token -> Promise<Void> in
             self.request("https://www.googleapis.com/plus/v1/people/me",
@@ -102,9 +103,10 @@ class GoogleHTTPClient : AbstractHTTPClient {
                 ans.parse(json)
                 let realm = self.realmProvider.realm()
                 try! realm.write {
+                    ans.isPrimary = true
                     let primaries = realm.objects(UserModel.self).filter({x in x.isPrimary})
-                    if primaries.count == 0 {
-                        ans.isPrimary = true
+                    for primary in primaries {
+                        primary.isPrimary = false
                     }
                     realm.add(ans, update: true)
                 }
