@@ -10,6 +10,7 @@ import Foundation
 import PromiseKit
 import XCTest
 
+/// This is supposed to be used as a base class.
 class AsyncTests : XCTestCase {
     
     /// Clean up the in-memory singleton databse after each test case
