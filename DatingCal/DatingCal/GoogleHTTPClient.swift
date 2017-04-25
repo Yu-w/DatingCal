@@ -42,30 +42,20 @@ class GoogleHTTPClient : AbstractHTTPClient {
     ///    because otherwise, realm will require threadsafe references
     private var user : UserModel? {
         get {
-            guard let id = _userId else {
-                return nil
-            }
             let realm = realmProvider.realm()
-            return realm.objects(UserModel.self).filter({u in u.id == id}).first
+            if let id = _userId,
+                let user = realm.objects(UserModel.self).filter({u in u.id==id}).first {
+                return user
+            } else {
+                let primary = realm.objects(UserModel.self).filter({u in u.isPrimary}).first
+                _userId = primary?.id
+                return primary
+            }
         }
         
         set {
-            guard let user = newValue else {
-                _userId = nil
-                return
-            }
-            _userId = user.id
+            _userId = user?.id
         }
-    }
-    
-    init() {
-        let realm = realmProvider.realm()
-        let primary = realm.objects(UserModel.self).filter({u in u.isPrimary})
-        guard let primaryFirst = primary.first else {
-            user = nil
-            return
-        }
-        self.user = primaryFirst
     }
     
     /// A helper function that actually does the login.
@@ -144,9 +134,8 @@ class GoogleHTTPClient : AbstractHTTPClient {
     ///  replace current user with this account.
     /// :param presenter: Necessary because google wants to display a login page
     func acceptNewUser(_ presenter: UIViewController) -> Promise<Void> {
-        self.user = nil
         self._authState = nil
-        return self.ensureLogin(presenter: presenter)
+        return self.login(presenter: presenter)
     }
     
     /// Returns the primary user
