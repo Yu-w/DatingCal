@@ -89,8 +89,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func willSetPrimaryUser(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
         return { _ in
             let user = self.userModels[index.row]
-            self.appDelegate.googleClient.changeUser(user, self)
-            self.refreshListOfUsers()
+            _ = self.appDelegate.googleClient.changeUser(user, self).then {
+                self.refreshListOfUsers()
+            }
         }
     }
     
