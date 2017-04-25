@@ -21,6 +21,10 @@ class SpecialDatesCollectionViewCell: BasePageCollectionCell {
         customTitle.layer.shadowRadius = 2
         customTitle.layer.shadowOffset = CGSize(width: 0, height: 3)
         customTitle.layer.shadowOpacity = 0.2
+        
+        subTitle.layer.shadowRadius = 2
+        subTitle.layer.shadowOffset = CGSize(width: 0, height: 3)
+        subTitle.layer.shadowOpacity = 0.2
     }
     
 }
