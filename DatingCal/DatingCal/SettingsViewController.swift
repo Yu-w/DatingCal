@@ -75,11 +75,23 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     /// A currying function that handles UIAlertAction to logout an account
+    /// :param index: The index of the user to be logged out
     func willLogout(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
         return { _ in
             let user = self.userModels[index.row]
-            user.logout(self.realmProvider)
+            user.remove(self.realmProvider)
             self.refreshListOfUsers()
+        }
+    }
+    
+    /// A currying function that handles UIAlertAction to set primary account
+    /// :param index: The index of the user to be set as primary user
+    func willSetPrimaryUser(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
+        return { _ in
+            let user = self.userModels[index.row]
+            _ = self.appDelegate.googleClient.changeUser(user, self).then {
+                self.refreshListOfUsers()
+            }
         }
     }
     
@@ -89,7 +101,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.deselectRow(at: indexPath, animated: true)
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Sign off this account", style: .default, handler: willLogout(indexPath)))
-        alert.addAction(UIAlertAction(title: "Set it as primary account", style: .default))
+        alert.addAction(UIAlertAction(title: "Set it as primary account", style: .default, handler: willSetPrimaryUser(indexPath)))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default))
         self.present(alert, animated: true)
     }
