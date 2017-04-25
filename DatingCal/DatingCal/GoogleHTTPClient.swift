@@ -36,6 +36,8 @@ class GoogleHTTPClient : AbstractHTTPClient {
     /// This object stores all the tokens and login states
     private var _authState : OIDAuthState?
     
+    /// This variable can only be used by our class.
+    ///    It's an abstraction.
     /// We have to fetch a new UserModel every time
     ///    because otherwise, realm will require threadsafe references
     private var user : UserModel? {
@@ -53,17 +55,6 @@ class GoogleHTTPClient : AbstractHTTPClient {
                 return
             }
             _userId = user.id
-        }
-    }
-    
-    /// Getter for path to tokens stored in iPhone hard drive
-    private var googleAuthStateStorage : String? {
-        get {
-            guard let user = self.user else {
-                return nil
-            }
-            let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
-            return library + user.authStorage
         }
     }
     
@@ -88,7 +79,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
             self._authState = authState
             return self.refreshUser()
         }.then { _ -> Void in
-            self._authState!.save(self.googleAuthStateStorage!)
+            self._authState!.save(self.user!.authStorage)
         }
     }
     
@@ -118,7 +109,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
     /// This function will ensure the user is logged in.
     /// But rest assured, it will only call login() when necessary.
     func ensureLogin(presenter: UIViewController) -> Promise<Void> {
-        guard let storagePath = googleAuthStateStorage else {
+        guard let storagePath = self.user?.authStorage else {
             return self.login(presenter: presenter)
         }
         self._authState = OIDAuthState.load(storagePath)
@@ -128,21 +119,6 @@ class GoogleHTTPClient : AbstractHTTPClient {
         return authState.performRefresh().asVoid().recover {err -> Promise<Void> in
             debugPrint("Failed to refresh access token. Reason: ", err)
             return self.login(presenter: presenter)
-        }
-    }
-    
-    /// Logout the current user and DELETE its tokens
-    func logout() {
-        self._authState = nil
-        if let storagePath = googleAuthStateStorage {
-            try? FileManager.default.removeItem(atPath: storagePath)
-        }
-        guard let user = self.user else {
-            return
-        }
-        let realm = realmProvider.realm()
-        try? realm.write {
-            realm.delete(user)
         }
     }
     
@@ -173,6 +149,12 @@ class GoogleHTTPClient : AbstractHTTPClient {
         return self.ensureLogin(presenter: presenter)
     }
     
+    /// Returns the primary user
+    ///   This is the account where we create new events.
+    func getPrimaryUser() -> UserModel? {
+        return self.user
+    }
+    
     var isLoggedIn : Bool {
         get {
             return _authState != nil
@@ -185,18 +167,6 @@ class GoogleHTTPClient : AbstractHTTPClient {
         }
         return authState.performRefresh() .then { (token ,id) -> String in
             return token!
-        }
-    }
-    
-    var userId : Promise<String> {
-        get {
-            return self.token.then { token -> Promise<String> in
-                self.request("https://www.googleapis.com/plus/v1/people/me",
-                             method: .get,
-                             parameters: nil).then { json -> String in
-                    json["id"].string!
-                }
-            }
         }
     }
     

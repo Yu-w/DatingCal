@@ -14,6 +14,7 @@ import TextFieldEffects
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let realmProvider = BusinessRealmProvider()
     
     @IBOutlet var tableView: UITableView!
     
@@ -31,7 +32,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        userModels = BusinessRealmProvider().realm().objects(UserModel.self)
+        refreshListOfUsers()
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -48,6 +49,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var userModels = BusinessRealmProvider().realm().objects(UserModel.self)
     
+    private func refreshListOfUsers() {
+        userModels = BusinessRealmProvider().realm().objects(UserModel.self)
+        tableView.reloadData()
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -60,8 +66,21 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = tableView.dequeueReusableCell(
             withIdentifier: "SettingsUserCellView", for: indexPath
             ) as! SettingsUserCellView
-        cell.configureData(user: userModels[indexPath.row])
+        if indexPath.row >= userModels.count {
+            cell.configureAsEmpty()
+        } else {
+            cell.configureData(user: userModels[indexPath.row])
+        }
         return cell
+    }
+    
+    /// A currying function that handles UIAlertAction to logout an account
+    func willLogout(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
+        return { _ in
+            let user = self.userModels[index.row]
+            user.logout(self.realmProvider)
+            self.refreshListOfUsers()
+        }
     }
     
     /// animate the deselection of the selection of rows
@@ -69,8 +88,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Sign off this account", style: .default))
-        alert.addAction(UIAlertAction(title: "Enable/Disable synchronization", style: .default))
+        alert.addAction(UIAlertAction(title: "Sign off this account", style: .default, handler: willLogout(indexPath)))
+        alert.addAction(UIAlertAction(title: "Set it as primary account", style: .default))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default))
         self.present(alert, animated: true)
     }

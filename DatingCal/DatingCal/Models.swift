@@ -50,14 +50,42 @@ class UserModel : Object, GoogleParsable {
     /// Path to a file in local storage.
     /// This file contains serialized authorization 
     ///     tokens for this user.
-    var authStorage: String {
+    var authStorage : String {
         get {
-            return "google-auth-" + id + ".dat"
+            let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
+            return library + "google-auth-" + id + ".dat"
         }
     }
     
     override class func primaryKey() -> String? {
         return "id"
+    }
+    
+    /// Logout the current user and DELETE it from hard drive and Realm
+    func logout(_ realmProvider: AbstractRealmProvider) {
+        try? FileManager.default.removeItem(atPath: authStorage)
+        let realm = realmProvider.realm()
+        let userInDB = realm.objects(UserModel.self).filter({x in x.id==self.id}).first
+        guard let user = userInDB else {
+            return
+        }
+        try? realm.write {
+            realm.delete(user)
+            let primaryUser = realm.objects(UserModel.self).filter({x in x.isPrimary}).first
+            if primaryUser == nil, let first = realm.objects(UserModel.self).first {
+                first.isPrimary = true
+            }
+        }
+    }
+    
+    func parse(_ json: JSON) {
+        let originalId = id
+        id = json["id"].string!
+        name = json["displayName"].string!
+        _email = parseEmail(json)
+        if originalId != id {
+            isPrimary = false
+        }
     }
     
     func unParse() -> Parameters {
@@ -82,16 +110,6 @@ class UserModel : Object, GoogleParsable {
             }
         }
         return ""
-    }
-    
-    func parse(_ json: JSON) {
-        let originalId = id
-        id = json["id"].string!
-        name = json["displayName"].string!
-        _email = parseEmail(json)
-        if originalId != id {
-            isPrimary = false
-        }
     }
 }
 

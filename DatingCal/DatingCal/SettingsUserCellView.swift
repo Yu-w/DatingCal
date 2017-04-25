@@ -15,6 +15,15 @@ class SettingsUserCellView: UITableViewCell {
     
     /// update the cell's content with a model object
     func configureData(user: UserModel) {
-        userEmailLabel.text = user.email
+        var ans = user.email
+        if user.isPrimary {
+            ans += " (primary)"
+        }
+        userEmailLabel.text = ans
+    }
+    
+    /// update the cell's content to be empty
+    func configureAsEmpty() {
+        userEmailLabel.text = ""
     }
 }

@@ -90,11 +90,11 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         _ = sequentialLogin.neverAppend {
             self.appDelegate.googleClient.ensureLogin(presenter: self).then { x -> Promise<Void> in
                 return self.appDelegate.googleCalendar.loadAll()
-            }.then { x -> Promise<String> in
+            }.then { x -> Void in
                 debugPrint("Sign In finished.")
-                return self.appDelegate.googleClient.userId
-            }.then { userId -> Void in
+                let userId = self.appDelegate.googleClient.getPrimaryUser()!.id
                 debugPrint("Google OAuth2 User ID = " + userId)
+                
                 Configurations.sharedInstance.currentIdString = userId
                 if Configurations.sharedInstance.birthDate(id: userId) == nil
                     || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
