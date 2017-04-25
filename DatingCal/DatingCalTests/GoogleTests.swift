@@ -68,9 +68,15 @@ class GoogleTests : AsyncTests {
     /// A helper function to fake APIs that fetch the complete list of events.
     func setClientForListingEvents(_ events: [Parameters], _ testMultiPage: Bool=false) {
         let nextPageToken = "A ToKeN"
-        let half = events.count / 2
-        let first = events.dropFirst(half)
-        let second = events.dropLast(events.count - half)
+        var first : [Parameters] = []
+        var second : [Parameters] = []
+        for i in 0...(events.count-1) {
+            if i < events.count / 2 {
+                first.append(events[i])
+            } else {
+                second.append(events[i])
+            }
+        }
         self.client.setHandler { url, method, params in
             var result : Parameters = [:]
             if testMultiPage {
@@ -81,7 +87,7 @@ class GoogleTests : AsyncTests {
                     XCTAssertTrue(params!.keys.contains("pageToken"))
                     let pageToken = params!["pageToken"] as! String
                     XCTAssertEqual(nextPageToken, pageToken)
-                    return Promise(value: JSON(["results": second]))
+                    return Promise(value: JSON(["items": second]))
                 }
             } else {
                 result["items"] = events

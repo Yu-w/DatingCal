@@ -53,8 +53,7 @@ class EventTests : GoogleTests {
     /// ------------------- TEST: createEvent
     
     /// Test whether all events listed by the API is correctly parsed
-    /// This does not test the usage of "nextPageToken"
-    func testListAllEventsInCalendar1() {
+    func testListAllEventsInCalendar(_ shouldUseNextPageToken: Bool) {
         let calendarId = "123"
         
         var wantedEvents : [Parameters] = []
@@ -69,11 +68,23 @@ class EventTests : GoogleTests {
             wantedEvents.append(wantedEvent)
         }
         
-        self.setClientForListingEvents(wantedEvents)
+        self.setClientForListingEvents(wantedEvents, shouldUseNextPageToken)
         
         testPromise(googleCalendar.listEventLists(calendarId).then { list -> Void in
             XCTAssertEqual(list.count, wantedEvents.count)
             XCTAssertEqual(list, wantedEvents.map(JSON.init))
         })
+    }
+    
+    /// Test whether all events listed by the API is correctly parsed
+    /// This does not test the usage of "nextPageToken"
+    func testListAllEventsInCalendar1() {
+        self.testListAllEventsInCalendar(false)
+    }
+    
+    /// Test whether all events listed by the API is correctly parsed
+    /// This DOES test the usage of "nextPageToken"
+    func testListAllEventsInCalendar2() {
+        self.testListAllEventsInCalendar(true)
     }
 }
