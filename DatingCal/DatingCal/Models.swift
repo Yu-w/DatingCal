@@ -53,7 +53,7 @@ class UserModel : Object, GoogleParsable {
     var authStorage : String {
         get {
             let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
-            return library + "google-auth-" + id + ".dat"
+            return library + "/google-auth-" + id + ".dat"
         }
     }
     

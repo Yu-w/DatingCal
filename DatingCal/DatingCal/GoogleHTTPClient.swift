@@ -54,7 +54,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
         }
         
         set {
-            _userId = user?.id
+            _userId = newValue?.id
         }
     }
     
