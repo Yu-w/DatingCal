@@ -20,12 +20,6 @@ class SpecialDatesViewController: ExpandingViewController {
             self.collectionView?.reloadData()
         }
     }
-    
-    fileprivate lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        return formatter
-    }()
   
     @IBOutlet weak var pageLabel: UILabel!
 }
@@ -130,10 +124,7 @@ extension SpecialDatesViewController {
     guard let cell = cell as? SpecialDatesCollectionViewCell else { return }
 
     let index = (indexPath as NSIndexPath).row % items.count
-    let info = items[index]
-    cell.backgroundImageView?.image = UIImage(named: info.keyDateType ?? "Event")
-    cell.customTitle.text = info.keyDateType
-    cell.subTitle.text = dateFormatter.string(from: info.startDate!)
+    cell.configureCell(event: items[index])
     cell.cellIsOpen(cellsIsOpen[index], animated: false)
   }
   
