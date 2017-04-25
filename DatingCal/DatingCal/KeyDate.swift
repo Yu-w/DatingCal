@@ -14,6 +14,7 @@ struct KeyDate {
     var title: String
     var desc: String
     var recurrence: [String]?
+    var keyDateType: String?
     
     /// A possible value for the parameter "recurrence" in our constructors
     public static var yearly = ["RRULE:FREQ=YEARLY"]
@@ -36,6 +37,18 @@ struct KeyDate {
         self.recurrence = recurrence
     }
     
+    func addKeyDateType(type: String) -> KeyDate {
+        var copy = self
+        copy.keyDateType = type
+        return copy
+    }
+    
+    func addKeyDateTypeWithTitle() -> KeyDate {
+        var copy = self
+        copy.keyDateType = self.title
+        return copy
+    }
+    
 }
 
 extension KeyDate {
@@ -47,6 +60,7 @@ extension KeyDate {
         e.summary = self.title
         e.desc = self.desc
         e.setRecurrence(newValue: recurrence)
+        e.keyDateType = self.keyDateType
         return e
     }
 }

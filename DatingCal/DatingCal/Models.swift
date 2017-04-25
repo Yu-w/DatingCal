@@ -139,6 +139,7 @@ class EventModel : Object, GoogleParsable {
     dynamic var endDate: Date? = nil
     dynamic var endTime: Date? = nil
     dynamic var endTimeZone: String? = nil
+    dynamic var keyDateType: String? = nil
     private dynamic var _recurrence: String? = nil
     
     /// This indicates whether the event should be

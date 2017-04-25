@@ -36,7 +36,13 @@ class DatesSetupViewController: UIViewController {
         let birthDate = firstDatePicker.date
         let relationshipDate = secondDatePicker.date
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
-        print(events)
+        let specialDatesStorage = SpecialDatesStorage()
+        specialDatesStorage.dates.append(objectsIn: events)
+        
+        let realm = try! Realm()
+        try! realm.write {
+
+        }
         self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<Void> in
             when(fulfilled: events.map { event in
                 self.appDelegate.googleCalendar.createEvent(event)

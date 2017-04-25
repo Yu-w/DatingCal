@@ -8,14 +8,26 @@
 
 import UIKit
 import expanding_collection
+import RealmSwift
 
 class SpecialDatesViewController: ExpandingViewController {
   
-  typealias ItemInfo = (imageName: String, title: String)
-  fileprivate var cellsIsOpen = [Bool]()
-  fileprivate let items: [ItemInfo] = [("item0", "Boston"),("item1", "New York"),("item2", "San Francisco"),("item3", "Washington")]
+    typealias ItemInfo = (imageName: String, title: String)
+    fileprivate var cellsIsOpen = [Bool]()
+//    fileprivate let items: [ItemInfo] = [("item0", "Boston"),("item1", "New York"),("item2", "San Francisco"),("item3", "Washington")]
+    fileprivate var items: [EventModel] = [] {
+        didSet {
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }()
   
-  @IBOutlet weak var pageLabel: UILabel!
+    @IBOutlet weak var pageLabel: UILabel!
 }
 
 // MARK: life cicle
@@ -25,6 +37,12 @@ extension SpecialDatesViewController {
   override func viewDidLoad() {
     itemSize = CGSize(width: 256, height: 335)
     super.viewDidLoad()
+    
+//    let realm = try! Realm()
+//    self.items = Array(realm.object(ofType: SpecialDatesStorage.self, forPrimaryKey: 0)!.dates)
+//    self.items = Array(realm.objects(EventModel.self).filter { $0.keyDateType != nil } )
+    self.items = DatesGenerator.sharedInstance.generateDates(birthDate: Configurations.sharedInstance.birthDate()!, relationshipDate: Configurations.sharedInstance.relationshipDate()!)
+    
     
     registerCell()
     fillCellIsOpeenArry()
@@ -113,9 +131,9 @@ extension SpecialDatesViewController {
 
     let index = (indexPath as NSIndexPath).row % items.count
     let info = items[index]
-    cell.backgroundImageView?.image = UIImage(named: info.imageName)
-    cell.customTitle.text = info.title
-//    cell.subTitle.text = 
+    cell.backgroundImageView?.image = UIImage(named: info.keyDateType ?? "Event")
+    cell.customTitle.text = info.keyDateType
+    cell.subTitle.text = dateFormatter.string(from: info.startDate!)
     cell.cellIsOpen(cellsIsOpen[index], animated: false)
   }
   

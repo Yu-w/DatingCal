@@ -77,8 +77,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9FK-FA-F0l">
                                 <rect key="frame" x="0.0" y="0.0" width="256" height="335"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ATCOASTAL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFh-D7-eSl">
-                                <rect key="frame" x="62" y="10" width="132" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ATCOASTAL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFh-D7-eSl">
+                                <rect key="frame" x="16" y="10" width="224" height="29"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
@@ -129,6 +129,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9FK-FA-F0l" firstAttribute="top" secondItem="4h2-Xv-xjU" secondAttribute="top" id="0HR-8P-WVW"/>
+                            <constraint firstAttribute="trailing" secondItem="XFh-D7-eSl" secondAttribute="trailing" constant="16" id="0vY-rn-n5E"/>
                             <constraint firstAttribute="trailing" secondItem="Uro-eS-siL" secondAttribute="trailing" id="4Mu-TL-bBf"/>
                             <constraint firstItem="EKg-XH-vNU" firstAttribute="leading" secondItem="FVj-GH-Mhw" secondAttribute="trailing" constant="1" id="6Bb-cJ-uQs"/>
                             <constraint firstItem="EKg-XH-vNU" firstAttribute="centerY" secondItem="oce-vs-fcR" secondAttribute="centerY" id="CIg-Mj-d0n"/>
@@ -139,6 +140,7 @@
                             <constraint firstItem="XFh-D7-eSl" firstAttribute="centerX" secondItem="4h2-Xv-xjU" secondAttribute="centerX" id="R29-hI-QrJ"/>
                             <constraint firstItem="XFh-D7-eSl" firstAttribute="top" secondItem="4h2-Xv-xjU" secondAttribute="top" constant="10" id="Rqu-wG-qYm"/>
                             <constraint firstAttribute="bottom" secondItem="9FK-FA-F0l" secondAttribute="bottom" id="T93-uF-QTS"/>
+                            <constraint firstItem="XFh-D7-eSl" firstAttribute="leading" secondItem="4h2-Xv-xjU" secondAttribute="leading" constant="16" id="V96-U0-I9S"/>
                             <constraint firstItem="Uro-eS-siL" firstAttribute="leading" secondItem="4h2-Xv-xjU" secondAttribute="leading" id="YEp-Od-zw3"/>
                             <constraint firstItem="oce-vs-fcR" firstAttribute="leading" secondItem="4h2-Xv-xjU" secondAttribute="leading" constant="8" id="b8q-tF-xpu"/>
                             <constraint firstItem="oce-vs-fcR" firstAttribute="width" secondItem="EKg-XH-vNU" secondAttribute="width" id="cXw-ba-vBK"/>
