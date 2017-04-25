@@ -45,7 +45,13 @@ class UserModel : Object, GoogleParsable {
     }
     
     /// This is an internal state of our app
-    dynamic var isPrimary: Bool = false
+    ///  External classes should not change its value.
+    dynamic var _isPrimary: Bool = false
+    var isPrimary : Bool {
+        get {
+            return _isPrimary
+        }
+    }
     
     /// Path to a file in local storage.
     /// This file contains serialized authorization 
@@ -61,8 +67,8 @@ class UserModel : Object, GoogleParsable {
         return "id"
     }
     
-    /// Logout the current user and DELETE it from hard drive and Realm
-    func logout(_ realmProvider: AbstractRealmProvider) {
+    /// Remove the current user from DB and delete its TOKENS from hard drive
+    func remove(_ realmProvider: AbstractRealmProvider) {
         try? FileManager.default.removeItem(atPath: authStorage)
         let realm = realmProvider.realm()
         let userInDB = realm.objects(UserModel.self).filter({x in x.id==self.id}).first
@@ -71,10 +77,19 @@ class UserModel : Object, GoogleParsable {
         }
         try? realm.write {
             realm.delete(user)
-            let primaryUser = realm.objects(UserModel.self).filter({x in x.isPrimary}).first
+            let primaryUser = realm.objects(UserModel.self).filter({x in x._isPrimary}).first
             if primaryUser == nil, let first = realm.objects(UserModel.self).first {
-                first.isPrimary = true
+                first._isPrimary = true
             }
+        }
+    }
+    
+    func setAsPrimaryUser(_ realmProvider: AbstractRealmProvider) {
+        let realm = realmProvider.realm()
+        let primaryUser = realm.objects(UserModel.self).filter({x in x._isPrimary})
+        try? realm.write {
+            primaryUser.forEach {x in x._isPrimary = false}
+            self._isPrimary = true
         }
     }
     
@@ -84,7 +99,7 @@ class UserModel : Object, GoogleParsable {
         name = json["displayName"].string!
         _email = parseEmail(json)
         if originalId != id {
-            isPrimary = false
+            _isPrimary = false
         }
     }
     

@@ -84,13 +84,9 @@ class GoogleHTTPClient : AbstractHTTPClient {
                 ans.parse(json)
                 let realm = self.realmProvider.realm()
                 try! realm.write {
-                    ans.isPrimary = true
-                    let primaries = realm.objects(UserModel.self).filter({x in x.isPrimary})
-                    for primary in primaries {
-                        primary.isPrimary = false
-                    }
                     realm.add(ans, update: true)
                 }
+                ans.setAsPrimaryUser(self.realmProvider)
                 self.user = ans
             }
         }
@@ -119,14 +115,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
         self.user = toUser
         self._authState = nil
         return self.ensureLogin(presenter: presenter).then { _ -> Void in
-            let realm = self.realmProvider.realm()
-            try! realm.write {
-                self.user!.isPrimary = true
-                let primaries = realm.objects(UserModel.self).filter({x in x.isPrimary})
-                for primary in primaries {
-                    primary.isPrimary = false
-                }
-            }
+            self.user!.setAsPrimaryUser(self.realmProvider)
         }
     }
     
