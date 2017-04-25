@@ -17,7 +17,4 @@ class SettingsUserCellView: UITableViewCell {
     func configureData(user: UserModel) {
         userEmailLabel.text = user.email
     }
-    
-    @IBAction func willLogout(_ sender: Any) {
-    }
 }

@@ -64,4 +64,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
     }
     
+    /// animate the deselection of the selection of rows
+    /// Code created by Yu Wang
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Sign off this account", style: .default))
+        alert.addAction(UIAlertAction(title: "Enable/Disable synchronization", style: .default))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        self.present(alert, animated: true)
+    }
+    
 }
