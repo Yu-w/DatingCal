@@ -41,7 +41,7 @@ class DatesSetupViewController: UIViewController {
         
         let realm = try! Realm()
         try! realm.write {
-
+            realm.add(specialDatesStorage, update: true)
         }
         self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<Void> in
             when(fulfilled: events.map { event in

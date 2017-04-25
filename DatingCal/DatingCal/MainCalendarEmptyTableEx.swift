@@ -17,12 +17,6 @@ extension MainCalendarViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDele
         return NSAttributedString(string: str, attributes: attrs)
     }
     
-    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "Tap the button below to add event."
-        let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
         return UIImage(named: "calendar")
     }
