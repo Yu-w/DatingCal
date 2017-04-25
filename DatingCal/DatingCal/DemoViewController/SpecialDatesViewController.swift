@@ -115,6 +115,7 @@ extension SpecialDatesViewController {
     let info = items[index]
     cell.backgroundImageView?.image = UIImage(named: info.imageName)
     cell.customTitle.text = info.title
+//    cell.subTitle.text = 
     cell.cellIsOpen(cellsIsOpen[index], animated: false)
   }
   
