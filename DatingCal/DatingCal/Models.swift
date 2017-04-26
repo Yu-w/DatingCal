@@ -161,7 +161,7 @@ class CalendarModel : Object, GoogleParsable {
     dynamic var isPrimary: Bool = false
     var events = List<EventModel>()
     
-    let owner = LinkingObjects(fromType: UserModel.self, property: "datingCalendar")
+    let owner = LinkingObjects(fromType: UserModel.self, property: "calendars")
     
     override class func primaryKey() -> String? {
         return "id"

@@ -84,10 +84,12 @@ class SettingsViewController: UIViewControllerWithWaitAlerts, UITableViewDataSou
     /// :param index: The index of the user to be logged out
     func willLogout(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
         return { _ in
-            self.showPleaseWait()
             let user = self.userModels[index.row]
             user.remove(self.realmProvider)
-            _ = self.appDelegate.googleCalendar.loadAll().then {
+            _ = self.appDelegate.googleClient.ensureLogin(presenter: self).then {
+                self.showPleaseWait()
+                return self.appDelegate.googleCalendar.loadAll()
+            }.then {
                 self.refreshListOfUsers()
             }.always {
                 self.hidePleaseWait()
