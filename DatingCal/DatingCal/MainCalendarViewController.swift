@@ -64,6 +64,11 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         
         self.setNeedsStatusBarAppearanceUpdate()
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        
         if UIDevice.current.model.hasPrefix("iPad") {
             self.calendarHeightConstraint.constant = 400
         }

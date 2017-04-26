@@ -76,6 +76,11 @@ extension SpecialDatesViewController {
     }
     
     fileprivate func configureNavBar() {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        
         let newBackButton = UIBarButtonItem(image: #imageLiteral(resourceName: "CloseButton"),
                                             style: UIBarButtonItemStyle.plain,
                                             target: self,
@@ -151,7 +156,9 @@ extension SpecialDatesViewController {
         } else {
             let vc = getViewController() as! SpecialDatesDetailViewController
             let index = (indexPath as NSIndexPath).row % items.count
-            vc.contents = SpecialDateContents[items[index].keyDateType!] ?? []
+            let item = items[index]
+            vc.contents = SpecialDateContents[item.keyDateType!] ?? []
+            vc.title = item.keyDateType! ?? ""
             pushToViewController(vc)
             
             if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
