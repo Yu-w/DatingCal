@@ -10,7 +10,7 @@ import UIKit
 import expanding_collection
 
 class SpecialDatesDetailViewController: ExpandingTableViewController {
-  
+    
     var contents: [String] = []
     
     fileprivate var scrollOffsetY: CGFloat = 0
@@ -19,7 +19,7 @@ class SpecialDatesDetailViewController: ExpandingTableViewController {
         configureNavBar()
         let image1 = #imageLiteral(resourceName: "BackgroundImage")
         tableView.backgroundView = UIImageView(image: image1)
-
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 140
     }
@@ -54,46 +54,46 @@ extension SpecialDatesDetailViewController {
 // MARK: Helpers
 
 extension SpecialDatesDetailViewController {
-  
-  fileprivate func configureNavBar() {
-    navigationItem.rightBarButtonItem?.image = navigationItem.rightBarButtonItem?.image!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-  }
+    
+    fileprivate func configureNavBar() {
+        navigationItem.rightBarButtonItem?.image = navigationItem.rightBarButtonItem?.image!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+    }
 }
 
 // MARK: Actions
 
 extension SpecialDatesDetailViewController {
-  
-  @IBAction func backButtonHandler(_ sender: AnyObject) {
-    // buttonAnimation
-    let viewControllers: [SpecialDatesViewController?] = navigationController?.viewControllers.map { $0 as? SpecialDatesViewController } ?? []
-
-    for viewController in viewControllers {
-      if let rightButton = viewController?.navigationItem.rightBarButtonItem as? AnimatingBarButton {
-        rightButton.animationSelected(false)
-      }
+    
+    @IBAction func backButtonHandler(_ sender: AnyObject) {
+        // buttonAnimation
+        let viewControllers: [SpecialDatesViewController?] = navigationController?.viewControllers.map { $0 as? SpecialDatesViewController } ?? []
+        
+        for viewController in viewControllers {
+            if let rightButton = viewController?.navigationItem.rightBarButtonItem as? AnimatingBarButton {
+                rightButton.animationSelected(false)
+            }
+        }
+        popTransitionAnimation()
     }
-    popTransitionAnimation()
-  }
 }
 
 // MARK: UIScrollViewDelegate
 
 extension SpecialDatesDetailViewController {
-  
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//    if scrollView.contentOffset.y < -25 {
-//      // buttonAnimation
-//      let viewControllers: [DemoViewController?] = navigationController?.viewControllers.map { $0 as? DemoViewController } ?? []
-//
-//      for viewController in viewControllers {
-//        if let rightButton = viewController?.navigationItem.rightBarButtonItem as? AnimatingBarButton {
-//          rightButton.animationSelected(false)
-//        }
-//      }
-//      popTransitionAnimation()
-//    }
     
-    scrollOffsetY = scrollView.contentOffset.y
-  }
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //    if scrollView.contentOffset.y < -25 {
+        //      // buttonAnimation
+        //      let viewControllers: [DemoViewController?] = navigationController?.viewControllers.map { $0 as? DemoViewController } ?? []
+        //
+        //      for viewController in viewControllers {
+        //        if let rightButton = viewController?.navigationItem.rightBarButtonItem as? AnimatingBarButton {
+        //          rightButton.animationSelected(false)
+        //        }
+        //      }
+        //      popTransitionAnimation()
+        //    }
+        
+        scrollOffsetY = scrollView.contentOffset.y
+    }
 }

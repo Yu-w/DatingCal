@@ -10,12 +10,12 @@ import UIKit
 import expanding_collection
 
 class SpecialDatesCollectionViewCell: BasePageCollectionCell {
-  
+    
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var customTitle: UILabel!
     @IBOutlet weak var subTitle: UILabel!
     @IBOutlet weak var backSummaryLabel: UILabel!
-  
+    
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -24,7 +24,7 @@ class SpecialDatesCollectionViewCell: BasePageCollectionCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-      
+        
         customTitle.layer.shadowRadius = 2
         customTitle.layer.shadowOffset = CGSize(width: 0, height: 3)
         customTitle.layer.shadowOpacity = 0.2

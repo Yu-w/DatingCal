@@ -52,7 +52,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 2
         return panGesture
-    }()
+        }()
     
     /// set status bar to white color
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -63,16 +63,16 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         super.viewDidLoad()
         
         self.setNeedsStatusBarAppearanceUpdate()
-
+        
         if UIDevice.current.model.hasPrefix("iPad") {
             self.calendarHeightConstraint.constant = 400
         }
         self.view.addGestureRecognizer(self.scopeGesture)
         self.addButton.layer.cornerRadius = self.addButton.layer.bounds.width / 2
-
+        
         calendarViewSetup()
         tableViewSetup()
-
+        
         // For UITest
         self.calendar.accessibilityIdentifier = "calendar"
     }
@@ -91,20 +91,20 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         _ = sequentialLogin.neverAppend {
             self.appDelegate.googleClient.ensureLogin(presenter: self).then { x -> Promise<Void> in
                 return self.appDelegate.googleCalendar.loadAll()
-            }.then { x -> Void in
-                debugPrint("Sign In finished.")
-                let userId = UserModel.getPrimaryUser(self.realmProvider)!.id
-                debugPrint("Google OAuth2 User ID = " + userId)
-                
-                Configurations.sharedInstance.currentIdString = userId
-                if Configurations.sharedInstance.birthDate(id: userId) == nil
-                    || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
-                    self.performSegue(withIdentifier: "goSetup", sender: self)
-                }
-            }.catch { err -> Void in
-                debugPrint("ERROR during Sign In: ", err)
-                self.showAlert("Error", "Cannot Login. Please re-enter the app. Reason: " + err.localizedDescription)
-                // TODO: provide a retry button
+                }.then { x -> Void in
+                    debugPrint("Sign In finished.")
+                    let userId = UserModel.getPrimaryUser(self.realmProvider)!.id
+                    debugPrint("Google OAuth2 User ID = " + userId)
+                    
+                    Configurations.sharedInstance.currentIdString = userId
+                    if Configurations.sharedInstance.birthDate(id: userId) == nil
+                        || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
+                        self.performSegue(withIdentifier: "goSetup", sender: self)
+                    }
+                }.catch { err -> Void in
+                    debugPrint("ERROR during Sign In: ", err)
+                    self.showAlert("Error", "Cannot Login. Please re-enter the app. Reason: " + err.localizedDescription)
+                    // TODO: provide a retry button
             }
         }
     }
@@ -124,7 +124,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         self.tableView.emptyDataSetDelegate = self
         self.tableView.tableFooterView = UIView()
     }
-
+    
     
     // MARK:- UIGestureRecognizerDelegate
     
