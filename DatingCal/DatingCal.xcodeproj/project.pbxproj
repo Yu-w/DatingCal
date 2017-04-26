@@ -35,7 +35,6 @@
 		88366A8D1EAE85CD00880F36 /* SpecialDatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A8A1EAE85CD00880F36 /* SpecialDatesViewController.swift */; };
 		88366A8F1EAE87C900880F36 /* ConfigurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A8E1EAE87C900880F36 /* ConfigurationHelper.swift */; };
 		88366A911EAEB64800880F36 /* KeyDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A901EAEB64800880F36 /* KeyDate.swift */; };
-		88366A931EAF061C00880F36 /* SpecialDatesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A921EAF061C00880F36 /* SpecialDatesStorage.swift */; };
 		88366A951EB0219000880F36 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A941EB0219000880F36 /* EventDetailViewController.swift */; };
 		88366A971EB0275900880F36 /* SpecialDatesDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A961EB0275900880F36 /* SpecialDatesDetailTableViewController.swift */; };
 		88366A9C1EB027D400880F36 /* AnimationBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A991EB027D400880F36 /* AnimationBarButton.swift */; };
@@ -109,7 +108,6 @@
 		88366A8A1EAE85CD00880F36 /* SpecialDatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecialDatesViewController.swift; path = DemoViewController/SpecialDatesViewController.swift; sourceTree = "<group>"; };
 		88366A8E1EAE87C900880F36 /* ConfigurationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationHelper.swift; sourceTree = "<group>"; };
 		88366A901EAEB64800880F36 /* KeyDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyDate.swift; sourceTree = "<group>"; };
-		88366A921EAF061C00880F36 /* SpecialDatesStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialDatesStorage.swift; sourceTree = "<group>"; };
 		88366A941EB0219000880F36 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		88366A961EB0275900880F36 /* SpecialDatesDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialDatesDetailTableViewController.swift; sourceTree = "<group>"; };
 		88366A991EB027D400880F36 /* AnimationBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationBarButton.swift; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 				88366A8A1EAE85CD00880F36 /* SpecialDatesViewController.swift */,
 				88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */,
 				88366A891EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib */,
-				88366A921EAF061C00880F36 /* SpecialDatesStorage.swift */,
 				88366A961EB0275900880F36 /* SpecialDatesDetailTableViewController.swift */,
 				883F727C1EB0492200D140EC /* SpecialDateDetailTableViewCell.swift */,
 				88D65D3E1EA7147500E80595 /* DatesGenerator.swift */,
@@ -582,7 +579,6 @@
 				4A2A228F1EA434A7001B6906 /* GoogleError.swift in Sources */,
 				88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */,
 				88F1041E1E9AE8EF0047F308 /* MainCalendarViewController.swift in Sources */,
-				88366A931EAF061C00880F36 /* SpecialDatesStorage.swift in Sources */,
 				88F104201E9AED300047F308 /* MainCalendarFSEx.swift in Sources */,
 				4AE954C71EADACBA00E6B224 /* SettingsUserCellView.swift in Sources */,
 				4AE954C51EAD9D3100E6B224 /* SettingsViewController.swift in Sources */,
