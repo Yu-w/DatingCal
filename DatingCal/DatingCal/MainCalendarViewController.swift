@@ -84,7 +84,6 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.selectedDate = Date()
     }
     
     private let sequentialLogin = SequentialPromise<Void>()
@@ -119,6 +118,7 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                     // TODO: provide a retry button
                 }.always {
                     self.hidePleaseWait()
+                    self.selectedDate = Date()
             }
         }
     }
