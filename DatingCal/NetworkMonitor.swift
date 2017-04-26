@@ -22,13 +22,18 @@ class NetworkMonitor {
     var commandsToReplay : Array<Replayer> = Array()
     let lockQueue = DispatchQueue(label: "DatingCal.NetworkMonitor")
     
+    var fakeNoInternet : Bool = false
+    func setFakeConnection(_ noInternet: Bool) {
+        fakeNoInternet = noInternet
+    }
+    
     /// This function should be called to examine any network error.
     ///   It finds out if we lost internet connection, and replay the
     ///   action later when there is connection.
     /// :param replayer: A function to replay the same command that
     ///   the failed promise was trying to execute.
     func handleNoInternet(_ replayer: @escaping Replayer) -> Bool {
-        if(Reachability.init()!.currentReachabilityStatus != .notReachable) {
+        if (Reachability.init()!.currentReachabilityStatus != .notReachable), !fakeNoInternet {
             return false
         }
         self.lockQueue.sync {

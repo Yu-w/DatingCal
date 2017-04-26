@@ -19,14 +19,38 @@ class GoogleTests : AsyncTests {
     var client = FakeHTTPClient()
     var realmProvider = FakeRealmProvider()
     
+    /// Add a default user to database without performing a real login.
     func addDefaultUser(_ userId: String) {
         let realm = realmProvider.realm()
+        let user = UserModel()
         try! realm.write {
-            let user = UserModel()
             user.id = userId
             user.name = "TEST"
             realm.add(user)
         }
+        user.setPrimaryUser(self.realmProvider)
+    }
+    
+    /// generate a new event template
+    /// useful if you want to create a new event.
+    func getDummyNewEvent() -> EventModel {
+        let wantedEvent = EventModel()
+        wantedEvent.summary = "ABC"
+        wantedEvent.desc = "TEST"
+        wantedEvent.startTime = Date()
+        wantedEvent.endTime = Date() + TimeInterval(Date().day)
+        return wantedEvent
+    }
+    
+    /// generate a new event template, and return it as HTTP Parameters
+    /// useful if you want to simulate getting existing events.
+    func getDummyEventParams() -> Parameters {
+        var wantedEvent : Parameters = [:]
+        wantedEvent["summary"] = "ABC"
+        wantedEvent["desc"] = "TEST"
+        wantedEvent["startTime"] = Date()
+        wantedEvent["endTime"] = Date() + TimeInterval(Date().day)
+        return wantedEvent
     }
     
     /// A helper function to fake APIs that create google calendar
