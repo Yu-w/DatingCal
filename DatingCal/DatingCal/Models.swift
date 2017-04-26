@@ -36,6 +36,15 @@ class UserModel : Object, GoogleParsable {
     dynamic var id: String = ""
     dynamic var name: String = ""
     
+    /// This is an internal state that links
+    ///   to this user's "DatingCal" calendar
+    dynamic var datingCalendar: CalendarModel?
+    
+    /// This is an internal state that links
+    ///   to any calendar owned by this person
+    ///   "DatingCal" must also be included.
+    var calendars = List<CalendarModel>()
+    
     /// This is a "GET-only" state
     private dynamic var _email: String = ""
     var email : String {
@@ -67,7 +76,7 @@ class UserModel : Object, GoogleParsable {
         return "id"
     }
     
-    /// Remove the current user from DB and delete its TOKENS from hard drive
+    /// Remove "self" from DB and delete its TOKENS from hard drive
     func remove(_ realmProvider: AbstractRealmProvider) {
         try? FileManager.default.removeItem(atPath: authStorage)
         let realm = realmProvider.realm()
@@ -76,6 +85,10 @@ class UserModel : Object, GoogleParsable {
             return
         }
         try? realm.write {
+            for cal in calendars {
+                realm.delete(cal.events)
+                realm.delete(cal)
+            }
             realm.delete(user)
             let primaryUser = realm.objects(UserModel.self).filter({x in x._isPrimary}).first
             if primaryUser == nil, let first = realm.objects(UserModel.self).first {
@@ -84,7 +97,14 @@ class UserModel : Object, GoogleParsable {
         }
     }
     
-    func setAsPrimaryUser(_ realmProvider: AbstractRealmProvider) {
+    /// This variable always returns the primary user.
+    static func getPrimaryUser(_ realmProvider: AbstractRealmProvider) -> UserModel? {
+        let realm = realmProvider.realm()
+        let primary = realm.objects(UserModel.self).filter({u in u.isPrimary}).first
+        return primary
+    }
+    
+    func setPrimaryUser(_ realmProvider: AbstractRealmProvider) {
         let realm = realmProvider.realm()
         let primaryUser = realm.objects(UserModel.self).filter({x in x._isPrimary})
         try? realm.write {
@@ -100,6 +120,8 @@ class UserModel : Object, GoogleParsable {
         _email = parseEmail(json)
         if originalId != id {
             _isPrimary = false
+            datingCalendar = nil
+            calendars = List<CalendarModel>()
         }
     }
     
@@ -136,6 +158,8 @@ class CalendarModel : Object, GoogleParsable {
     dynamic var bgColor: String? = nil
     dynamic var isPrimary: Bool = false
     var events = List<EventModel>()
+    
+    let owner = LinkingObjects(fromType: UserModel.self, property: "datingCalendar")
     
     override class func primaryKey() -> String? {
         return "id"
@@ -174,6 +198,8 @@ class EventModel : Object, GoogleParsable {
     dynamic var endTimeZone: String? = nil
     dynamic var keyDateType: String? = nil
     private dynamic var _recurrence: String? = nil
+    
+    let calendar = LinkingObjects(fromType: CalendarModel.self, property: "events")
     
     /// This indicates whether the event should be
     ///    sent to Google again, because it's not

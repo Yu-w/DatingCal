@@ -75,6 +75,7 @@ class GoogleCalendar {
                 parsed.parse(cal)
                 try! realm.write {
                     realm.add(parsed, update: true)
+                    UserModel.getPrimaryUser(self.realmProvider)!.calendars.append(parsed)
                 }
             }
         }
@@ -98,41 +99,59 @@ class GoogleCalendar {
         })
     }
     
+    typealias ThreadSafeCalendar = ThreadSafeReference<CalendarModel>
+    
+    /// Create the "DatingCal" calendar where we should all events created by DatingCal
+    ///   Calling this function twice will create duplicate calendars.
+    ///   This is a private helper function. Call getOurCalendar() instead.
+    private func createOurCalendar() -> Promise<ThreadSafeCalendar> {
+        let result = CalendarModel()
+        result.name = self.kNameOfOurCalendar;
+        return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { json -> ThreadSafeCalendar in
+            let result = CalendarModel()
+            result.parse(json)
+            let realm = self.realmProvider.realm()
+            try! realm.write {
+                realm.add(result, update:true)
+            }
+            return ThreadSafeReference(to: result)
+        }
+    }
+    
     /// Fetch and save all calendars and events.
     func loadAll() -> Promise<Void> {
         return loadAllCalendars().then { x in
+            return self.getOurCalendar().asVoid()
+        }.then { x in
             return self.loadAllEvents()
         }
     }
     
     private func getOurCalendarLocally() -> CalendarModel? {
-        let realm = self.realmProvider.realm()
-        let ourCalendars = realm.objects(CalendarModel.self).filter({cal in
-            cal.name == self.kNameOfOurCalendar
-        })
-        return ourCalendars.first
+        let user = UserModel.getPrimaryUser(self.realmProvider)
+        return user?.datingCalendar
     }
     
-    /// Get the calendar where we should all events created by DatingCal
-    func getOurCalendar() -> Promise<ThreadSafeReference<CalendarModel>> {
-        if let ans = getOurCalendarLocally() {
-            return Promise(value: ThreadSafeReference(to: ans))
-        }
-        return loadAllCalendars().then {
-            if let ans = self.getOurCalendarLocally() {
+    /// Get the "DatingCal" calendar where we should all events created by DatingCal
+    func getOurCalendar() -> Promise<ThreadSafeCalendar> {
+        return firstly { _ -> Promise<ThreadSafeCalendar> in
+            if let ans = getOurCalendarLocally() {
                 return Promise(value: ThreadSafeReference(to: ans))
             }
-            let result = CalendarModel()
-            result.name = self.kNameOfOurCalendar;
-            return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { json -> ThreadSafeReference<CalendarModel> in
-                let result = CalendarModel()
-                result.parse(json)
-                let realm = self.realmProvider.realm()
-                try! realm.write {
-                    realm.add(result, update:true)
+            return loadAllCalendars().then {
+                if let ans = self.getOurCalendarLocally() {
+                    return Promise(value: ThreadSafeReference(to: ans))
                 }
-                return ThreadSafeReference(to: result)
+                return self.createOurCalendar()
             }
+        }.then { ans -> ThreadSafeCalendar in
+            let realm = self.realmProvider.realm()
+            let calendar = realm.resolve(ans)!
+            try! realm.write {
+                UserModel.getPrimaryUser(self.realmProvider)!.datingCalendar = calendar
+                UserModel.getPrimaryUser(self.realmProvider)!.calendars.append(calendar)
+            }
+            return ThreadSafeReference(to: calendar)
         }
     }
     
