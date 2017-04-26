@@ -97,9 +97,8 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
             return
         }
         _ = sequentialLogin.neverAppend {
-            return self.appDelegate.googleClient.ensureLogin(presenter: self)
+            self.appDelegate.googleClient.ensureLogin(presenter: self)
                 .then { x -> Promise<Void> in
-                    self.showPleaseWait()
                     self.navigationItem.leftBarButtonItem?.isEnabled = false
                     return self.appDelegate.googleCalendar.loadAll()
                 }.then { x -> Void in
@@ -111,18 +110,16 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                     Configurations.sharedInstance.currentIdString = userId
                     if Configurations.sharedInstance.birthDate(id: userId) == nil
                         || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
-                        self.hidePleaseWait()
                         self.performSegue(withIdentifier: "goSetup", sender: self)
                     }
                 }.catch { err -> Void in
                     debugPrint("ERROR during Sign In: ", err)
                     self.showAlert("Error", "Cannot Login. Please re-enter the app. Reason: " + err.localizedDescription)
                     // TODO: provide a retry button
-                }.always {
-                    self.hidePleaseWait()
-                    self.navigationItem.leftBarButtonItem?.isEnabled = true
-                    self.selectedDate = Date()
-            }
+                }
+        }.always {
+            self.navigationItem.leftBarButtonItem?.isEnabled = true
+            self.selectedDate = Date()
         }
     }
     
