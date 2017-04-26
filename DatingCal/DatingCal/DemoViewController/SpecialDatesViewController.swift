@@ -158,7 +158,7 @@ extension SpecialDatesViewController {
             let index = (indexPath as NSIndexPath).row % items.count
             let item = items[index]
             vc.contents = SpecialDateContents[item.keyDateType!] ?? []
-            vc.title = item.keyDateType! ?? ""
+            vc.title = item.keyDateType ?? ""
             pushToViewController(vc)
             
             if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
