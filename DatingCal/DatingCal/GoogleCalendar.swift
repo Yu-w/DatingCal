@@ -63,11 +63,11 @@ class GoogleCalendar {
         return listCalendarLists().then { list -> Void in
             let list = list.array ?? []
             let realm = self.realmProvider.realm()
-            let listAsSet = NSMutableSet(array: list)
             let currUser = UserModel.getPrimaryUser(self.realmProvider)!
             
             for cal in realm.objects(CalendarModel.self) {
-                if !listAsSet.contains(where: {($0 as! CalendarModel).id==cal.id}), cal.owner.contains(currUser) {
+                if !list.contains(where: {$0["id"].string==cal.id}),
+                    cal.owner.contains(where: {$0.id==currUser.id}) {
                     try! realm.write {
                         realm.delete(cal)
                     }
