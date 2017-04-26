@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A28AEFA1E9C607F007665F0 /* Models.swift */; };
 		4A2A228F1EA434A7001B6906 /* GoogleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A228E1EA434A7001B6906 /* GoogleError.swift */; };
 		4A3E6BA41E9C3B7B00E1644A /* GoogleCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E6BA31E9C3B7B00E1644A /* GoogleCalendar.swift */; };
 		4A7758DC1E9B1D6900C1DDDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */; };
@@ -25,6 +24,10 @@
 		4AE954C71EADACBA00E6B224 /* SettingsUserCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954C61EADACBA00E6B224 /* SettingsUserCellView.swift */; };
 		4AE954CB1EAEB08700E6B224 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954CA1EAEB08700E6B224 /* EventTests.swift */; };
 		4AE954CD1EAEB16900E6B224 /* GoogleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954CC1EAEB16900E6B224 /* GoogleTests.swift */; };
+		4AE954D41EB060BB00E6B224 /* AbstractModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954D31EB060BB00E6B224 /* AbstractModels.swift */; };
+		4AE954D61EB060D200E6B224 /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954D51EB060D200E6B224 /* CalendarModel.swift */; };
+		4AE954D81EB060DD00E6B224 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954D71EB060DD00E6B224 /* UserModel.swift */; };
+		4AE954DA1EB0613800E6B224 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954D91EB0613800E6B224 /* EventModel.swift */; };
 		66BCFC77BDF4C3ABEB746EC7 /* Pods_DatingCalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D314118D80B2A41AEAE1A87E /* Pods_DatingCalTests.framework */; };
 		88366A8B1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */; };
 		88366A8C1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88366A891EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib */; };
@@ -80,7 +83,6 @@
 /* Begin PBXFileReference section */
 		14993FCCC749C5544529B988 /* Pods-DatingCal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCal/Pods-DatingCal.debug.xcconfig"; sourceTree = "<group>"; };
 		294C7979DC7819CEE71FD3A3 /* Pods-DatingCalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatingCalTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DatingCalTests/Pods-DatingCalTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4A28AEFA1E9C607F007665F0 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		4A2A228E1EA434A7001B6906 /* GoogleError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleError.swift; sourceTree = "<group>"; };
 		4A3E6BA31E9C3B7B00E1644A /* GoogleCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCalendar.swift; sourceTree = "<group>"; };
 		4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -96,6 +98,10 @@
 		4AE954C61EADACBA00E6B224 /* SettingsUserCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserCellView.swift; sourceTree = "<group>"; };
 		4AE954CA1EAEB08700E6B224 /* EventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
 		4AE954CC1EAEB16900E6B224 /* GoogleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleTests.swift; sourceTree = "<group>"; };
+		4AE954D31EB060BB00E6B224 /* AbstractModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractModels.swift; sourceTree = "<group>"; };
+		4AE954D51EB060D200E6B224 /* CalendarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
+		4AE954D71EB060DD00E6B224 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		4AE954D91EB0613800E6B224 /* EventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecialDatesCollectionViewCell.swift; path = DemoViewController/Cells/SpecialDatesCollectionViewCell.swift; sourceTree = "<group>"; };
 		88366A891EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SpecialDatesCollectionViewCell.xib; path = DemoViewController/Cells/SpecialDatesCollectionViewCell.xib; sourceTree = "<group>"; };
 		88366A8A1EAE85CD00880F36 /* SpecialDatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecialDatesViewController.swift; path = DemoViewController/SpecialDatesViewController.swift; sourceTree = "<group>"; };
@@ -174,12 +180,22 @@
 				4A3E6BA31E9C3B7B00E1644A /* GoogleCalendar.swift */,
 				4AC169111EA44602006F79E3 /* GoogleHTTPClient.swift */,
 				4A2A228E1EA434A7001B6906 /* GoogleError.swift */,
-				4A28AEFA1E9C607F007665F0 /* Models.swift */,
 				4AC522051EA6A49C00448202 /* NetworkMonitor.swift */,
 				4AC522011EA5C89A00448202 /* RealmProvider.swift */,
 				4AC522071EA6BBBA00448202 /* SequentialPromise.swift */,
 			);
 			name = GoogleHelpers;
+			sourceTree = "<group>";
+		};
+		4AE954D11EB0609E00E6B224 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4AE954D31EB060BB00E6B224 /* AbstractModels.swift */,
+				4AE954D51EB060D200E6B224 /* CalendarModel.swift */,
+				4AE954D71EB060DD00E6B224 /* UserModel.swift */,
+				4AE954D91EB0613800E6B224 /* EventModel.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		6DB00AF3EECCDBF857427B19 /* Frameworks */ = {
@@ -233,6 +249,7 @@
 		88F103EB1E9AE1D90047F308 /* DatingCal */ = {
 			isa = PBXGroup;
 			children = (
+				4AE954D11EB0609E00E6B224 /* Models */,
 				4A7758DF1E9BD0B100C1DDDB /* GoogleHelpers */,
 				4A7758DB1E9B1D6900C1DDDB /* GoogleService-Info.plist */,
 				88F103EC1E9AE1D90047F308 /* AppDelegate.swift */,
@@ -552,7 +569,7 @@
 				4AC522021EA5C89A00448202 /* RealmProvider.swift in Sources */,
 				88366A8F1EAE87C900880F36 /* ConfigurationHelper.swift in Sources */,
 				88D65D3F1EA7147500E80595 /* DatesGenerator.swift in Sources */,
-				4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */,
+				4AE954D41EB060BB00E6B224 /* AbstractModels.swift in Sources */,
 				88366A9D1EB027D400880F36 /* Rotatable.swift in Sources */,
 				88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */,
 				88D65D3D1EA6B29800E80595 /* Configurations.swift in Sources */,
@@ -574,11 +591,14 @@
 				88366A951EB0219000880F36 /* EventDetailViewController.swift in Sources */,
 				88D65D391E9F0BAB00E80595 /* AddEventViewController.swift in Sources */,
 				88366A8B1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift in Sources */,
+				4AE954D81EB060DD00E6B224 /* UserModel.swift in Sources */,
 				88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */,
 				4AC522061EA6A49C00448202 /* NetworkMonitor.swift in Sources */,
+				4AE954D61EB060D200E6B224 /* CalendarModel.swift in Sources */,
 				4AC169121EA44602006F79E3 /* GoogleHTTPClient.swift in Sources */,
 				883F727F1EB04CC300D140EC /* SpeicalDateContents.swift in Sources */,
 				88366A9C1EB027D400880F36 /* AnimationBarButton.swift in Sources */,
+				4AE954DA1EB0613800E6B224 /* EventModel.swift in Sources */,
 				4A7758E11E9BD0EB00C1DDDB /* AppAuthPromise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
