@@ -14,7 +14,6 @@ class SpecialDatesViewController: ExpandingViewController {
   
     typealias ItemInfo = (imageName: String, title: String)
     fileprivate var cellsIsOpen = [Bool]()
-//    fileprivate let items: [ItemInfo] = [("item0", "Boston"),("item1", "New York"),("item2", "San Francisco"),("item3", "Washington")]
     fileprivate var items: [EventModel] = [] {
         didSet {
             self.collectionView?.reloadData()
@@ -28,21 +27,31 @@ class SpecialDatesViewController: ExpandingViewController {
 
 extension SpecialDatesViewController {
   
-  override func viewDidLoad() {
-    itemSize = CGSize(width: 256, height: 335)
-    super.viewDidLoad()
+    /// set status bar to white color
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
-//    let realm = try! Realm()
-//    self.items = Array(realm.object(ofType: SpecialDatesStorage.self, forPrimaryKey: 0)!.dates)
-//    self.items = Array(realm.objects(EventModel.self).filter { $0.keyDateType != nil } )
-    self.items = DatesGenerator.sharedInstance.generateDates(birthDate: Configurations.sharedInstance.birthDate()!, relationshipDate: Configurations.sharedInstance.relationshipDate()!)
+    override func viewDidLoad() {
+        itemSize = CGSize(width: 256, height: 335)
+        super.viewDidLoad()
+
+        //    let realm = try! Realm()
+        //    self.items = Array(realm.object(ofType: SpecialDatesStorage.self, forPrimaryKey: 0)!.dates)
+        //    self.items = Array(realm.objects(EventModel.self).filter { $0.keyDateType != nil } )
+        self.items = DatesGenerator.sharedInstance.generateDates(birthDate: Configurations.sharedInstance.birthDate()!, relationshipDate: Configurations.sharedInstance.relationshipDate()!)
+        
+        registerCell()
+        fillCellIsOpeenArry()
+        addGestureToView(collectionView!)
+        configureNavBar()
+    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+    }
     
-    registerCell()
-    fillCellIsOpeenArry()
-    addGestureToView(collectionView!)
-//    configureNavBar()
-  }
 }
 
 // MARK: Helpers 
@@ -61,15 +70,21 @@ extension SpecialDatesViewController {
     }
   }
   
-//  fileprivate func getViewController() -> ExpandingTableViewController {
-//    let storyboard = UIStoryboard(storyboard: .Main)
-//    let toViewController: DemoTableViewController = storyboard.instantiateViewController()
-//    return toViewController
-//  }
+  fileprivate func getViewController() -> ExpandingTableViewController {
+    let storyboard = UIStoryboard(storyboard: .Main)
+    let toViewController: DemoTableViewController = storyboard.instantiateViewController()
+    return toViewController
+  }
   
-//  fileprivate func configureNavBar() {
-//    navigationItem.leftBarButtonItem?.image = navigationItem.leftBarButtonItem?.image!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-//  }
+  fileprivate func configureNavBar() {
+    let newBackButton = UIBarButtonItem(image: #imageLiteral(resourceName: "CloseButton"),
+                                        style: UIBarButtonItemStyle.plain,
+                                        target: self,
+                                        action: #selector(self.close(sender:)))
+    newBackButton.tintColor = UIColor.white
+    self.navigationItem.leftBarButtonItem = newBackButton
+    navigationItem.leftBarButtonItem?.image = navigationItem.leftBarButtonItem?.image!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+  }
 }
 
 /// MARK: Gesture
@@ -93,11 +108,11 @@ extension SpecialDatesViewController {
     guard let cell  = collectionView?.cellForItem(at: indexPath) as? SpecialDatesCollectionViewCell else { return }
     // double swipe Up transition
     if cell.isOpened == true && sender.direction == .up {
-//      pushToViewController(getViewController())
+      pushToViewController(getViewController())
       
-//      if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-//        rightButton.animationSelected(true)
-//      }
+      if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
+        rightButton.animationSelected(true)
+      }
     }
     
     let open = sender.direction == .up ? true : false
@@ -135,11 +150,11 @@ extension SpecialDatesViewController {
     if cell.isOpened == false {
       cell.cellIsOpen(true)
     } else {
-//      pushToViewController(getViewController())
+      pushToViewController(getViewController())
       
-//      if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-//        rightButton.animationSelected(true)
-//      }
+      if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
+        rightButton.animationSelected(true)
+      }
     }
   }
 }
@@ -154,4 +169,13 @@ extension SpecialDatesViewController {
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: SpecialDatesCollectionViewCell.self), for: indexPath)
   }
+}
+
+// MARK: Actions
+extension SpecialDatesViewController {
+
+    func close(sender: AnyObject) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
 }
