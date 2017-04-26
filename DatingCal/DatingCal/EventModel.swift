@@ -22,6 +22,7 @@ class EventModel : Object, GoogleParsable {
     dynamic var endDate: Date? = nil
     dynamic var endTime: Date? = nil
     dynamic var endTimeZone: String? = nil
+    dynamic var keyDateType: String? = nil
     private dynamic var _recurrence: String? = nil
     
     let calendar = LinkingObjects(fromType: CalendarModel.self, property: "events")
@@ -30,10 +31,6 @@ class EventModel : Object, GoogleParsable {
     ///    sent to Google again, because it's not
     ///    created in upstream yet.
     dynamic var shouldCreate: Bool = false
-    
-    /// This is an internal state added by Yu Wang
-    ///    Management of the state was added by Zhongzhi.
-    dynamic var keyDateType: String? = nil
     
     override class func primaryKey() -> String? {
         return "id"
@@ -104,7 +101,6 @@ class EventModel : Object, GoogleParsable {
             let realm = realmProvider.realm()
             let newEvent = realm.objects(EventModel.self).filter{x in x.id==self.id}.first
             shouldCreate = newEvent?.shouldCreate ?? false
-            keyDateType = newEvent?.keyDateType
         }
     }
     
@@ -112,7 +108,7 @@ class EventModel : Object, GoogleParsable {
     func createCopy(_ realmProvider: AbstractRealmProvider) -> EventModel {
         let ans = EventModel()
         var params = unParse()
-        params["id"] = id
+        params["id"] = ""
         ans.parse(JSON(params), realmProvider)
         return ans
     }

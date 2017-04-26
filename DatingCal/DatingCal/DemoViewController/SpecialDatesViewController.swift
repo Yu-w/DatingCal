@@ -35,18 +35,10 @@ extension SpecialDatesViewController {
         itemSize = CGSize(width: 256, height: 335)
         super.viewDidLoad()
         
-        let realmProvider = BusinessRealmProvider()
-        let realm = realmProvider.realm()
+        //    let realm = try! Realm()
         //    self.items = Array(realm.object(ofType: SpecialDatesStorage.self, forPrimaryKey: 0)!.dates)
-        if let user = UserModel.getPrimaryUser(realmProvider) {
-            self.items = Array(realm.objects(EventModel.self).filter {
-                guard let calendar = $0.calendar.first else {
-                    return false
-                }
-                return user.calendars.contains(calendar) && $0.keyDateType != nil
-            } )
-        }
-        //self.items = DatesGenerator.sharedInstance.generateDates(birthDate: Configurations.sharedInstance.birthDate()!, relationshipDate: Configurations.sharedInstance.relationshipDate()!)
+        //    self.items = Array(realm.objects(EventModel.self).filter { $0.keyDateType != nil } )
+        self.items = DatesGenerator.sharedInstance.generateDates(birthDate: Configurations.sharedInstance.birthDate()!, relationshipDate: Configurations.sharedInstance.relationshipDate()!)
         
         registerCell()
         fillCellIsOpeenArry()

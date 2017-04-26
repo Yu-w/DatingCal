@@ -182,14 +182,13 @@ class GoogleCalendar {
             return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .post, parameters: params)
         }.then { createdEvent -> ThreadSafeEvent in
             /// If successful, we store the results in DB.
-            let updatedEvent = event.createCopy(self.realmProvider)
-            updatedEvent.id = createdEvent["id"].string ?? ""
-            updatedEvent.parse(createdEvent, self.realmProvider)
+            let event = EventModel()
+            event.parse(createdEvent, self.realmProvider)
             let realm = self.realmProvider.realm()
             try! realm.write {
-                realm.add(updatedEvent, update:true)
+                realm.add(event, update:true)
             }
-            return ThreadSafeReference(to: updatedEvent)
+            return ThreadSafeReference(to: event)
         }.catch { err -> Void in
             /// Handle errors, especially if it's due to
             ///     Intenet connection issues
