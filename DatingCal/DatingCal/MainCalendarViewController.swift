@@ -82,16 +82,12 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
         self.calendar.accessibilityIdentifier = "calendar"
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     private let sequentialLogin = SequentialPromise<Void>()
     private let realmProvider = BusinessRealmProvider()
     var hasLoggedIn = false
-    
-    override func viewDidAppear(_ animated: Bool) {
-        // These lines ensure that the user is logged in
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)        // These lines ensure that the user is logged in
         //   and that his or her calendar has been synchronized
         self.selectedDate = Date()
         if self.hasLoggedIn {
@@ -106,13 +102,8 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                     debugPrint("Sign In finished.")
                     let userId = UserModel.getPrimaryUser(self.realmProvider)!.id
                     debugPrint("Google OAuth2 User ID = " + userId)
-                    
                     self.hasLoggedIn = true
-                    Configurations.sharedInstance.currentIdString = userId
-                    if Configurations.sharedInstance.birthDate(id: userId) == nil
-                        || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
-                        self.performSegue(withIdentifier: "goSetup", sender: self)
-                    }
+                    presentDateSetupViewIfNecessary(userId: userId)
                 }.catch { err -> Void in
                     debugPrint("ERROR during Sign In: ", err)
                     self.showAlert("Error", "Cannot Login. Please re-enter the app. Reason: " + err.localizedDescription)
@@ -120,6 +111,14 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                 }.always {
                     self.navigationItem.leftBarButtonItem?.isEnabled = true
             }
+        }
+    }
+    
+    func presentDateSetupViewIfNecessary(userId: String) {
+        Configurations.sharedInstance.currentIdString = userId
+        if Configurations.sharedInstance.birthDate(id: userId) == nil
+            || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
+            self.performSegue(withIdentifier: "goSetup", sender: self)
         }
     }
     
