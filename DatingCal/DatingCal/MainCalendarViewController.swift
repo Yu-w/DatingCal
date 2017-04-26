@@ -93,6 +93,7 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
     override func viewDidAppear(_ animated: Bool) {
         // These lines ensure that the user is logged in
         //   and that his or her calendar has been synchronized
+        self.selectedDate = Date()
         if self.hasLoggedIn {
             return
         }
@@ -120,7 +121,6 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                     self.navigationItem.leftBarButtonItem?.isEnabled = true
             }
         }
-        self.selectedDate = Date()
     }
     
     /// calendar setup
