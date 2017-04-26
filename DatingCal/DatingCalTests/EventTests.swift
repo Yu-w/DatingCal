@@ -33,12 +33,7 @@ class EventTests : GoogleTests {
             self.setClientForCreatingEvent(eventId)
         })
         
-        let wantedEvent = EventModel()
-        wantedEvent.summary = "ABC"
-        wantedEvent.desc = "TEST"
-        wantedEvent.startTime = Date()
-        wantedEvent.endTime = Date() + TimeInterval(Date().day)
-        
+        let wantedEvent = getDummyNewEvent()
         testPromise(googleCalendar.createEvent(wantedEvent).then { _ -> Void in
             /// Read from database to make sure calendar is cached
             let realm = self.realmProvider.realm()
@@ -61,11 +56,7 @@ class EventTests : GoogleTests {
         let userId = "345"
         
         var wantedEvents : [Parameters] = []
-        var wantedEvent : Parameters = [:]
-        wantedEvent["summary"] = "ABC"
-        wantedEvent["desc"] = "TEST"
-        wantedEvent["startTime"] = Date()
-        wantedEvent["endTime"] = Date() + TimeInterval(Date().day)
+        let wantedEvent = getDummyEventParams()
         for i in 1...10 {
             var copy = wantedEvent
             copy["id"] = "\(i)"
