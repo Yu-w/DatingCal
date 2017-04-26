@@ -72,7 +72,7 @@ extension SpecialDatesViewController {
   
   fileprivate func getViewController() -> ExpandingTableViewController {
     let storyboard = UIStoryboard(storyboard: .Main)
-    let toViewController: DemoTableViewController = storyboard.instantiateViewController()
+    let toViewController: SpecialDatesDetailViewController = storyboard.instantiateViewController()
     return toViewController
   }
   
@@ -150,7 +150,10 @@ extension SpecialDatesViewController {
     if cell.isOpened == false {
       cell.cellIsOpen(true)
     } else {
-      pushToViewController(getViewController())
+      let vc = getViewController() as! SpecialDatesDetailViewController
+      let index = (indexPath as NSIndexPath).row % items.count
+      vc.contents = SpecialDateContents[items[index].keyDateType!] ?? []
+      pushToViewController(vc)
       
       if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
         rightButton.animationSelected(true)
