@@ -103,7 +103,7 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                     let userId = UserModel.getPrimaryUser(self.realmProvider)!.id
                     debugPrint("Google OAuth2 User ID = " + userId)
                     self.hasLoggedIn = true
-                    presentDateSetupViewIfNecessary(userId: userId)
+                    self.presentDateSetupViewIfNecessary(userId: userId)
                 }.catch { err -> Void in
                     debugPrint("ERROR during Sign In: ", err)
                     self.showAlert("Error", "Cannot Login. Please re-enter the app. Reason: " + err.localizedDescription)
