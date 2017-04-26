@@ -32,10 +32,12 @@ class CalendarTests: GoogleTests {
         /// First, respond to 'list calendars' API
         setClientForCreatingCalendar(false, createdId, [])
         
-        testPromise(googleCalendar.getOurCalendar().then { calendarRef -> Void in
+        testPromise(googleCalendar.ensureOurCalendar().then { _ -> Void in
             /// Read from database to make sure calendar is cached
             let realm = self.realmProvider.realm()
-            let calendar = realm.resolve(calendarRef)!
+            let currUser = UserModel.getPrimaryUser(self.realmProvider)
+            let calendar = currUser?.datingCalendar
+            XCTAssertNotNil(calendar)
             let result = realm.objects(CalendarModel.self).filter({
                 cal in cal.name == wantedName
             })
@@ -44,7 +46,7 @@ class CalendarTests: GoogleTests {
             XCTAssertEqual(result.first!.name, wantedName)
             
             /// Examine returned calendar object
-            XCTAssertEqual(calendar, result.first!)
+            XCTAssertEqual(calendar!, result.first!)
         })
     }
     
@@ -58,16 +60,19 @@ class CalendarTests: GoogleTests {
         
         addDefaultUser(userId)
         setClientForCreatingCalendar(false, originalId, [])
-        testPromise(googleCalendar.getOurCalendar().then { calendarRef -> Promise<ThreadSafeReference<CalendarModel>> in
-            let realm = self.realmProvider.realm()
-            let calendar = realm.resolve(calendarRef)!
+        testPromise(googleCalendar.ensureOurCalendar().then { _ -> Promise<Void> in
+            /// Read from database to make sure calendar is cached
+            let currUser = UserModel.getPrimaryUser(self.realmProvider)
+            let _calendar = currUser?.datingCalendar
+            let calendar = _calendar!
+            XCTAssertNotNil(calendar)
             XCTAssertEqual(calendar.id, originalId)
             
             /// Try calling getOurCalendar() again
             var existingCalendar = calendar.unParse()
             existingCalendar["id"] = calendar.id
             self.setClientForCreatingCalendar(true, createdId, [existingCalendar])
-            return self.googleCalendar.getOurCalendar()
+            return self.googleCalendar.ensureOurCalendar()
         })
     }
     
@@ -86,6 +91,6 @@ class CalendarTests: GoogleTests {
             "summary": self.googleCalendar.kNameOfOurCalendar
             ]])
         
-        testPromise(googleCalendar.getOurCalendar())
+        testPromise(googleCalendar.ensureOurCalendar())
     }
 }
