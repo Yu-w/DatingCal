@@ -22,12 +22,13 @@ class GoogleTests : AsyncTests {
     /// Add a default user to database without performing a real login.
     func addDefaultUser(_ userId: String) {
         let realm = realmProvider.realm()
+        let user = UserModel()
         try! realm.write {
-            let user = UserModel()
             user.id = userId
             user.name = "TEST"
             realm.add(user)
         }
+        user.setPrimaryUser(self.realmProvider)
     }
     
     /// generate a new event template

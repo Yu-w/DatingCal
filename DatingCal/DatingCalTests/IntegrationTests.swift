@@ -93,9 +93,9 @@ class IntegrationTests : GoogleTests {
     ///  will be deleted upon logout
     /// Specifically, we log out the current user.
     func testMultiUserEventsWillBeDeleted1A() {
-        let calendarId = "123"
-        let eventId = "234"
-        let userId = "345"
+        let calendarId = "123B"
+        let eventId = "234B"
+        let userId = "345B"
         
         addDefaultUser(userId)
         
@@ -105,8 +105,22 @@ class IntegrationTests : GoogleTests {
         })
         
         let wantedEvent = getDummyNewEvent()
-        testPromise(googleCalendar.createEvent(wantedEvent).then { _ -> Void in
-            self.testDeletingEvents([eventId], [calendarId])
+        testPromise(googleCalendar.createEvent(wantedEvent).then { _ -> Promise<Void> in
+            let calendarId = "123A"
+            let eventId = "234A"
+            let userId = "345A"
+            
+            self.addDefaultUser(userId)
+            
+            /// First, respond to 'list calendars' API
+            self.setClientForCreatingCalendar(false, calendarId, [], {
+                self.setClientForCreatingEvent(eventId)
+            })
+            
+            let wantedEvent = self.getDummyNewEvent()
+            return self.googleCalendar.createEvent(wantedEvent).then { _ -> Void in
+                self.testDeletingEvents([eventId], [calendarId])
+            }
         })
     }
     
@@ -115,15 +129,15 @@ class IntegrationTests : GoogleTests {
     ///  will be deleted upon logout
     /// Specifically, we log out the current user.
     func testMultiUserEventsWillBeDeleted2A() {
-        let calendarId = "123"
-        let userId = "345"
+        let calendarId = "123B"
+        let userId = "345B"
         var eventIds : [String] = []
         
         var wantedEvents : [Parameters] = []
         let wantedEvent = getDummyEventParams()
         for i in 1...10 {
             var copy = wantedEvent
-            let id = "\(i)"
+            let id = "\(i)B"
             copy["id"] = id
             eventIds.append(id)
             wantedEvents.append(wantedEvent)
@@ -133,8 +147,28 @@ class IntegrationTests : GoogleTests {
         
         self.setClientForListingEvents(wantedEvents, true)
         
-        testPromise(googleCalendar.listEventLists(calendarId).then { _ -> Void in
-            self.testDeletingEvents(eventIds, [calendarId])
+        testPromise(googleCalendar.listEventLists(calendarId).then { _ -> Promise<Void> in
+            let calendarId = "123A"
+            let userId = "345A"
+            var eventIds : [String] = []
+            
+            var wantedEvents : [Parameters] = []
+            let wantedEvent = self.getDummyEventParams()
+            for i in 1...10 {
+                var copy = wantedEvent
+                let id = "\(i)A"
+                copy["id"] = id
+                eventIds.append(id)
+                wantedEvents.append(wantedEvent)
+            }
+            
+            self.addDefaultUser(userId)
+            
+            self.setClientForListingEvents(wantedEvents, true)
+            
+            return self.googleCalendar.listEventLists(calendarId).then { _ -> Void in
+                self.testDeletingEvents(eventIds, [calendarId])
+            }
         })
     }
 }
