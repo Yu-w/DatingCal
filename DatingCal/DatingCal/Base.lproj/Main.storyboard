@@ -575,7 +575,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="CnH-MG-dne">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZ0-XP-ahx">
                                 <rect key="frame" x="172" y="626.5" width="31" height="20.5"/>
@@ -586,9 +586,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="CnH-MG-dne" firstAttribute="top" secondItem="3sa-hd-wAq" secondAttribute="bottom" constant="-44" id="Gfr-Jk-oys"/>
                             <constraint firstItem="Nc2-t1-3Qv" firstAttribute="top" secondItem="CnH-MG-dne" secondAttribute="bottom" id="Pz8-yU-lE0"/>
                             <constraint firstItem="Nc2-t1-3Qv" firstAttribute="top" secondItem="iZ0-XP-ahx" secondAttribute="bottom" constant="20" id="TpU-ed-usz"/>
+                            <constraint firstItem="CnH-MG-dne" firstAttribute="top" secondItem="QK4-0A-TRg" secondAttribute="top" id="Xpz-XI-eZI"/>
                             <constraint firstItem="iZ0-XP-ahx" firstAttribute="centerX" secondItem="QK4-0A-TRg" secondAttribute="centerX" id="eCy-74-B9U"/>
                             <constraint firstItem="CnH-MG-dne" firstAttribute="leading" secondItem="QK4-0A-TRg" secondAttribute="leading" id="gbb-Gf-2Hy"/>
                             <constraint firstAttribute="trailing" secondItem="CnH-MG-dne" secondAttribute="trailing" id="oto-Sw-0FD"/>
@@ -616,12 +616,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NT5-cd-a2K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2521" y="-914"/>
+            <point key="canvasLocation" x="2520.8000000000002" y="-914.392803598201"/>
         </scene>
         <!--Special Dates Detail View Controller-->
         <scene sceneID="qhG-Ye-GZh">
             <objects>
-                <tableViewController storyboardIdentifier="SpecialDatesDetailViewController" id="6Cl-8t-xZX" customClass="SpecialDatesDetailViewController" customModule="DatingCal" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SpecialDatesDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="6Cl-8t-xZX" customClass="SpecialDatesDetailViewController" customModule="DatingCal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="h6n-Vb-GcR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
