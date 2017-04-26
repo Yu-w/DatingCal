@@ -20,6 +20,26 @@ class IntegrationTests : GoogleTests {
         return GoogleCalendar(self.client, self.realmProvider)
     }()
     
+    /// This is a helper function that tests whether removing a user will delete its events
+    /// :param shouldDeleteEvents: pass in the ids of events that should be deleted
+    /// :param shouldDeleteCalendars: pass in the ids of calendars that should be deleted
+    func testDeletingEvents(_ shouldDeleteEvents: [String], _ shouldDeleteCalendars: [String]) -> Void {
+        guard let user = UserModel.getPrimaryUser(self.realmProvider) else {
+            XCTFail()
+            return
+        }
+        let originalUserId = user.id
+        user.remove(self.realmProvider)
+        let realm = self.realmProvider.realm()
+        XCTAssertEqual(realm.objects(UserModel.self).filter{$0.id==originalUserId}.count, 0)
+        XCTAssertEqual(realm.objects(CalendarModel.self).filter{ calendar in
+            shouldDeleteCalendars.contains(where: {$0 == calendar.id})
+        }.count, 0)
+        XCTAssertEqual(realm.objects(EventModel.self).filter{ event in
+            shouldDeleteEvents.contains(where: {$0 == event.id})
+        }.count, 0)
+    }
+    
     /// Test single-user functionalities
     /// Test that events created with "createEvents"
     ///  will be deleted upon logout
@@ -37,15 +57,7 @@ class IntegrationTests : GoogleTests {
         
         let wantedEvent = getDummyNewEvent()
         testPromise(googleCalendar.createEvent(wantedEvent).then { _ -> Void in
-            guard let user = UserModel.getPrimaryUser(self.realmProvider) else {
-                XCTFail()
-                return
-            }
-            user.remove(self.realmProvider)
-            let realm = self.realmProvider.realm()
-            XCTAssertEqual(realm.objects(UserModel.self).count, 0)
-            XCTAssertEqual(realm.objects(CalendarModel.self).count, 0)
-            XCTAssertEqual(realm.objects(EventModel.self).count, 0)
+            self.testDeletingEvents([eventId], [calendarId])
         })
     }
     
@@ -55,12 +67,15 @@ class IntegrationTests : GoogleTests {
     func singleUserEventsWillBeDeleted2() {
         let calendarId = "123"
         let userId = "345"
+        var eventIds : [String] = []
         
         var wantedEvents : [Parameters] = []
         let wantedEvent = getDummyEventParams()
         for i in 1...10 {
             var copy = wantedEvent
-            copy["id"] = "\(i)"
+            let id = "\(i)"
+            copy["id"] = id
+            eventIds.append(id)
             wantedEvents.append(wantedEvent)
         }
         
@@ -68,16 +83,8 @@ class IntegrationTests : GoogleTests {
         
         self.setClientForListingEvents(wantedEvents, true)
         
-        testPromise(googleCalendar.listEventLists(calendarId).then { list -> Void in
-            guard let user = UserModel.getPrimaryUser(self.realmProvider) else {
-                XCTFail()
-                return
-            }
-            user.remove(self.realmProvider)
-            let realm = self.realmProvider.realm()
-            XCTAssertEqual(realm.objects(UserModel.self).count, 0)
-            XCTAssertEqual(realm.objects(CalendarModel.self).count, 0)
-            XCTAssertEqual(realm.objects(EventModel.self).count, 0)
+        testPromise(googleCalendar.listEventLists(calendarId).then { _ -> Void in
+            self.testDeletingEvents(eventIds, [calendarId])
         })
     }
 }
