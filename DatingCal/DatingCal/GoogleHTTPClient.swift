@@ -52,7 +52,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
                          parameters: nil)
         }.then { json -> Void in
             let ans = UserModel()
-            ans.parse(json)
+            ans.parse(json, self.realmProvider)
             let realm = self.realmProvider.realm()
             try! realm.write {
                 realm.add(ans, update: true)

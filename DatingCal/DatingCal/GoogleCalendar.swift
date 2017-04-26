@@ -61,9 +61,10 @@ class GoogleCalendar {
             let list = list.array ?? []
             let realm = self.realmProvider.realm()
             let listAsSet = NSMutableSet(array: list)
+            let currUser = UserModel.getPrimaryUser(self.realmProvider)!
             
             for cal in realm.objects(CalendarModel.self) {
-                if !listAsSet.contains(cal) {
+                if !listAsSet.contains(cal), cal.owner.contains(currUser) {
                     try! realm.write {
                         realm.delete(cal)
                     }
@@ -72,7 +73,7 @@ class GoogleCalendar {
             
             for cal in list {
                 let parsed = CalendarModel()
-                parsed.parse(cal)
+                parsed.parse(cal, self.realmProvider)
                 try! realm.write {
                     realm.add(parsed, update: true)
                     UserModel.getPrimaryUser(self.realmProvider)!.calendars.append(parsed)
@@ -84,12 +85,15 @@ class GoogleCalendar {
     /// Fetch and save all events. This will not sync new calendars.
     private func loadAllEvents() -> Promise<Void> {
         let realm = self.realmProvider.realm()
-        return when(fulfilled: realm.objects(CalendarModel.self).map { cal in
+        let currUser = UserModel.getPrimaryUser(self.realmProvider)!
+        return when(fulfilled: realm.objects(CalendarModel.self).filter{ cal in
+            cal.owner.contains(currUser)
+        }.map { cal in
             return listEventLists(cal.id).then { list -> Void in
                 let realm = self.realmProvider.realm()
                 for event in list {
                     let parsed = EventModel()
-                    parsed.parse(event)
+                    parsed.parse(event, self.realmProvider)
                     try! realm.write {
                         realm.add(parsed, update: true)
                         cal.events.append(parsed)
@@ -109,7 +113,7 @@ class GoogleCalendar {
         result.name = self.kNameOfOurCalendar;
         return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { json -> ThreadSafeCalendar in
             let result = CalendarModel()
-            result.parse(json)
+            result.parse(json, self.realmProvider)
             let realm = self.realmProvider.realm()
             try! realm.write {
                 realm.add(result, update:true)
@@ -167,7 +171,7 @@ class GoogleCalendar {
         }.then { createdEvent -> Void in
             /// If successful, we store the results in DB.
             let event = EventModel()
-            event.parse(createdEvent)
+            event.parse(createdEvent, self.realmProvider)
             let realm = self.realmProvider.realm()
             try! realm.write {
                 realm.add(event, update:true)
@@ -178,7 +182,7 @@ class GoogleCalendar {
             
             // Need to make a copy of the current event
             // to prevent threading issues
-            let eventCopy = event.createCopy()
+            let eventCopy = event.createCopy(self.realmProvider)
             
             let realm = self.realmProvider.realm()
             try! realm.write {
