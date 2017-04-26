@@ -12,6 +12,8 @@ import RealmSwift
 import SwiftDate
 import Alamofire
 
+let kNameOfOurCalendar = "DatingCal calendar";
+
 class CalendarModel : Object, GoogleParsable {
 
     dynamic var id: String = ""
@@ -46,6 +48,28 @@ class CalendarModel : Object, GoogleParsable {
             let realm = realmProvider.realm()
             let newCalendar = realm.objects(CalendarModel.self).filter{x in x.id==self.id}.first
             events = newCalendar?.events ?? List<EventModel>()
+        }
+    }
+    
+    /// This always returns the primary "DatingCal" calendar.
+    static func getPrimary(_ realmProvider: AbstractRealmProvider) -> CalendarModel? {
+        let currUser = UserModel.getPrimaryUser(realmProvider)
+        return currUser?.datingCalendar
+    }
+    
+    /// This will add the "self" calendar to the current user.
+    ///   It will also take care of "DatingCal" calendar.
+    func addToPrimaryUser(_ realmProvider: AbstractRealmProvider) {
+        let realm = realmProvider.realm()
+        try? realm.write {
+            let user = UserModel.getPrimaryUser(realmProvider)!
+            if !user.calendars.contains(where: {x in x.id==self.id}) {
+                user.calendars.append(self)
+            }
+            
+            if self.name == kNameOfOurCalendar {
+                user.datingCalendar = self
+            }
         }
     }
 }

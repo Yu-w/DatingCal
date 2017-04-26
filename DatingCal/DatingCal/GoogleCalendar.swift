@@ -21,7 +21,6 @@ class GoogleCalendar {
     
     let client: AbstractHTTPClient
     let realmProvider : AbstractRealmProvider
-    let kNameOfOurCalendar = "DatingCal calendar";
     
     init(_ client: AbstractHTTPClient, _ realmProvider: AbstractRealmProvider) {
         self.client = client
@@ -79,14 +78,9 @@ class GoogleCalendar {
                 parsed.parse(cal, self.realmProvider)
                 try! realm.write {
                     realm.add(parsed, update: true)
-                    let user = UserModel.getPrimaryUser(self.realmProvider)!
-                    if !user.calendars.contains(where: {x in x.id==parsed.id}) {
-                        user.calendars.append(parsed)
-                    }
-                    if parsed.name == self.kNameOfOurCalendar {
-                        user.datingCalendar = parsed
-                    }
                 }
+                
+                parsed.addToPrimaryUser(self.realmProvider)
             }
         }
     }
@@ -119,7 +113,7 @@ class GoogleCalendar {
     ///   This is a private helper function. Call ensureOurCalendar() instead.
     private func createOurCalendar() -> Promise<ThreadSafeCalendar> {
         let result = CalendarModel()
-        result.name = self.kNameOfOurCalendar;
+        result.name = kNameOfOurCalendar;
         return self.client.request("https://www.googleapis.com/calendar/v3/calendars", method: .post, parameters: result.unParse()).then { json -> ThreadSafeCalendar in
             let result = CalendarModel()
             result.parse(json, self.realmProvider)
@@ -140,19 +134,14 @@ class GoogleCalendar {
         }
     }
     
-    private func getOurCalendarLocally() -> CalendarModel? {
-        let user = UserModel.getPrimaryUser(self.realmProvider)
-        return user?.datingCalendar
-    }
-    
     /// Get the "DatingCal" calendar where we should all events created by DatingCal
     func ensureOurCalendar() -> Promise<Void> {
         return firstly { _ -> Promise<ThreadSafeCalendar> in
-            if let ans = getOurCalendarLocally() {
+            if let ans = CalendarModel.getPrimary(self.realmProvider) {
                 return Promise(value: ThreadSafeReference(to: ans))
             }
             return loadAllCalendars().then {
-                if let ans = self.getOurCalendarLocally() {
+                if let ans = CalendarModel.getPrimary(self.realmProvider) {
                     return Promise(value: ThreadSafeReference(to: ans))
                 }
                 return self.createOurCalendar()
@@ -160,13 +149,7 @@ class GoogleCalendar {
         }.then { ans -> ThreadSafeCalendar in
             let realm = self.realmProvider.realm()
             let calendar = realm.resolve(ans)!
-            try! realm.write {
-                let user = UserModel.getPrimaryUser(self.realmProvider)!
-                user.datingCalendar = calendar
-                if !user.calendars.contains(where: {x in x.id==calendar.id}) {
-                    user.calendars.append(calendar)
-                }
-            }
+            calendar.addToPrimaryUser(self.realmProvider)
             return ThreadSafeReference(to: calendar)
         }.asVoid()
     }
@@ -175,16 +158,14 @@ class GoogleCalendar {
     func createEvent(_ event: EventModel) -> Promise<ThreadSafeEvent> {
         return ensureOurCalendar().then { _ -> Promise<JSON> in
             /// Send requests to Google
-            let currUser = UserModel.getPrimaryUser(self.realmProvider)
-            let ourCalendar = currUser!.datingCalendar!
+            let ourCalendar = CalendarModel.getPrimary(self.realmProvider)!
             let encodedId : String = ourCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
             let params = event.unParse()
             return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .post, parameters: params)
         }.then { createdEvent -> ThreadSafeEvent in
             /// If successful, we store the results in DB.
             let event = EventModel()
-            let currUser = UserModel.getPrimaryUser(self.realmProvider)
-            let ourCalendar = currUser!.datingCalendar!
+            let ourCalendar = CalendarModel.getPrimary(self.realmProvider)!
             event.parse(createdEvent, self.realmProvider)
             let realm = self.realmProvider.realm()
             try! realm.write {

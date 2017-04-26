@@ -25,7 +25,7 @@ class CalendarTests: GoogleTests {
     func testGetOurCalendarWillCreateCalendar() {
         let createdId = "123"
         let userId = "345"
-        let wantedName = googleCalendar.kNameOfOurCalendar
+        let wantedName = kNameOfOurCalendar
         
         addDefaultUser(userId)
         
@@ -35,8 +35,7 @@ class CalendarTests: GoogleTests {
         testPromise(googleCalendar.ensureOurCalendar().then { _ -> Void in
             /// Read from database to make sure calendar is cached
             let realm = self.realmProvider.realm()
-            let currUser = UserModel.getPrimaryUser(self.realmProvider)
-            let calendar = currUser?.datingCalendar
+            let calendar = CalendarModel.getPrimary(self.realmProvider)
             XCTAssertNotNil(calendar)
             let result = realm.objects(CalendarModel.self).filter({
                 cal in cal.name == wantedName
@@ -62,8 +61,7 @@ class CalendarTests: GoogleTests {
         setClientForCreatingCalendar(false, originalId, [])
         testPromise(googleCalendar.ensureOurCalendar().then { _ -> Promise<Void> in
             /// Read from database to make sure calendar is cached
-            let currUser = UserModel.getPrimaryUser(self.realmProvider)
-            let _calendar = currUser?.datingCalendar
+            let _calendar = CalendarModel.getPrimary(self.realmProvider)
             let calendar = _calendar!
             XCTAssertNotNil(calendar)
             XCTAssertEqual(calendar.id, originalId)
@@ -88,7 +86,7 @@ class CalendarTests: GoogleTests {
         addDefaultUser(userId)
         setClientForCreatingCalendar(true, createdId, [[
             "id": originalId,
-            "summary": self.googleCalendar.kNameOfOurCalendar
+            "summary": kNameOfOurCalendar
             ]])
         
         testPromise(googleCalendar.ensureOurCalendar())
