@@ -36,18 +36,18 @@ class DatesSetupViewController: UIViewController {
         let birthDate = firstDatePicker.date
         let relationshipDate = secondDatePicker.date
         let events = DatesGenerator.sharedInstance.generateDates(birthDate: birthDate, relationshipDate: relationshipDate)
-        let specialDatesStorage = SpecialDatesStorage()
-        specialDatesStorage.dates.append(objectsIn: events)
-        
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(specialDatesStorage, update: true)
-        }
-        self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<Void> in
-            when(fulfilled: events.map { event in
-                self.appDelegate.googleCalendar.createEvent(event)
+        self.appDelegate.googleCalendar.getOurCalendar().then { _ -> Promise<[ThreadSafeEvent]> in
+            return when(fulfilled: events.map { event -> Promise<ThreadSafeEvent> in
+                return self.appDelegate.googleCalendar.createEvent(event)
             })
-        }.then { _ in
+        }.then { createdEvents -> Void in
+            let realm = try! Realm()
+            let eventsInRealm = createdEvents.map{x in realm.resolve(x)!}
+            try! realm.write {
+                let specialDatesStorage = SpecialDatesStorage()
+                realm.add(specialDatesStorage, update: true)
+                specialDatesStorage.dates.append(objectsIn: eventsInRealm)
+            }
             self.dismiss(animated: true, completion: nil)
         }.catch { err in
             self.showAlert("Error", "Cannot create events. Reason: " + err.localizedDescription)

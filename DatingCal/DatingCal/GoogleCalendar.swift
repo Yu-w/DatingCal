@@ -12,6 +12,9 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
+typealias ThreadSafeCalendar = ThreadSafeReference<CalendarModel>
+typealias ThreadSafeEvent = ThreadSafeReference<EventModel>
+
 /// This is a HTTP client for Google Calendar API
 /// Currently, the official API doesn't work well with Swift 3
 class GoogleCalendar {
@@ -111,8 +114,6 @@ class GoogleCalendar {
         })
     }
     
-    typealias ThreadSafeCalendar = ThreadSafeReference<CalendarModel>
-    
     /// Create the "DatingCal" calendar where we should all events created by DatingCal
     ///   Calling this function twice will create duplicate calendars.
     ///   This is a private helper function. Call getOurCalendar() instead.
@@ -171,7 +172,7 @@ class GoogleCalendar {
     }
     
     /// Create any kind of event in the 'DatingCal' calendar
-    func createEvent(_ event: EventModel) -> Promise<Void> {
+    func createEvent(_ event: EventModel) -> Promise<ThreadSafeEvent> {
         return getOurCalendar().then { calendarRef -> Promise<JSON> in
             /// Send requests to Google
             let realm = self.realmProvider.realm()
@@ -179,7 +180,7 @@ class GoogleCalendar {
             let encodedId : String = ourCalendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
             let params = event.unParse()
             return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)/events", method: .post, parameters: params)
-        }.then { createdEvent -> Void in
+        }.then { createdEvent -> ThreadSafeEvent in
             /// If successful, we store the results in DB.
             let event = EventModel()
             event.parse(createdEvent, self.realmProvider)
@@ -187,7 +188,8 @@ class GoogleCalendar {
             try! realm.write {
                 realm.add(event, update:true)
             }
-        }.recover { err -> Void in
+            return ThreadSafeReference(to: event)
+        }.catch { err -> Void in
             /// Handle errors, especially if it's due to
             ///     Intenet connection issues
             
@@ -200,11 +202,8 @@ class GoogleCalendar {
                 event.shouldCreate = true
                 realm.add(event, update:true)
             }
-            let hasNoInternet = NetworkMonitor.shared.handleNoInternet {
+            _ = NetworkMonitor.shared.handleNoInternet {
                 self.createEvent(eventCopy).asVoid()
-            }
-            if !hasNoInternet {
-                throw err
             }
         }
     }
