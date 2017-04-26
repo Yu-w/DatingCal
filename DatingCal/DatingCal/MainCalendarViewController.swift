@@ -11,7 +11,7 @@ import FSCalendar
 import PromiseKit
 import RealmSwift
 
-class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate {
+class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var calendar: FSCalendar!
@@ -89,7 +89,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
         // These lines ensure that the user is logged in
         //   and that his or her calendar has been synchronized
         _ = sequentialLogin.neverAppend {
-            self.appDelegate.googleClient.ensureLogin(presenter: self).then { x -> Promise<Void> in
+            return self.appDelegate.googleClient.ensureLogin(presenter: self).then { x -> Promise<Void> in
                 return self.appDelegate.googleCalendar.loadAll()
             }.then { x -> Void in
                 debugPrint("Sign In finished.")

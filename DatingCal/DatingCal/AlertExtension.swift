@@ -18,3 +18,26 @@ extension UIViewController {
         self.present(alertVC, animated: true)
     }
 }
+
+class UIViewControllerWithWaitAlerts : UIViewController {
+    
+    private var alertPleaseWait : UIAlertController?
+    
+    func showPleaseWait() {
+        if alertPleaseWait != nil {
+            return
+        }
+        let alertVC = UIAlertController(title: "Please wait...", message: nil, preferredStyle: .alert)
+        self.present(alertVC, animated: true)
+        alertPleaseWait = alertVC
+    }
+    
+    func hidePleaseWait() {
+        guard let alert = alertPleaseWait else {
+            return
+        }
+        alert.dismiss(animated: true)
+        alertPleaseWait = nil
+    }
+    
+}

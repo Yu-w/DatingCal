@@ -85,7 +85,7 @@ class UserModel : Object, GoogleParsable {
             return
         }
         try? realm.write {
-            for cal in calendars {
+            for cal in user.calendars {
                 realm.delete(cal.events)
                 realm.delete(cal)
             }
