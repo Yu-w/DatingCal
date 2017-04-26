@@ -101,7 +101,14 @@ class UserModel : Object, GoogleParsable {
     static func getPrimaryUser(_ realmProvider: AbstractRealmProvider) -> UserModel? {
         let realm = realmProvider.realm()
         let primary = realm.objects(UserModel.self).filter({u in u.isPrimary}).first
-        return primary
+        if primary != nil {
+            return primary
+        }
+        let user = realm.objects(UserModel.self).first
+        try! realm.write {
+            user?._isPrimary = true
+        }
+        return user
     }
     
     func setPrimaryUser(_ realmProvider: AbstractRealmProvider) {

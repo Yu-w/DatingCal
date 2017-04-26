@@ -19,6 +19,16 @@ class GoogleTests : AsyncTests {
     var client = FakeHTTPClient()
     var realmProvider = FakeRealmProvider()
     
+    func addDefaultUser(_ userId: String) {
+        let realm = realmProvider.realm()
+        try! realm.write {
+            let user = UserModel()
+            user.id = userId
+            user.name = "TEST"
+            realm.add(user)
+        }
+    }
+    
     /// A helper function to fake APIs that create google calendar
     /// :param forbidCreation: if true, the test case will fail if any new calendar is created
     /// :param createdId: the id of any created calendar

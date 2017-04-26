@@ -76,7 +76,13 @@ class GoogleCalendar {
                 parsed.parse(cal, self.realmProvider)
                 try! realm.write {
                     realm.add(parsed, update: true)
-                    UserModel.getPrimaryUser(self.realmProvider)!.calendars.append(parsed)
+                    let user = UserModel.getPrimaryUser(self.realmProvider)!
+                    if !user.calendars.contains(where: {x in x.id==parsed.id}) {
+                        user.calendars.append(parsed)
+                    }
+                    if parsed.name == self.kNameOfOurCalendar {
+                        user.datingCalendar = parsed
+                    }
                 }
             }
         }
@@ -85,9 +91,9 @@ class GoogleCalendar {
     /// Fetch and save all events. This will not sync new calendars.
     private func loadAllEvents() -> Promise<Void> {
         let realm = self.realmProvider.realm()
-        let currUser = UserModel.getPrimaryUser(self.realmProvider)!
         return when(fulfilled: realm.objects(CalendarModel.self).filter{ cal in
-            cal.owner.contains(currUser)
+            let currUser = UserModel.getPrimaryUser(self.realmProvider)!
+            return cal.owner.contains(currUser)
         }.map { cal in
             return listEventLists(cal.id).then { list -> Void in
                 let realm = self.realmProvider.realm()
@@ -96,7 +102,9 @@ class GoogleCalendar {
                     parsed.parse(event, self.realmProvider)
                     try! realm.write {
                         realm.add(parsed, update: true)
-                        cal.events.append(parsed)
+                        if !cal.events.contains(where: {x in x.id==parsed.id}) {
+                            cal.events.append(parsed)
+                        }
                     }
                 }
             }
@@ -152,8 +160,11 @@ class GoogleCalendar {
             let realm = self.realmProvider.realm()
             let calendar = realm.resolve(ans)!
             try! realm.write {
-                UserModel.getPrimaryUser(self.realmProvider)!.datingCalendar = calendar
-                UserModel.getPrimaryUser(self.realmProvider)!.calendars.append(calendar)
+                let user = UserModel.getPrimaryUser(self.realmProvider)!
+                user.datingCalendar = calendar
+                if !user.calendars.contains(where: {x in x.id==calendar.id}) {
+                    user.calendars.append(calendar)
+                }
             }
             return ThreadSafeReference(to: calendar)
         }

@@ -24,7 +24,10 @@ class CalendarTests: GoogleTests {
     
     func testGetOurCalendarWillCreateCalendar() {
         let createdId = "123"
+        let userId = "345"
         let wantedName = googleCalendar.kNameOfOurCalendar
+        
+        addDefaultUser(userId)
         
         /// First, respond to 'list calendars' API
         setClientForCreatingCalendar(false, createdId, [])
@@ -50,9 +53,11 @@ class CalendarTests: GoogleTests {
     func testGetOurCalendarWillNotDuplicate1() {
         /// First, respond to 'list calendars' API
         let originalId = "100"
+        let userId = "345"
         let createdId = "123"
-        setClientForCreatingCalendar(false, originalId, [])
         
+        addDefaultUser(userId)
+        setClientForCreatingCalendar(false, originalId, [])
         testPromise(googleCalendar.getOurCalendar().then { calendarRef -> Promise<ThreadSafeReference<CalendarModel>> in
             let realm = self.realmProvider.realm()
             let calendar = realm.resolve(calendarRef)!
@@ -73,8 +78,9 @@ class CalendarTests: GoogleTests {
         /// createdId: the ID of possibly created, duplicated calendar
         let originalId = "100"
         let createdId = "123"
+        let userId = "345"
         
-        /// First, respond to 'list calendars' API
+        addDefaultUser(userId)
         setClientForCreatingCalendar(true, createdId, [[
             "id": originalId,
             "summary": self.googleCalendar.kNameOfOurCalendar

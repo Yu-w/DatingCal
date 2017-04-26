@@ -84,13 +84,19 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
     
     private let sequentialLogin = SequentialPromise<Void>()
     private let realmProvider = BusinessRealmProvider()
+    var hasLoggedIn = false
     
     override func viewDidAppear(_ animated: Bool) {
         // These lines ensure that the user is logged in
         //   and that his or her calendar has been synchronized
+        if self.hasLoggedIn {
+            return
+        }
         _ = sequentialLogin.neverAppend {
-            return self.appDelegate.googleClient.ensureLogin(presenter: self).then { x -> Promise<Void> in
-                return self.appDelegate.googleCalendar.loadAll()
+            return self.appDelegate.googleClient.ensureLogin(presenter: self)
+                .then { x -> Promise<Void> in
+                    self.showPleaseWait()
+                    return self.appDelegate.googleCalendar.loadAll()
                 }.then { x -> Void in
                     debugPrint("Sign In finished.")
                     let userId = UserModel.getPrimaryUser(self.realmProvider)!.id
@@ -101,10 +107,13 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                         || Configurations.sharedInstance.relationshipDate(id: userId) == nil {
                         self.performSegue(withIdentifier: "goSetup", sender: self)
                     }
+                    self.hasLoggedIn = true
                 }.catch { err -> Void in
                     debugPrint("ERROR during Sign In: ", err)
                     self.showAlert("Error", "Cannot Login. Please re-enter the app. Reason: " + err.localizedDescription)
                     // TODO: provide a retry button
+                }.always {
+                    self.hidePleaseWait()
             }
         }
     }

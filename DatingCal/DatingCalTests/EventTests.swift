@@ -24,6 +24,9 @@ class EventTests : GoogleTests {
     func testCreateEventResultExists() {
         let calendarId = "123"
         let eventId = "234"
+        let userId = "345"
+        
+        addDefaultUser(userId)
         
         /// First, respond to 'list calendars' API
         setClientForCreatingCalendar(false, calendarId, [], {
@@ -55,6 +58,7 @@ class EventTests : GoogleTests {
     /// Test whether all events listed by the API is correctly parsed
     func testListAllEventsInCalendar(_ shouldUseNextPageToken: Bool) {
         let calendarId = "123"
+        let userId = "345"
         
         var wantedEvents : [Parameters] = []
         var wantedEvent : Parameters = [:]
@@ -67,6 +71,8 @@ class EventTests : GoogleTests {
             copy["id"] = "\(i)"
             wantedEvents.append(wantedEvent)
         }
+        
+        addDefaultUser(userId)
         
         self.setClientForListingEvents(wantedEvents, shouldUseNextPageToken)
         
