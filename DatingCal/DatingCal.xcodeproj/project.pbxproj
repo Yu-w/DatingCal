@@ -32,6 +32,14 @@
 		88366A8F1EAE87C900880F36 /* ConfigurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A8E1EAE87C900880F36 /* ConfigurationHelper.swift */; };
 		88366A911EAEB64800880F36 /* KeyDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A901EAEB64800880F36 /* KeyDate.swift */; };
 		88366A931EAF061C00880F36 /* SpecialDatesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A921EAF061C00880F36 /* SpecialDatesStorage.swift */; };
+		88366A951EB0219000880F36 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A941EB0219000880F36 /* EventDetailViewController.swift */; };
+		88366A971EB0275900880F36 /* SpecialDatesDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A961EB0275900880F36 /* SpecialDatesDetailTableViewController.swift */; };
+		88366A9C1EB027D400880F36 /* AnimationBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A991EB027D400880F36 /* AnimationBarButton.swift */; };
+		88366A9D1EB027D400880F36 /* Rotatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A9B1EB027D400880F36 /* Rotatable.swift */; };
+		88366A9F1EB0281F00880F36 /* ConstraintsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A9E1EB0281F00880F36 /* ConstraintsHelper.swift */; };
+		88366AA11EB028FC00880F36 /* StoryboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366AA01EB028FC00880F36 /* StoryboardHelper.swift */; };
+		883F727D1EB0492200D140EC /* SpecialDateDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883F727C1EB0492200D140EC /* SpecialDateDetailTableViewCell.swift */; };
+		883F727F1EB04CC300D140EC /* SpeicalDateContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883F727E1EB04CC300D140EC /* SpeicalDateContents.swift */; };
 		88442BC81E9C350F00DC23A3 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC71E9C350F00DC23A3 /* TriangleView.swift */; };
 		88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88442BC91E9C415500DC23A3 /* Defaults.swift */; };
 		88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */; };
@@ -94,6 +102,14 @@
 		88366A8E1EAE87C900880F36 /* ConfigurationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationHelper.swift; sourceTree = "<group>"; };
 		88366A901EAEB64800880F36 /* KeyDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyDate.swift; sourceTree = "<group>"; };
 		88366A921EAF061C00880F36 /* SpecialDatesStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialDatesStorage.swift; sourceTree = "<group>"; };
+		88366A941EB0219000880F36 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		88366A961EB0275900880F36 /* SpecialDatesDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialDatesDetailTableViewController.swift; sourceTree = "<group>"; };
+		88366A991EB027D400880F36 /* AnimationBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationBarButton.swift; sourceTree = "<group>"; };
+		88366A9B1EB027D400880F36 /* Rotatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rotatable.swift; sourceTree = "<group>"; };
+		88366A9E1EB0281F00880F36 /* ConstraintsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintsHelper.swift; sourceTree = "<group>"; };
+		88366AA01EB028FC00880F36 /* StoryboardHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardHelper.swift; sourceTree = "<group>"; };
+		883F727C1EB0492200D140EC /* SpecialDateDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialDateDetailTableViewCell.swift; sourceTree = "<group>"; };
+		883F727E1EB04CC300D140EC /* SpeicalDateContents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeicalDateContents.swift; sourceTree = "<group>"; };
 		88442BC71E9C350F00DC23A3 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		88442BC91E9C415500DC23A3 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -175,6 +191,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		88366A981EB027D400880F36 /* AnimatingBarButton */ = {
+			isa = PBXGroup;
+			children = (
+				88366A991EB027D400880F36 /* AnimationBarButton.swift */,
+				88366A9A1EB027D400880F36 /* Animations */,
+			);
+			path = AnimatingBarButton;
+			sourceTree = "<group>";
+		};
+		88366A9A1EB027D400880F36 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				88366A9B1EB027D400880F36 /* Rotatable.swift */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		88F103E01E9AE1D90047F308 = {
 			isa = PBXGroup;
 			children = (
@@ -210,10 +243,13 @@
 				88F104211E9AED5D0047F308 /* MainCalendarTableEx.swift */,
 				88D65D2E1E9DF92200E80595 /* MainCalendarEmptyTableEx.swift */,
 				88D65D2C1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift */,
+				88366A941EB0219000880F36 /* EventDetailViewController.swift */,
 				88366A8A1EAE85CD00880F36 /* SpecialDatesViewController.swift */,
 				88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */,
 				88366A891EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib */,
 				88366A921EAF061C00880F36 /* SpecialDatesStorage.swift */,
+				88366A961EB0275900880F36 /* SpecialDatesDetailTableViewController.swift */,
+				883F727C1EB0492200D140EC /* SpecialDateDetailTableViewCell.swift */,
 				88D65D3E1EA7147500E80595 /* DatesGenerator.swift */,
 				88366A901EAEB64800880F36 /* KeyDate.swift */,
 				88442BC71E9C350F00DC23A3 /* TriangleView.swift */,
@@ -225,9 +261,13 @@
 				88F103F31E9AE1DA0047F308 /* Assets.xcassets */,
 				88F103F81E9AE1DA0047F308 /* Info.plist */,
 				88F1041A1E9AE7DC0047F308 /* DatingCal-Bridging-Header.h */,
+				883F727E1EB04CC300D140EC /* SpeicalDateContents.swift */,
 				4AE954C41EAD9D3100E6B224 /* SettingsViewController.swift */,
 				4AE954C61EADACBA00E6B224 /* SettingsUserCellView.swift */,
+				88366AA01EB028FC00880F36 /* StoryboardHelper.swift */,
+				88366A9E1EB0281F00880F36 /* ConstraintsHelper.swift */,
 				88366A8E1EAE87C900880F36 /* ConfigurationHelper.swift */,
+				88366A981EB027D400880F36 /* AnimatingBarButton */,
 			);
 			path = DatingCal;
 			sourceTree = "<group>";
@@ -505,6 +545,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88D65D3B1EA4832300E80595 /* DatesSetupViewController.swift in Sources */,
+				88366A9F1EB0281F00880F36 /* ConstraintsHelper.swift in Sources */,
 				88D65D2F1E9DF92200E80595 /* MainCalendarEmptyTableEx.swift in Sources */,
 				88366A911EAEB64800880F36 /* KeyDate.swift in Sources */,
 				88F104221E9AED5D0047F308 /* MainCalendarTableEx.swift in Sources */,
@@ -512,9 +553,11 @@
 				88366A8F1EAE87C900880F36 /* ConfigurationHelper.swift in Sources */,
 				88D65D3F1EA7147500E80595 /* DatesGenerator.swift in Sources */,
 				4A28AEFB1E9C607F007665F0 /* Models.swift in Sources */,
+				88366A9D1EB027D400880F36 /* Rotatable.swift in Sources */,
 				88442BCA1E9C415500DC23A3 /* Defaults.swift in Sources */,
 				88D65D3D1EA6B29800E80595 /* Configurations.swift in Sources */,
 				4AC522081EA6BBBA00448202 /* SequentialPromise.swift in Sources */,
+				883F727D1EB0492200D140EC /* SpecialDateDetailTableViewCell.swift in Sources */,
 				88366A8D1EAE85CD00880F36 /* SpecialDatesViewController.swift in Sources */,
 				4A2A228F1EA434A7001B6906 /* GoogleError.swift in Sources */,
 				88D65D2D1E9DF5BC00E80595 /* MainCalendarEventTableViewCell.swift in Sources */,
@@ -524,13 +567,18 @@
 				4AE954C71EADACBA00E6B224 /* SettingsUserCellView.swift in Sources */,
 				4AE954C51EAD9D3100E6B224 /* SettingsViewController.swift in Sources */,
 				4AC5220C1EA72FA200448202 /* AlertExtension.swift in Sources */,
+				88366AA11EB028FC00880F36 /* StoryboardHelper.swift in Sources */,
+				88366A971EB0275900880F36 /* SpecialDatesDetailTableViewController.swift in Sources */,
 				88442BC81E9C350F00DC23A3 /* TriangleView.swift in Sources */,
 				4A3E6BA41E9C3B7B00E1644A /* GoogleCalendar.swift in Sources */,
+				88366A951EB0219000880F36 /* EventDetailViewController.swift in Sources */,
 				88D65D391E9F0BAB00E80595 /* AddEventViewController.swift in Sources */,
 				88366A8B1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift in Sources */,
 				88F103ED1E9AE1DA0047F308 /* AppDelegate.swift in Sources */,
 				4AC522061EA6A49C00448202 /* NetworkMonitor.swift in Sources */,
 				4AC169121EA44602006F79E3 /* GoogleHTTPClient.swift in Sources */,
+				883F727F1EB04CC300D140EC /* SpeicalDateContents.swift in Sources */,
+				88366A9C1EB027D400880F36 /* AnimationBarButton.swift in Sources */,
 				4A7758E11E9BD0EB00C1DDDB /* AppAuthPromise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
