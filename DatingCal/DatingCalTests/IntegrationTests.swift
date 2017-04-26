@@ -43,7 +43,7 @@ class IntegrationTests : GoogleTests {
     /// Test single-user functionalities
     /// Test that events created with "createEvents"
     ///  will be deleted upon logout
-    func singleUserEventsWillBeDeleted1() {
+    func testSingleUserEventsWillBeDeleted1() {
         let calendarId = "123"
         let eventId = "234"
         let userId = "345"
@@ -64,7 +64,57 @@ class IntegrationTests : GoogleTests {
     /// Test single-user functionalities
     /// Test that events fetched from Google
     ///  will be deleted upon logout
-    func singleUserEventsWillBeDeleted2() {
+    func testSingleUserEventsWillBeDeleted2() {
+        let calendarId = "123"
+        let userId = "345"
+        var eventIds : [String] = []
+        
+        var wantedEvents : [Parameters] = []
+        let wantedEvent = getDummyEventParams()
+        for i in 1...10 {
+            var copy = wantedEvent
+            let id = "\(i)"
+            copy["id"] = id
+            eventIds.append(id)
+            wantedEvents.append(wantedEvent)
+        }
+        
+        addDefaultUser(userId)
+        
+        self.setClientForListingEvents(wantedEvents, true)
+        
+        testPromise(googleCalendar.listEventLists(calendarId).then { _ -> Void in
+            self.testDeletingEvents(eventIds, [calendarId])
+        })
+    }
+    
+    /// Test multi-user functionalities
+    /// Test that events created with "createEvents"
+    ///  will be deleted upon logout
+    /// Specifically, we log out the current user.
+    func testMultiUserEventsWillBeDeleted1A() {
+        let calendarId = "123"
+        let eventId = "234"
+        let userId = "345"
+        
+        addDefaultUser(userId)
+        
+        /// First, respond to 'list calendars' API
+        setClientForCreatingCalendar(false, calendarId, [], {
+            self.setClientForCreatingEvent(eventId)
+        })
+        
+        let wantedEvent = getDummyNewEvent()
+        testPromise(googleCalendar.createEvent(wantedEvent).then { _ -> Void in
+            self.testDeletingEvents([eventId], [calendarId])
+        })
+    }
+    
+    /// Test multi-user functionalities
+    /// Test that events fetched from Google
+    ///  will be deleted upon logout
+    /// Specifically, we log out the current user.
+    func testMultiUserEventsWillBeDeleted2A() {
         let calendarId = "123"
         let userId = "345"
         var eventIds : [String] = []
