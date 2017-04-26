@@ -182,14 +182,15 @@ class GoogleCalendar {
             // Need to make a copy of the current event
             // to prevent threading issues
             let eventCopy = event.createCopy(self.realmProvider)
-            
-            let realm = self.realmProvider.realm()
-            try! realm.write {
-                event.shouldCreate = true
-                realm.add(event, update:true)
-            }
-            _ = NetworkMonitor.shared.handleNoInternet {
+            let isInternetProblem = NetworkMonitor.shared.handleNoInternet {
                 self.createEvent(eventCopy).asVoid()
+            }
+            if isInternetProblem {
+                let realm = self.realmProvider.realm()
+                try! realm.write {
+                    event.shouldCreate = true
+                    realm.add(event, update:true)
+                }
             }
         }
     }

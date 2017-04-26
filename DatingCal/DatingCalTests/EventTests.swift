@@ -48,6 +48,54 @@ class EventTests : GoogleTests {
         })
     }
     
+    /// A helper function to test cases where creating events returned error.
+    /// :param noInternet: whether error is due to no internet.
+    func testCreateEventWithError(_ noInternet: Bool) {
+        let calendarId = "123"
+        let userId = "345"
+        
+        addDefaultUser(userId)
+        
+        /// First, respond to 'list calendars' API
+        setClientForCreatingCalendar(false, calendarId, [], {
+            self.client.setHandler { _,_,_ in
+                if noInternet {
+                    return Promise(error: FakeHTTPError.NetworkError)
+                } else {
+                    return Promise(error: FakeHTTPError.InvalidOperation)
+                }
+            }
+        })
+        
+        NetworkMonitor.shared.fakeNoInternet = noInternet
+        
+        let wantedEvent = getDummyNewEvent()
+        testPromise(googleCalendar.createEvent(wantedEvent).asVoid().recover { _ -> Void in
+            /// Read from database to make sure calendar is cached
+            let realm = self.realmProvider.realm()
+            let result = realm.objects(EventModel.self).filter({
+                event in event.summary == wantedEvent.summary
+            })
+            if noInternet {
+                XCTAssertEqual(result.count, 1)
+                XCTAssertEqual(result.first!.shouldCreate, noInternet)
+                XCTAssertNotNil(result.first!.startTime)
+                XCTAssertNotNil(result.first!.endTime)
+                result.first!.assertEqual(wantedEvent)
+            } else {
+                XCTAssertEqual(result.count, 0)
+            }
+        })
+    }
+    
+    func testCreateEventNoInternet() {
+        testCreateEventWithError(true)
+    }
+    
+    func testCreateEventWithCriticalErrors() {
+        testCreateEventWithError(false)
+    }
+    
     /// ------------------- TEST: createEvent
     
     /// Test whether all events listed by the API is correctly parsed
