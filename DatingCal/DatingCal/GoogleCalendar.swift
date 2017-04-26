@@ -67,7 +67,7 @@ class GoogleCalendar {
             let currUser = UserModel.getPrimaryUser(self.realmProvider)!
             
             for cal in realm.objects(CalendarModel.self) {
-                if !listAsSet.contains(cal), cal.owner.contains(currUser) {
+                if !listAsSet.contains(where: {($0 as! CalendarModel).id==cal.id}), cal.owner.contains(currUser) {
                     try! realm.write {
                         realm.delete(cal)
                     }
@@ -96,7 +96,7 @@ class GoogleCalendar {
         let realm = self.realmProvider.realm()
         return when(fulfilled: realm.objects(CalendarModel.self).filter{ cal in
             let currUser = UserModel.getPrimaryUser(self.realmProvider)!
-            return cal.owner.contains(currUser)
+            return cal.owner.contains(where: {$0.id==currUser.id})
         }.map { cal in
             return listEventLists(cal.id).then { list -> Void in
                 let realm = self.realmProvider.realm()
