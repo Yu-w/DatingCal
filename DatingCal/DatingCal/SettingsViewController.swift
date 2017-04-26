@@ -8,10 +8,11 @@
 
 import Foundation
 import UIKit
+import PromiseKit
 import DateTimePicker
 import TextFieldEffects
 
-class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SettingsViewController: UIViewControllerWithWaitAlerts, UITableViewDataSource, UITableViewDelegate {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let realmProvider = BusinessRealmProvider()
@@ -19,10 +20,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var tableView: UITableView!
     
     @IBAction func willLoginNewAccount(_ sender: Any) {
-        _ = appDelegate.googleClient.acceptNewUser(self).then { _ -> Void in
+        _ = appDelegate.googleClient.acceptNewUser(self).then { _ -> Promise<Void> in
+            self.showPleaseWait()
+            return self.appDelegate.googleCalendar.loadAll()
+        }.then { _ -> Void in
+            self.hidePleaseWait()
             self.dismiss(animated: true, completion: nil)
         }.catch { err -> Void in
             self.showAlert("Error", "Login Failed")
+        }.always {
         }
     }
 
@@ -80,7 +86,14 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         return { _ in
             let user = self.userModels[index.row]
             user.remove(self.realmProvider)
-            self.refreshListOfUsers()
+            _ = self.appDelegate.googleClient.ensureLogin(presenter: self).then {
+                self.showPleaseWait()
+                return self.appDelegate.googleCalendar.loadAll()
+            }.then {
+                self.refreshListOfUsers()
+            }.always {
+                self.hidePleaseWait()
+            }
         }
     }
     
@@ -88,9 +101,14 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     /// :param index: The index of the user to be set as primary user
     func willSetPrimaryUser(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
         return { _ in
+            self.showPleaseWait()
             let user = self.userModels[index.row]
             _ = self.appDelegate.googleClient.changeUser(user, self).then {
+                return self.appDelegate.googleCalendar.loadAll()
+            }.then {
                 self.refreshListOfUsers()
+            }.always {
+                self.hidePleaseWait()
             }
         }
     }

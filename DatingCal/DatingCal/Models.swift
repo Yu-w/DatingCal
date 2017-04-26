@@ -21,7 +21,7 @@ protocol GoogleParsable {
     ///    then this should create a new model with
     ///    with a new set of internal states, and
     ///    should not interfere with the old model.
-    func parse(_ json: JSON)
+    func parse(_ json: JSON, _ realmProvider: AbstractRealmProvider)
     
     /// Turn this model object into a 'Parameters'
     ///    dictionary whose key names comply with Google
@@ -85,7 +85,7 @@ class UserModel : Object, GoogleParsable {
             return
         }
         try? realm.write {
-            for cal in calendars {
+            for cal in user.calendars {
                 realm.delete(cal.events)
                 realm.delete(cal)
             }
@@ -113,15 +113,17 @@ class UserModel : Object, GoogleParsable {
         }
     }
     
-    func parse(_ json: JSON) {
+    func parse(_ json: JSON, _ realmProvider: AbstractRealmProvider) {
         let originalId = id
         id = json["id"].string!
         name = json["displayName"].string!
         _email = parseEmail(json)
         if originalId != id {
-            _isPrimary = false
-            datingCalendar = nil
-            calendars = List<CalendarModel>()
+            let realm = realmProvider.realm()
+            let newUser = realm.objects(UserModel.self).filter{x in x.id==self.id}.first
+            _isPrimary = newUser?._isPrimary ?? false
+            datingCalendar = newUser?.datingCalendar ?? nil
+            calendars = newUser?.calendars ?? List<CalendarModel>()
         }
     }
     
@@ -159,7 +161,7 @@ class CalendarModel : Object, GoogleParsable {
     dynamic var isPrimary: Bool = false
     var events = List<EventModel>()
     
-    let owner = LinkingObjects(fromType: UserModel.self, property: "datingCalendar")
+    let owner = LinkingObjects(fromType: UserModel.self, property: "calendars")
     
     override class func primaryKey() -> String? {
         return "id"
@@ -173,7 +175,7 @@ class CalendarModel : Object, GoogleParsable {
     }
     
     /// Create a CalendarModel from a JSON returned from Google
-    func parse(_ json: JSON) {
+    func parse(_ json: JSON, _ realmProvider: AbstractRealmProvider) {
         let originalId = id
         id = json["id"].string!
         name = json["summary"].string!
@@ -181,7 +183,9 @@ class CalendarModel : Object, GoogleParsable {
         bgColor = json["backgroundColor"].string
         isPrimary = json["primary"].bool ?? false
         if originalId != id {
-            events = List<EventModel>()
+            let realm = realmProvider.realm()
+            let newCalendar = realm.objects(CalendarModel.self).filter{x in x.id==self.id}.first
+            events = newCalendar?.events ?? List<EventModel>()
         }
     }
 }
@@ -256,7 +260,7 @@ class EventModel : Object, GoogleParsable {
     }
     
     /// Create a EventModel from a JSON returned from Google
-    func parse(_ json: JSON) {
+    func parse(_ json: JSON, _ realmProvider: AbstractRealmProvider) {
         let originalId = id
         let start = parseDates(json["start"])
         let end = parseDates(json["end"])
@@ -272,16 +276,18 @@ class EventModel : Object, GoogleParsable {
         _recurrence = json["recurrence"].rawString()
         
         if originalId != id {
-            shouldCreate = false
+            let realm = realmProvider.realm()
+            let newEvent = realm.objects(EventModel.self).filter{x in x.id==self.id}.first
+            shouldCreate = newEvent?.shouldCreate ?? false
         }
     }
     
     /// Create a copy of this object which is not thread-confined.
-    func createCopy() -> EventModel {
+    func createCopy(_ realmProvider: AbstractRealmProvider) -> EventModel {
         let ans = EventModel()
         var params = unParse()
         params["id"] = ""
-        ans.parse(JSON(params))
+        ans.parse(JSON(params), realmProvider)
         return ans
     }
     

@@ -43,29 +43,22 @@ class GoogleHTTPClient : AbstractHTTPClient {
             let (flow, promise) = OIDAuthState.startLogin(config, presenter)
             appDelegate.googleAuthFlow = flow
             return promise
-        }.then { authState -> Promise<Void> in
+        }.then { authState -> Promise<String> in
             self._authState = authState
-            return self.refreshUser()
-        }.then { _ -> Void in
-            self._authState!.save(UserModel.getPrimaryUser(self.realmProvider)!.authStorage)
-        }
-    }
-    
-    /// A helper function to refresh/synchronize self.user
-    ///   Note that this will set current user as the default user
-    private func refreshUser() -> Promise<Void> {
-        return self.token.then { token -> Promise<Void> in
-            self.request("https://www.googleapis.com/plus/v1/people/me",
+            return self.token
+        }.then { token -> Promise<JSON> in
+            return self.request("https://www.googleapis.com/plus/v1/people/me",
                          method: .get,
-                         parameters: nil).then { json -> Void in
-                let ans = UserModel()
-                ans.parse(json)
-                let realm = self.realmProvider.realm()
-                try! realm.write {
-                    realm.add(ans, update: true)
-                }
-                ans.setPrimaryUser(self.realmProvider)
+                         parameters: nil)
+        }.then { json -> Void in
+            let ans = UserModel()
+            ans.parse(json, self.realmProvider)
+            let realm = self.realmProvider.realm()
+            try! realm.write {
+                realm.add(ans, update: true)
             }
+            ans.setPrimaryUser(self.realmProvider)
+            self._authState!.save(UserModel.getPrimaryUser(self.realmProvider)!.authStorage)
         }
     }
     
