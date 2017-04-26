@@ -75,6 +75,7 @@ class GoogleCalendar {
                 parsed.parse(cal)
                 try! realm.write {
                     realm.add(parsed, update: true)
+                    UserModel.getPrimaryUser(self.realmProvider)!.calendars.append(parsed)
                 }
             }
         }
@@ -120,16 +121,15 @@ class GoogleCalendar {
     /// Fetch and save all calendars and events.
     func loadAll() -> Promise<Void> {
         return loadAllCalendars().then { x in
+            return self.getOurCalendar().asVoid()
+        }.then { x in
             return self.loadAllEvents()
         }
     }
     
     private func getOurCalendarLocally() -> CalendarModel? {
-        let realm = self.realmProvider.realm()
-        let ourCalendars = realm.objects(CalendarModel.self).filter({cal in
-            cal.name == self.kNameOfOurCalendar
-        })
-        return ourCalendars.first
+        let user = UserModel.getPrimaryUser(self.realmProvider)
+        return user?.datingCalendar
     }
     
     /// Get the "DatingCal" calendar where we should all events created by DatingCal
@@ -149,6 +149,7 @@ class GoogleCalendar {
             let calendar = realm.resolve(ans)!
             try! realm.write {
                 UserModel.getPrimaryUser(self.realmProvider)!.datingCalendar = calendar
+                UserModel.getPrimaryUser(self.realmProvider)!.calendars.append(calendar)
             }
             return ThreadSafeReference(to: calendar)
         }

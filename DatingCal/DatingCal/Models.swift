@@ -40,6 +40,11 @@ class UserModel : Object, GoogleParsable {
     ///   to this user's "DatingCal" calendar
     dynamic var datingCalendar: CalendarModel?
     
+    /// This is an internal state that links
+    ///   to any calendar owned by this person
+    ///   "DatingCal" must also be included.
+    var calendars = List<CalendarModel>()
+    
     /// This is a "GET-only" state
     private dynamic var _email: String = ""
     var email : String {
@@ -71,7 +76,7 @@ class UserModel : Object, GoogleParsable {
         return "id"
     }
     
-    /// Remove the current user from DB and delete its TOKENS from hard drive
+    /// Remove "self" from DB and delete its TOKENS from hard drive
     func remove(_ realmProvider: AbstractRealmProvider) {
         try? FileManager.default.removeItem(atPath: authStorage)
         let realm = realmProvider.realm()
@@ -80,6 +85,10 @@ class UserModel : Object, GoogleParsable {
             return
         }
         try? realm.write {
+            for cal in calendars {
+                realm.delete(cal.events)
+                realm.delete(cal)
+            }
             realm.delete(user)
             let primaryUser = realm.objects(UserModel.self).filter({x in x._isPrimary}).first
             if primaryUser == nil, let first = realm.objects(UserModel.self).first {
@@ -112,6 +121,7 @@ class UserModel : Object, GoogleParsable {
         if originalId != id {
             _isPrimary = false
             datingCalendar = nil
+            calendars = List<CalendarModel>()
         }
     }
     
