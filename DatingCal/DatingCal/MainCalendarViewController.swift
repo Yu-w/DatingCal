@@ -83,6 +83,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
     }
     
     private let sequentialLogin = SequentialPromise<Void>()
+    private let realmProvider = BusinessRealmProvider()
     
     override func viewDidAppear(_ animated: Bool) {
         // These lines ensure that the user is logged in
@@ -92,7 +93,7 @@ class MainCalendarViewController: UIViewController, UIGestureRecognizerDelegate 
                 return self.appDelegate.googleCalendar.loadAll()
             }.then { x -> Void in
                 debugPrint("Sign In finished.")
-                let userId = self.appDelegate.googleClient.getPrimaryUser()!.id
+                let userId = UserModel.getPrimaryUser(self.realmProvider)!.id
                 debugPrint("Google OAuth2 User ID = " + userId)
                 
                 Configurations.sharedInstance.currentIdString = userId

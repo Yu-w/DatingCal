@@ -36,28 +36,6 @@ class GoogleHTTPClient : AbstractHTTPClient {
     /// This object stores all the tokens and login states
     private var _authState : OIDAuthState?
     
-    /// This variable can only be used by our class.
-    ///    It's an abstraction.
-    /// We have to fetch a new UserModel every time
-    ///    because otherwise, realm will require threadsafe references
-    private var user : UserModel? {
-        get {
-            let realm = realmProvider.realm()
-            if let id = _userId,
-                let user = realm.objects(UserModel.self).filter({u in u.id==id}).first {
-                return user
-            } else {
-                let primary = realm.objects(UserModel.self).filter({u in u.isPrimary}).first
-                _userId = primary?.id
-                return primary
-            }
-        }
-        
-        set {
-            _userId = newValue?.id
-        }
-    }
-    
     /// A helper function that actually does the login.
     private func login(presenter: UIViewController) -> Promise<Void> {
         return OIDAuthorizationService.getConfigurations().then { config -> Promise<OIDAuthState> in
@@ -69,7 +47,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
             self._authState = authState
             return self.refreshUser()
         }.then { _ -> Void in
-            self._authState!.save(self.user!.authStorage)
+            self._authState!.save(UserModel.getPrimaryUser(self.realmProvider)!.authStorage)
         }
     }
     
@@ -86,8 +64,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
                 try! realm.write {
                     realm.add(ans, update: true)
                 }
-                ans.setAsPrimaryUser(self.realmProvider)
-                self.user = ans
+                ans.setPrimaryUser(self.realmProvider)
             }
         }
     }
@@ -95,7 +72,7 @@ class GoogleHTTPClient : AbstractHTTPClient {
     /// This function will ensure the user is logged in.
     /// But rest assured, it will only call login() when necessary.
     func ensureLogin(presenter: UIViewController) -> Promise<Void> {
-        guard let storagePath = self.user?.authStorage else {
+        guard let storagePath = UserModel.getPrimaryUser(self.realmProvider)?.authStorage else {
             return self.login(presenter: presenter)
         }
         self._authState = OIDAuthState.load(storagePath)
@@ -112,11 +89,9 @@ class GoogleHTTPClient : AbstractHTTPClient {
     /// It returns a promise that fulfills when credentials are ready
     /// :param presenter: Necessary in case google wants to display a login page
     func changeUser(_ toUser: UserModel, _ presenter: UIViewController) -> Promise<Void> {
-        self.user = toUser
         self._authState = nil
-        return self.ensureLogin(presenter: presenter).then { _ -> Void in
-            self.user!.setAsPrimaryUser(self.realmProvider)
-        }
+        toUser.setPrimaryUser(self.realmProvider)
+        return self.ensureLogin(presenter: presenter)
     }
     
     /// Login to a completely new account, and
@@ -125,12 +100,6 @@ class GoogleHTTPClient : AbstractHTTPClient {
     func acceptNewUser(_ presenter: UIViewController) -> Promise<Void> {
         self._authState = nil
         return self.login(presenter: presenter)
-    }
-    
-    /// Returns the primary user
-    ///   This is the account where we create new events.
-    func getPrimaryUser() -> UserModel? {
-        return self.user
     }
     
     var isLoggedIn : Bool {
