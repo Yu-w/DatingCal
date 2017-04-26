@@ -116,11 +116,11 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                     debugPrint("ERROR during Sign In: ", err)
                     self.showAlert("Error", "Cannot Login. Please re-enter the app. Reason: " + err.localizedDescription)
                     // TODO: provide a retry button
-                }
-        }.always {
-            self.navigationItem.leftBarButtonItem?.isEnabled = true
-            self.selectedDate = Date()
+                }.always {
+                    self.navigationItem.leftBarButtonItem?.isEnabled = true
+            }
         }
+        self.selectedDate = Date()
     }
     
     /// calendar setup
