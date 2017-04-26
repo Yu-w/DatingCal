@@ -100,6 +100,7 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
             return self.appDelegate.googleClient.ensureLogin(presenter: self)
                 .then { x -> Promise<Void> in
                     self.showPleaseWait()
+                    self.navigationItem.leftBarButtonItem?.isEnabled = false
                     return self.appDelegate.googleCalendar.loadAll()
                 }.then { x -> Void in
                     debugPrint("Sign In finished.")
@@ -119,6 +120,7 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
                     // TODO: provide a retry button
                 }.always {
                     self.hidePleaseWait()
+                    self.navigationItem.leftBarButtonItem?.isEnabled = true
                     self.selectedDate = Date()
             }
         }
