@@ -29,8 +29,6 @@ class AddEventViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleTextField.placeholder = "Title for the event"
-        descTextField.placeholder = "Description (optional)"
 
         startTimeButton.addTarget(self, action: #selector(self.invokePicker(sender:)), for: .touchUpInside)
         endTimeButton.addTarget(self, action: #selector(self.invokePicker(sender:)), for: .touchUpInside)
@@ -82,7 +80,6 @@ class AddEventViewController: UIViewController {
     }
     
     @IBAction func closeButtonDidClicked(_ sender: UIButton) {
-        print("*a")
         self.dismiss(animated: true, completion: nil)
     }
     
