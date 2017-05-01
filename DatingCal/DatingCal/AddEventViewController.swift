@@ -76,7 +76,7 @@ class AddEventViewController: UIViewController {
     
     
     @IBAction func doneButtonDidClicked(_ sender: UIButton) {
-        if let startTime = self.startTime, let endTime = self.endTime, let title = titleTextField.text {
+        if let startTime = self.startTime, let title = titleTextField.text {
             let event = EventModel()
             event.summary = title
             event.desc = descTextField.text ?? ""
@@ -93,7 +93,7 @@ class AddEventViewController: UIViewController {
                 self.showAlert("Error", "Cannot create event. Reason: " + err.localizedDescription)
             }
         } else {
-            showAlert("Warning", "Please fill title, start time, and end time before submitting!")
+            showAlert("Warning", "Please fill title and dates before submitting!")
         }
     }
     
