@@ -256,7 +256,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sgm-Wd-J4z" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="32" y="169" width="311" height="60"/>
+                                <rect key="frame" x="32" y="161" width="311" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0ga-go-DUB"/>
                                 </constraints>
@@ -279,7 +279,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Location (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="agz-Kz-tBU" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="32" y="253" width="311" height="60"/>
+                                <rect key="frame" x="32" y="237" width="311" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="ocz-GS-bYP"/>
                                 </constraints>
@@ -302,26 +302,26 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="START TIME:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vAe-ZL-vwl">
-                                <rect key="frame" x="32" y="418" width="98.5" height="23.5"/>
+                                <rect key="frame" x="32" y="402" width="98.5" height="23.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="END TIME:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvH-Ns-xRL">
-                                <rect key="frame" x="32" y="473.5" width="85.5" height="23.5"/>
+                                <rect key="frame" x="32" y="457.5" width="85.5" height="23.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nqv-4q-BS3">
-                                <rect key="frame" x="219" y="411" width="124" height="36"/>
+                                <rect key="frame" x="219" y="395" width="124" height="36"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="SELECT A DATE">
                                     <color key="titleColor" red="1" green="0.20000000000000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVR-1s-PFs">
-                                <rect key="frame" x="219" y="466.5" width="124" height="36"/>
+                                <rect key="frame" x="219" y="450.5" width="124" height="36"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="SELECT A DATE">
                                     <color key="titleColor" red="1" green="0.20000000000000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -348,11 +348,11 @@
                                     <action selector="closeButtonDidClicked:" destination="0Xd-HI-D0n" eventType="touchUpInside" id="WpF-et-MZ7"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M8J-Qv-JwN">
-                                <rect key="frame" x="294" y="354.5" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="M8J-Qv-JwN">
+                                <rect key="frame" x="294" y="338.5" width="51" height="31"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IS ALL-DAY:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGZ-2e-OlR">
-                                <rect key="frame" x="32" y="358" width="91" height="24"/>
+                                <rect key="frame" x="32" y="342" width="91" height="24"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -382,9 +382,9 @@
                             <constraint firstItem="cvH-Ns-xRL" firstAttribute="leading" secondItem="vAe-ZL-vwl" secondAttribute="leading" id="e8N-a7-WrH"/>
                             <constraint firstItem="agz-Kz-tBU" firstAttribute="height" secondItem="sgm-Wd-J4z" secondAttribute="height" id="eHc-55-fNK"/>
                             <constraint firstItem="sgm-Wd-J4z" firstAttribute="leading" secondItem="yh5-Cu-hZA" secondAttribute="leading" id="gAg-n1-TRg"/>
-                            <constraint firstItem="sgm-Wd-J4z" firstAttribute="top" secondItem="yh5-Cu-hZA" secondAttribute="bottom" constant="24" id="hhj-Qi-I76"/>
+                            <constraint firstItem="sgm-Wd-J4z" firstAttribute="top" secondItem="yh5-Cu-hZA" secondAttribute="bottom" constant="16" id="hhj-Qi-I76"/>
                             <constraint firstItem="sgm-Wd-J4z" firstAttribute="trailing" secondItem="yh5-Cu-hZA" secondAttribute="trailing" id="j6j-cJ-gK1"/>
-                            <constraint firstItem="agz-Kz-tBU" firstAttribute="top" secondItem="sgm-Wd-J4z" secondAttribute="bottom" constant="24" id="k1Q-BA-4rq"/>
+                            <constraint firstItem="agz-Kz-tBU" firstAttribute="top" secondItem="sgm-Wd-J4z" secondAttribute="bottom" constant="16" id="k1Q-BA-4rq"/>
                             <constraint firstItem="yh5-Cu-hZA" firstAttribute="leading" secondItem="eWP-qA-kJQ" secondAttribute="leading" constant="32" id="kZV-8A-IrX"/>
                             <constraint firstAttribute="trailing" secondItem="PBd-bH-P5I" secondAttribute="trailing" id="ozl-hu-2Ml"/>
                             <constraint firstItem="CVR-1s-PFs" firstAttribute="trailing" secondItem="nqv-4q-BS3" secondAttribute="trailing" id="s3y-fa-qke"/>
