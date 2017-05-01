@@ -32,10 +32,12 @@ class OnboardController {
     }
     
     fileprivate static func configureContentPage(page: OnboardingContentViewController) {
-        page.iconWidth = 326
-        page.iconHeight = 580
-        page.topPadding = 318
-        page.underIconPadding = -832
+        let bounds = UIScreen.main.bounds
+        page.iconWidth = 326 * (bounds.width / 414)
+        page.iconHeight = 580 * (bounds.height / 736)
+        page.topPadding = 318 * (bounds.height / 736)
+        page.underIconPadding = -832 * (bounds.height / 720)
+        page.underTitlePadding = page.underTitlePadding * (bounds.height / 720)
         let bottomPanel = UIView()
         bottomPanel.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         bottomPanel.frame = CGRect(x: 0, y: page.view.bounds.height - 44, width: page.view.bounds.width, height: 44)
