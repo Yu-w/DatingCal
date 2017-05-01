@@ -350,6 +350,9 @@
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="M8J-Qv-JwN">
                                 <rect key="frame" x="294" y="338.5" width="51" height="31"/>
+                                <connections>
+                                    <action selector="allDaySwitchToggled:" destination="0Xd-HI-D0n" eventType="valueChanged" id="Too-Rw-TbJ"/>
+                                </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IS ALL-DAY:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGZ-2e-OlR">
                                 <rect key="frame" x="32" y="342" width="91" height="24"/>
@@ -394,9 +397,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="allDaySwitch" destination="M8J-Qv-JwN" id="SgR-Ox-pIp"/>
                         <outlet property="descTextField" destination="sgm-Wd-J4z" id="FJX-sQ-oCP"/>
                         <outlet property="endTimeButton" destination="CVR-1s-PFs" id="WEo-dh-lIU"/>
+                        <outlet property="endTimeLabel" destination="cvH-Ns-xRL" id="38S-M2-mBe"/>
+                        <outlet property="locationTextField" destination="agz-Kz-tBU" id="dp8-Sf-pi9"/>
                         <outlet property="startTimeButton" destination="nqv-4q-BS3" id="yA6-q8-XON"/>
+                        <outlet property="startTimeLabel" destination="vAe-ZL-vwl" id="KZo-p0-wfU"/>
                         <outlet property="titleTextField" destination="yh5-Cu-hZA" id="3D5-ne-doH"/>
                     </connections>
                 </viewController>

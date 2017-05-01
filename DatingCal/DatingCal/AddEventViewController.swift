@@ -14,8 +14,13 @@ class AddEventViewController: UIViewController {
 
     @IBOutlet weak var titleTextField: HoshiTextField!
     @IBOutlet weak var descTextField: HoshiTextField!
+       @IBOutlet weak var locationTextField: HoshiTextField!
+    @IBOutlet weak var allDaySwitch: UISwitch!
     @IBOutlet weak var startTimeButton: UIButton!
     @IBOutlet weak var endTimeButton: UIButton!
+    @IBOutlet weak var startTimeLabel: UILabel!
+    @IBOutlet weak var endTimeLabel: UILabel!
+    
     var startTime: Date?
     var endTime: Date?
     
@@ -61,6 +66,14 @@ class AddEventViewController: UIViewController {
         titleTextField.resignFirstResponder()
         descTextField.resignFirstResponder()
     }
+    
+    @IBAction func allDaySwitchToggled(_ sender: UISwitch) {
+        endTimeButton.isUserInteractionEnabled = !sender.isOn
+        endTimeButton.alpha = sender.isOn ? 0.5 : 1
+        endTimeLabel.alpha = endTimeButton.alpha
+        startTimeLabel.text = sender.isOn ? "EVENT TIME" : "START TIME"
+    }
+    
     
     @IBAction func doneButtonDidClicked(_ sender: UIButton) {
         if let startTime = self.startTime, let endTime = self.endTime, let title = titleTextField.text {
