@@ -34,6 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         UIApplication.shared.statusBarStyle = .lightContent
         // Override point for customization after application launch.
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window!.rootViewController = OnboardController.generateOnboardingViewController(completion: {
+            let initialViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialViewController
+            self.window!.makeKeyAndVisible()
+        })
+        self.window!.makeKeyAndVisible()
         return true
     }
     

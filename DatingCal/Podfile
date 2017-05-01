@@ -31,6 +31,7 @@ target 'DatingCal' do
     pod 'DZNEmptyDataSet'
     pod 'DateTimePicker'
     pod 'expanding-collection', '~> 1.0.3'
+    pod 'Onboard'
 
     post_install do |installer|
       installer.pods_project.targets.each do |target|
