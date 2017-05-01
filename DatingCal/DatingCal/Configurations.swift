@@ -12,6 +12,7 @@ class Configurations: Defaults {
     
     static let sharedInstance = Configurations()
     
+    dynamic var needOnboard = true
     dynamic var currentIdString = ""
     dynamic var birthDate = [String: Date]()
     dynamic var relationshipDate = [String: Date]()

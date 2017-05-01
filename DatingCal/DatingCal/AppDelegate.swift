@@ -35,13 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.statusBarStyle = .lightContent
         // Override point for customization after application launch.
         
+        let initialViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window!.rootViewController = OnboardController.generateOnboardingViewController(completion: {
-            let initialViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = initialViewController
-            self.window!.makeKeyAndVisible()
-        })
+        self.window!.rootViewController = Configurations.sharedInstance.needOnboard
+            ? OnboardController.generateOnboardingViewController(completion: {
+                Configurations.sharedInstance.needOnboard = false
+                self.window?.rootViewController = initialViewController
+                self.window!.makeKeyAndVisible()
+            })
+            : initialViewController
         self.window!.makeKeyAndVisible()
         return true
     }
