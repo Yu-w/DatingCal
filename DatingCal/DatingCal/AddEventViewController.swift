@@ -79,9 +79,14 @@ class AddEventViewController: UIViewController {
         if let startTime = self.startTime, let endTime = self.endTime, let title = titleTextField.text {
             let event = EventModel()
             event.summary = title
-            event.desc = (descTextField.text) ?? ""
-            event.startTime = startTime
-            event.endTime = endTime
+            event.desc = descTextField.text ?? ""
+            event.location = locationTextField.text ?? ""
+            if allDaySwitch.isOn {
+                event.startDate = startTime
+            } else {
+                event.startTime = startTime
+                event.endTime = endTime
+            }
             appDelegate.googleCalendar.createEvent(event).then { _ in
                 self.dismiss(animated: true, completion: nil)
             }.catch { err in

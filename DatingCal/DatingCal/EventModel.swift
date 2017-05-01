@@ -16,6 +16,7 @@ class EventModel : Object, GoogleParsable {
     dynamic var id: String = ""
     dynamic var summary: String = ""
     dynamic var desc: String = ""
+    dynamic var location: String = ""
     dynamic var startDate: Date? = nil
     dynamic var startTime: Date? = nil
     dynamic var startTimeZone: String? = nil
