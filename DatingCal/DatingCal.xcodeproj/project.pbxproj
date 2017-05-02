@@ -401,7 +401,7 @@
 				TargetAttributes = {
 					88F103E81E9AE1D90047F308 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = BLNBM6S947;
+						DevelopmentTeam = 4EYD34WAXU;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
@@ -767,7 +767,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = BLNBM6S947;
+				DEVELOPMENT_TEAM = 4EYD34WAXU;
 				INFOPLIST_FILE = DatingCal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cs242.DatingCal;
@@ -784,7 +784,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = BLNBM6S947;
+				DEVELOPMENT_TEAM = 4EYD34WAXU;
 				INFOPLIST_FILE = DatingCal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cs242.DatingCal;

@@ -76,6 +76,7 @@ class EventModel : Object, GoogleParsable {
         let endDict : Parameters = unParseDates(endDate, endTime, endTimeZone)
         ans["summary"] = summary
         ans["description"] = desc
+        ans["location"] = location
         ans["start"] = startDict
         ans["end"] = endDict
         ans["recurrence"] = getRecurrence()
@@ -90,6 +91,7 @@ class EventModel : Object, GoogleParsable {
         id = json["id"].string!
         summary = json["summary"].string ?? ""
         desc = json["description"].string ?? ""
+        location = json["location"].string ?? ""
         startDate = start.0
         startTime = start.1
         startTimeZone = start.2
