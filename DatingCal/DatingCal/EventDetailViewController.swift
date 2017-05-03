@@ -9,9 +9,9 @@
 import UIKit
 
 class EventDetailViewController: UIViewController {
-    @IBOutlet var eventDescription: UILabel!
-    @IBOutlet var eventLocation: UILabel!
-    @IBOutlet var eventTitle: UILabel!
+    @IBOutlet var eventDescription: UILabel?
+    @IBOutlet var eventLocation: UILabel?
+    @IBOutlet var eventTitle: UILabel?
     
     var eventToShow : EventModel? = nil {
         didSet {
@@ -20,9 +20,15 @@ class EventDetailViewController: UIViewController {
     }
     
     private func refresh() {
-        eventTitle.text = eventToShow?.summary ?? "(Not found)"
-        eventLocation.text = eventToShow?.location ?? "(no location)"
-        eventDescription.text = "UNDER CONSTRUCTION"
+        eventTitle?.text = eventToShow?.summary ?? "(Not found)"
+        eventLocation?.text = eventToShow?.location ?? "(no location)"
+        eventDescription?.text = "UNDER CONSTRUCTION"
+    }
+    
+    // Make sure to refresh after view shows up, in case IBOutlet references are wrong
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refresh()
     }
     
     @IBAction func willCloseWindow(_ sender: Any) {
