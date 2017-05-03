@@ -246,6 +246,9 @@
                                 <state key="normal" title="Delete Event">
                                     <color key="titleColor" red="0.8696986607142857" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="willDeleteEvent:" destination="gjO-FP-a33" eventType="touchUpInside" id="6vL-fd-FJj"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="90v-nF-Wjh">
                                 <rect key="frame" x="207" y="601" width="120" height="34"/>
@@ -281,6 +284,11 @@
                             <constraint firstItem="0Su-DI-Waa" firstAttribute="leading" secondItem="okh-xe-8rM" secondAttribute="leading" id="yXf-XJ-Bae"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="eventDescription" destination="m9w-KO-uch" id="lGS-3W-ICd"/>
+                        <outlet property="eventLocation" destination="9Xv-wT-fXK" id="qF5-YA-9Sx"/>
+                        <outlet property="eventTitle" destination="okh-xe-8rM" id="aSQ-ic-5zg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZUW-2z-JtL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

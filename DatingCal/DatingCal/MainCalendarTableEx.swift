@@ -40,6 +40,7 @@ extension MainCalendarViewController: UITableViewDataSource, UITableViewDelegate
     
     /// animate the deselection of the selection of rows
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        lastSelectedEvent = eventsToPresent[indexPath.row]
         self.performSegue(withIdentifier: "goEventDetail", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }

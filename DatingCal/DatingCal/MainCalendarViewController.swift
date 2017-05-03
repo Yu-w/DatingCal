@@ -159,4 +159,16 @@ class MainCalendarViewController: UIViewControllerWithWaitAlerts, UIGestureRecog
         return shouldBegin
     }
     
+    // MARK: parepare segue for EventDetailViewController
+    
+    var lastSelectedEvent : EventModel? = nil
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goEventDetail" {
+            if let vc = segue.destination as? EventDetailViewController {
+                vc.eventToShow = lastSelectedEvent
+            }
+        }
+    }
+    
 }

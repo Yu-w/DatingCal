@@ -9,9 +9,27 @@
 import UIKit
 
 class EventDetailViewController: UIViewController {
+    @IBOutlet var eventDescription: UILabel!
+    @IBOutlet var eventLocation: UILabel!
+    @IBOutlet var eventTitle: UILabel!
+    
+    var eventToShow : EventModel? = nil {
+        didSet {
+            refresh()
+        }
+    }
+    
+    private func refresh() {
+        eventTitle.text = eventToShow?.summary ?? "(Not found)"
+        eventLocation.text = eventToShow?.location ?? "(no location)"
+        eventDescription.text = "UNDER CONSTRUCTION"
+    }
     
     @IBAction func willCloseWindow(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
+    @IBAction func willDeleteEvent(_ sender: Any) {
+    }
+    
 }
