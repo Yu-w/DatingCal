@@ -83,7 +83,7 @@ class SettingsViewController: UIViewControllerWithWaitAlerts, UITableViewDataSou
     
     /// A currying function that handles UIAlertAction to logout an account
     /// :param index: The index of the user to be logged out
-    func willLogout(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
+    private func willLogout(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
         return { _ in
             let user = self.userModels[index.row]
             user.remove(self.realmProvider)
@@ -98,9 +98,30 @@ class SettingsViewController: UIViewControllerWithWaitAlerts, UITableViewDataSou
         }
     }
     
+    /// A currying function that handles UIAlertAction to clear events in an account
+    /// :param index: The index of the account to be cleared
+    private func willClearOurEvents(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
+        return { _ in
+            let user = self.userModels[index.row]
+            
+            /// We will need to change primary user before deleting events.
+            self.showPleaseWait()
+            _ = self.appDelegate.googleClient.temporarilyChangeUser(user, self).then {
+                return self.appDelegate.googleCalendar.clearOurCalendar()
+            }.then {
+                self.dismiss(animated: true, completion: nil)
+            }.catch { err in
+                self.showAlert("Failed to clear events", err.localizedDescription)
+            }.always {
+                self.hidePleaseWait()
+                self.appDelegate.googleClient.cancelTemporaryChangedUser()
+            }
+        }
+    }
+    
     /// A currying function that handles UIAlertAction to set primary account
     /// :param index: The index of the user to be set as primary user
-    func willSetPrimaryUser(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
+    private func willSetPrimaryUser(_ index: IndexPath) -> ((UIAlertAction) -> Void) {
         return { _ in
             self.showPleaseWait()
             let user = self.userModels[index.row]
@@ -119,8 +140,9 @@ class SettingsViewController: UIViewControllerWithWaitAlerts, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Sign off this account", style: .default, handler: willLogout(indexPath)))
         alert.addAction(UIAlertAction(title: "Set it as primary account", style: .default, handler: willSetPrimaryUser(indexPath)))
+        alert.addAction(UIAlertAction(title: "Sign off this account", style: .destructive, handler: willLogout(indexPath)))
+        alert.addAction(UIAlertAction(title: "Delete all \"DatingCal\" events in this account", style: .destructive, handler: willClearOurEvents(indexPath)))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default))
         self.present(alert, animated: true)
     }

@@ -215,4 +215,32 @@ class GoogleCalendar {
             }
         }
     }
+    
+    /// Delete all events in the "DatingCal" calendar of the primary user
+    func clearOurCalendar() -> Promise<Void> {
+        guard let ourCalendarId = CalendarModel.getPrimary(self.realmProvider)?.id else {
+            return Promise(value: ())
+        }
+        let encodedId = ourCalendarId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        
+        // There is no API to CLEAR arbitrary calendars. 
+        // So, first, we have to delete our calendar.
+        return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(encodedId)", method: .delete, parameters: nil).then { _ -> Promise<Void> in
+            let realm = self.realmProvider.realm()
+            let user = UserModel.getPrimaryUser(self.realmProvider)
+            let events = realm.objects(EventModel.self).filter {
+                $0.calendar.contains{$0.id==ourCalendarId}
+            }
+            try! realm.write {
+                realm.delete(events)
+                if let calendar = user?.datingCalendar {
+                    realm.delete(calendar)
+                }
+                user?.datingCalendar = nil
+            }
+            
+            // Then, we create our calendar again.
+            return self.ensureOurCalendar()
+        }
+    }
 }
