@@ -28,7 +28,7 @@
 		4AE954D61EB060D200E6B224 /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954D51EB060D200E6B224 /* CalendarModel.swift */; };
 		4AE954D81EB060DD00E6B224 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954D71EB060DD00E6B224 /* UserModel.swift */; };
 		4AE954DA1EB0613800E6B224 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954D91EB0613800E6B224 /* EventModel.swift */; };
-		4AE954DC1EB067AA00E6B224 /* UserModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954DB1EB067AA00E6B224 /* UserModelTests.swift */; };
+		4AE954DC1EB067AA00E6B224 /* EventModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954DB1EB067AA00E6B224 /* EventModelTests.swift */; };
 		4AE954DE1EB102BD00E6B224 /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE954DD1EB102BD00E6B224 /* IntegrationTests.swift */; };
 		66BCFC77BDF4C3ABEB746EC7 /* Pods_DatingCalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D314118D80B2A41AEAE1A87E /* Pods_DatingCalTests.framework */; };
 		88366A8B1EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */; };
@@ -104,7 +104,7 @@
 		4AE954D51EB060D200E6B224 /* CalendarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
 		4AE954D71EB060DD00E6B224 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		4AE954D91EB0613800E6B224 /* EventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
-		4AE954DB1EB067AA00E6B224 /* UserModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModelTests.swift; sourceTree = "<group>"; };
+		4AE954DB1EB067AA00E6B224 /* EventModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventModelTests.swift; sourceTree = "<group>"; };
 		4AE954DD1EB102BD00E6B224 /* IntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		88366A881EAE85CD00880F36 /* SpecialDatesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecialDatesCollectionViewCell.swift; path = DemoViewController/Cells/SpecialDatesCollectionViewCell.swift; sourceTree = "<group>"; };
 		88366A891EAE85CD00880F36 /* SpecialDatesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SpecialDatesCollectionViewCell.xib; path = DemoViewController/Cells/SpecialDatesCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -301,7 +301,7 @@
 				4AE954CA1EAEB08700E6B224 /* EventTests.swift */,
 				4AC169131EA4829C006F79E3 /* FakeAbstractClasses.swift */,
 				4AE954CC1EAEB16900E6B224 /* GoogleTests.swift */,
-				4AE954DB1EB067AA00E6B224 /* UserModelTests.swift */,
+				4AE954DB1EB067AA00E6B224 /* EventModelTests.swift */,
 				88F104031E9AE1DA0047F308 /* Info.plist */,
 				4AE954DD1EB102BD00E6B224 /* IntegrationTests.swift */,
 			);
@@ -617,7 +617,7 @@
 				4AE954CB1EAEB08700E6B224 /* EventTests.swift in Sources */,
 				88F104021E9AE1DA0047F308 /* CalendarTests.swift in Sources */,
 				4AC169141EA4829C006F79E3 /* FakeAbstractClasses.swift in Sources */,
-				4AE954DC1EB067AA00E6B224 /* UserModelTests.swift in Sources */,
+				4AE954DC1EB067AA00E6B224 /* EventModelTests.swift in Sources */,
 				4AC522041EA5D94B00448202 /* AsyncTests.swift in Sources */,
 				4AE954DE1EB102BD00E6B224 /* IntegrationTests.swift in Sources */,
 			);
