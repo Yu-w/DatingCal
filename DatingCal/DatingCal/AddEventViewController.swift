@@ -83,6 +83,7 @@ class AddEventViewController: UIViewController {
             event.location = locationTextField.text ?? ""
             if allDaySwitch.isOn {
                 event.startDate = startTime
+                event.endDate = startTime
             } else {
                 event.startTime = startTime
                 event.endTime = endTime
