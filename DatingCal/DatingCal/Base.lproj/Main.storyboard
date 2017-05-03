@@ -645,17 +645,18 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJe-wU-NYW">
-                                                    <rect key="frame" x="0.0" y="-0.33333333333333215" width="374" height="43.666666666666671"/>
+                                                    <rect key="frame" x="24" y="-0.33333333333333215" width="326" height="43.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="uJe-wU-NYW" firstAttribute="width" secondItem="Fwo-xC-P3v" secondAttribute="width" id="QI2-By-KIw"/>
                                                 <constraint firstItem="uJe-wU-NYW" firstAttribute="centerX" secondItem="Fwo-xC-P3v" secondAttribute="centerX" id="fyW-bc-z1x"/>
                                                 <constraint firstItem="uJe-wU-NYW" firstAttribute="centerY" secondItem="Fwo-xC-P3v" secondAttribute="centerY" id="iqh-CT-3Ph"/>
+                                                <constraint firstItem="uJe-wU-NYW" firstAttribute="leading" secondItem="Fwo-xC-P3v" secondAttribute="leadingMargin" constant="16" id="jTf-pV-9X0"/>
                                                 <constraint firstItem="uJe-wU-NYW" firstAttribute="height" secondItem="Fwo-xC-P3v" secondAttribute="height" id="n0b-gk-e1b"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="uJe-wU-NYW" secondAttribute="trailing" constant="16" id="vwK-Qa-1p1"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration">
