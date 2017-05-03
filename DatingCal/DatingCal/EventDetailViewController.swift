@@ -15,8 +15,13 @@ class EventDetailViewController: UIViewControllerWithWaitAlerts {
     @IBOutlet var eventTitle: UILabel?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    var eventToShow : EventModel? = nil {
-        didSet {
+    var _eventToShow: EventModel? = nil
+    var eventToShow : EventModel? {
+        get {
+            return _eventToShow
+        }
+        set {
+            _eventToShow = newValue
             refresh()
         }
     }
@@ -54,14 +59,14 @@ class EventDetailViewController: UIViewControllerWithWaitAlerts {
     }
     
     private func willReallyDeleteEvent(_ sender: UIAlertAction) {
-        guard let eventToShow = self.eventToShow else {
+        guard let eventId = self.eventToShow?.id
+            , let calendarId = self.eventToShow?.calendar.first?.id else {
             return
         }
         self.showPleaseWait()
-        let backupEvent = eventToShow
-        self.eventToShow = nil
-        _ = self.appDelegate.googleCalendar.deleteEvent(eventToShow).catch { err in
-            self.eventToShow = backupEvent
+        self._eventToShow = nil
+        _ = self.appDelegate.googleCalendar.deleteEvent(eventId,
+                                                        calendarId).catch { err in
             _ = self.hidePleaseWait().then {
                 self.showAlert("Failed to delete events", err.localizedDescription)
             }

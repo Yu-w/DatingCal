@@ -198,24 +198,18 @@ class GoogleCalendar {
     /// Delete an event
     /// It will throw an error if this event doesn't belong to the primary user.
     /// Please note that, once the event is deleted, all access to it will cause a crash.
-    func deleteEvent(_ event: EventModel) -> Promise<Void> {
-        if event.shouldCreate {
-            return Promise(value: ())
-        }
-        guard let calendar = event.calendar.first else {
-            return Promise(error: GoogleError.IncorrectUser)
-        }
+    func deleteEvent(_ eventId: String, _ calendarId: String) -> Promise<Void> {
         guard let primaryUser = UserModel.getPrimaryUser(self.realmProvider) else {
             return Promise(error: GoogleError.NotLoggedIn)
         }
-        if !calendar.owner.contains{$0.id == primaryUser.id} {
+        if !primaryUser.calendars.contains{$0.id==calendarId} {
             return Promise(error: GoogleError.IncorrectUser)
         }
-        let calendarId = calendar.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        let eventId = event.id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(calendarId)/events/\(eventId)", method: .delete, parameters: nil).then { _ -> Void in
+        let urlCalendarId = calendarId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        let urlEventId = eventId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        return self.client.request("https://www.googleapis.com/calendar/v3/calendars/\(urlCalendarId)/events/\(urlEventId)", method: .delete, parameters: nil).then { _ -> Void in
             let realm = self.realmProvider.realm()
-            let safeReference = realm.objects(EventModel.self).filter{$0.id==event.id}
+            let safeReference = realm.objects(EventModel.self).filter{$0.id==eventId}
             try! realm.write {
                 realm.delete(safeReference)
             }
