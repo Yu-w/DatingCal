@@ -37,24 +37,22 @@ class EventModel : Object, GoogleParsable {
         return "id"
     }
     
-    /// A helper function that parses any substructure that represents a time/date
-    ///   json: Please pass in the substructure that directly contains "dateTime" or "date"
-    private func parseDates(_ json: JSON) -> (Date?, Date?, String?) {
-        var date : Date? = nil
-        var time : Date? = nil
-        var timeZone : String? = nil
-        if let startTime = json["dateTime"].string {
-            time = ISO8601Parser.date(from: startTime)?.date
-            timeZone = json["timeZone"].string
-        }
-        if let startDate = json["date"].string {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            date = dateFormatter.date(from: startDate)
-        }
-        return (date, time, timeZone)
+    // ----------------- Google Parsable protocol
+    
+    func unParse() -> Parameters {
+        var ans : Parameters = [:]
+        let startDict : Parameters = unParseDates(startDate, startTime, startTimeZone)
+        let endDict : Parameters = unParseDates(endDate, endTime, endTimeZone)
+        ans["summary"] = summary
+        ans["description"] = desc
+        ans["location"] = location
+        ans["start"] = startDict
+        ans["end"] = endDict
+        ans["recurrence"] = getRecurrence()
+        return ans
     }
     
+    // helper function for unParse()
     private func unParseDates(_ date: Date?, _ time: Date?, _ timeZone: String?) -> Parameters {
         var ans : Parameters = [:]
         ans["date"] = date?.string(format: DateFormat.custom("yyyy-MM-dd"))
@@ -67,19 +65,6 @@ class EventModel : Object, GoogleParsable {
             }
             ans["dateTime"] = dateTimeFormat.string(from: time)
         }
-        return ans
-    }
-    
-    func unParse() -> Parameters {
-        var ans : Parameters = [:]
-        let startDict : Parameters = unParseDates(startDate, startTime, startTimeZone)
-        let endDict : Parameters = unParseDates(endDate, endTime, endTimeZone)
-        ans["summary"] = summary
-        ans["description"] = desc
-        ans["location"] = location
-        ans["start"] = startDict
-        ans["end"] = endDict
-        ans["recurrence"] = getRecurrence()
         return ans
     }
     
@@ -104,6 +89,65 @@ class EventModel : Object, GoogleParsable {
             let realm = realmProvider.realm()
             let newEvent = realm.objects(EventModel.self).filter{x in x.id==self.id}.first
             shouldCreate = newEvent?.shouldCreate ?? false
+        }
+    }
+    
+    /// A helper function that parses any substructure that represents a time/date
+    ///   json: Please pass in the substructure that directly contains "dateTime" or "date"
+    private func parseDates(_ json: JSON) -> (Date?, Date?, String?) {
+        var date : Date? = nil
+        var time : Date? = nil
+        var timeZone : String? = nil
+        if let startTime = json["dateTime"].string {
+            time = ISO8601Parser.date(from: startTime)?.date
+            timeZone = json["timeZone"].string
+        }
+        if let startDate = json["date"].string {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            date = dateFormatter.date(from: startDate)
+        }
+        return (date, time, timeZone)
+    }
+    
+    // ------------------ PUBLIC Utility functions (and their helpers) -------------------
+    
+    func describe() -> String? {
+        guard let calendarName = self.calendar.first?.name
+            , let start = describeDates(self.startDate, self.startTime)
+            , let end = describeDates(self.endDate, self.endTime) else {
+            return nil
+        }
+        
+        var recurrence = "non-recurring"
+        if let recurs = getRecurrence(), recurs.count > 0 {
+            recurrence = "recurring"
+        }
+        
+        var eventType = "a \(recurrence) event"
+        if startDate != nil, endDate != nil {
+            eventType = "an all-day, \(recurrence) event"
+        }
+        
+        var extraDesc = "And the author didn't write anything else."
+        if self.desc != "" {
+            extraDesc = "And here are some extra descriptions:\n\n" + self.desc
+        }
+        
+        return "This is \(eventType)\n"
+            + "It starts from \(start)\n"
+            + "It ends on \(end)\n"
+            + "It's created for \"\(calendarName)\"\n"
+            + extraDesc
+    }
+    
+    private func describeDates(_ date: Date?, _ time: Date?) -> String? {
+        if let date = date {
+            return date.string(format: DateFormat.custom("eeee, MMMM d, yyyy"))
+        } else if let time = time {
+            return time.string(format: DateFormat.custom("eee, MMMM d, yyyy h:mm a"))
+        } else {
+            return nil
         }
     }
     

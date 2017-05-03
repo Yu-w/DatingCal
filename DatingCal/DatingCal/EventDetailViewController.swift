@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftDate
 
 class EventDetailViewController: UIViewController {
     @IBOutlet var eventDescription: UILabel?
@@ -21,8 +22,11 @@ class EventDetailViewController: UIViewController {
     
     private func refresh() {
         eventTitle?.text = eventToShow?.summary ?? "(Not found)"
-        eventLocation?.text = eventToShow?.location ?? "(no location)"
-        eventDescription?.text = "UNDER CONSTRUCTION"
+        eventLocation?.text = "(no location)"
+        if let location = eventToShow?.location, location != "" {
+            eventLocation?.text = "Location: " + location
+        }
+        eventDescription?.text = eventToShow?.describe() ?? ""
     }
     
     // Make sure to refresh after view shows up, in case IBOutlet references are wrong
