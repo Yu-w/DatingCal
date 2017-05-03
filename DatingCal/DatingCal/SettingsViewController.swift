@@ -24,8 +24,9 @@ class SettingsViewController: UIViewControllerWithWaitAlerts, UITableViewDataSou
             self.showPleaseWait()
             return self.appDelegate.googleCalendar.loadAll()
         }.then { _ -> Void in
-            self.hidePleaseWait()
-            self.dismiss(animated: true, completion: nil)
+            _ = self.hidePleaseWait().then {
+                self.dismiss(animated: true, completion: nil)
+            }
         }.catch { err -> Void in
             self.showAlert("Error", "Login Failed")
         }.always {
@@ -92,7 +93,7 @@ class SettingsViewController: UIViewControllerWithWaitAlerts, UITableViewDataSou
             }.then {
                 self.refreshListOfUsers()
             }.always {
-                self.hidePleaseWait()
+                _ = self.hidePleaseWait()
             }
         }
     }
@@ -108,7 +109,7 @@ class SettingsViewController: UIViewControllerWithWaitAlerts, UITableViewDataSou
             }.then {
                 self.refreshListOfUsers()
             }.always {
-                self.hidePleaseWait()
+                _ = self.hidePleaseWait()
             }
         }
     }

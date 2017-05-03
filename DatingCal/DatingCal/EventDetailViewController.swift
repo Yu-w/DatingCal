@@ -9,10 +9,11 @@
 import UIKit
 import SwiftDate
 
-class EventDetailViewController: UIViewController {
+class EventDetailViewController: UIViewControllerWithWaitAlerts {
     @IBOutlet var eventDescription: UILabel?
     @IBOutlet var eventLocation: UILabel?
     @IBOutlet var eventTitle: UILabel?
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var eventToShow : EventModel? = nil {
         didSet {
@@ -31,8 +32,12 @@ class EventDetailViewController: UIViewController {
     }
     
     @IBAction func willDeleteEvent(_ sender: Any) {
+        if eventToShow == nil {
+            // Don't show the prompt if the event doesn't exist
+            return
+        }
         let alertVC = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
-        alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: self.willReallyDeleteEvent))
+        alertVC.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: self.willReallyDeleteEvent))
         alertVC.addAction(UIAlertAction(title: "No", style: .default))
         self.present(alertVC, animated: true)
     }
@@ -49,7 +54,22 @@ class EventDetailViewController: UIViewController {
     }
     
     private func willReallyDeleteEvent(_ sender: UIAlertAction) {
-        // TODO: finish this function
+        guard let eventToShow = self.eventToShow else {
+            return
+        }
+        self.showPleaseWait()
+        let backupEvent = eventToShow
+        self.eventToShow = nil
+        _ = self.appDelegate.googleCalendar.deleteEvent(eventToShow).catch { err in
+            self.eventToShow = backupEvent
+            _ = self.hidePleaseWait().then {
+                self.showAlert("Failed to delete events", err.localizedDescription)
+            }
+        }.then { _ -> Void in
+            _ = self.hidePleaseWait().then {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
 }

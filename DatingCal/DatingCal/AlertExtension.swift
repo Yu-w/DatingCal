@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PromiseKit
 import UIKit
 
 extension UIViewController {
@@ -32,12 +33,14 @@ class UIViewControllerWithWaitAlerts : UIViewController {
         alertPleaseWait = alertVC
     }
     
-    func hidePleaseWait() {
+    func hidePleaseWait() -> Promise<Void> {
         guard let alert = alertPleaseWait else {
-            return
+            return Promise(value: ())
         }
-        alert.dismiss(animated: true)
-        alertPleaseWait = nil
+        return Promise<Void>{ fulfill, reject in
+            alert.dismiss(animated: true, completion: {x in fulfill()})
+            alertPleaseWait = nil
+        }
     }
     
 }
