@@ -36,9 +36,10 @@ class GoogleHTTPClient : AbstractHTTPClient {
     /// And it's actually the only state of our class.
     private var _authState : OIDAuthState?
     
-    /// This is a stack that helps implement
+    /// These stacks help implement
     ///  temporarilyChangeUser()
     private var _authStateStack : [OIDAuthState] = []
+    private var _primaryUserIDStack : [String] = []
     
     /// A helper function that actually does the login.
     private func login(presenter: UIViewController) -> Promise<Void> {
@@ -95,8 +96,10 @@ class GoogleHTTPClient : AbstractHTTPClient {
     ///   but allows the operation to be cancelled.
     /// This will store extra data.
     func temporarilyChangeUser(_ toUser: UserModel, _ presenter: UIViewController) -> Promise<Void> {
-        if let state = _authState {
+        if let state = _authState
+            , let userID = UserModel.getPrimaryUser(self.realmProvider)?.id {
             _authStateStack.append(state)
+            _primaryUserIDStack.append(userID)
         }
         return self.changeUser(toUser, presenter)
     }
@@ -104,7 +107,13 @@ class GoogleHTTPClient : AbstractHTTPClient {
     /// Cancels the temporary change of user brought
     ///    by temporarilyChangeUser()
     func cancelTemporaryChangedUser() {
-        _authState = _authStateStack.popLast()
+        let realm = self.realmProvider.realm()
+        if let authState = _authStateStack.popLast()
+            , let userID = _primaryUserIDStack.popLast()
+            , let user = realm.objects(UserModel.self).filter({$0.id==userID}).first {
+            user.setPrimaryUser(self.realmProvider)
+            _authState = authState
+        }
     }
     
     /// Login to a completely new account, and

@@ -60,13 +60,15 @@ class EventDetailViewController: UIViewControllerWithWaitAlerts {
     
     private func willReallyDeleteEvent(_ sender: UIAlertAction) {
         guard let eventId = self.eventToShow?.id
-            , let calendarId = self.eventToShow?.calendar.first?.id else {
+            , let calendarId = self.eventToShow?.calendar.first?.id
+            , let owner = self.eventToShow?.calendar.first?.owner.first else {
             return
         }
         self.showPleaseWait()
         self._eventToShow = nil
-        _ = self.appDelegate.googleCalendar.deleteEvent(eventId,
-                                                        calendarId).catch { err in
+        _ = self.appDelegate.googleClient.temporarilyChangeUser(owner, self).then {
+            return self.appDelegate.googleCalendar.deleteEvent(eventId, calendarId)
+        }.catch { err in
             _ = self.hidePleaseWait().then {
                 self.showAlert("Failed to delete events", err.localizedDescription)
             }
@@ -74,6 +76,8 @@ class EventDetailViewController: UIViewControllerWithWaitAlerts {
             _ = self.hidePleaseWait().then {
                 self.dismiss(animated: true, completion: nil)
             }
+        }.always {
+            self.appDelegate.googleClient.cancelTemporaryChangedUser()
         }
     }
     
