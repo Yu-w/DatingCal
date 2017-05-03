@@ -97,7 +97,7 @@ class EventModelTests : AsyncTests {
             XCTAssertTrue(desc.contains("This is a non-recurring event"))
         }
         XCTAssertTrue(desc.contains("It starts from Sun, April 10, 2016 8:10 PM"))
-        XCTAssertTrue(desc.contains("It ends on Monday, April 11, 2016 9:22 PM"))
+        XCTAssertTrue(desc.contains("It ends on Mon, April 11, 2016 9:22 PM"))
     }
     
     private func testDescriptionForExtraDescription(desc: String? = nil) {
