@@ -112,11 +112,21 @@ class EventModel : Object, GoogleParsable {
     
     // ------------------ PUBLIC Utility functions (and their helpers) -------------------
     
+    /// Show a description for everthing about this event
+    ///     , except for name and location.
+    /// The gist is that:
+    ///     A view should show the name and location in separate labels.
+    ///     And then it could show description from this function for everything else
     func describe() -> String? {
-        guard let calendarName = self.calendar.first?.name
+        guard let calendar = self.calendar.first
             , let start = describeDates(self.startDate, self.startTime)
             , let end = describeDates(self.endDate, self.endTime) else {
             return nil
+        }
+        
+        var calendarName = calendar.name
+        if calendar.isPrimary {
+            calendarName = "Google default calendar"
         }
         
         var recurrence = "non-recurring"
@@ -134,10 +144,16 @@ class EventModel : Object, GoogleParsable {
             extraDesc = "And here are some extra descriptions:\n\n" + self.desc
         }
         
+        var account = "nobody"
+        if let user = self.calendar.first?.owner.first {
+            account = user.email
+        }
+        
         return "This is \(eventType)\n"
             + "It starts from \(start)\n"
             + "It ends on \(end)\n"
             + "It's created for \"\(calendarName)\"\n"
+            + "It belongs to \(account)\n"
             + extraDesc
     }
     

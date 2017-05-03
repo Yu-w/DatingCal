@@ -94,7 +94,9 @@ class GoogleHTTPClient : AbstractHTTPClient {
     
     /// Change the current user like changeUser(),
     ///   but allows the operation to be cancelled.
-    /// This will store extra data.
+    /// We use a stack to save and restore states,
+    ///    so it's possible to temporarily change/cancel
+    ///    primary user more than once.
     func temporarilyChangeUser(_ toUser: UserModel, _ presenter: UIViewController) -> Promise<Void> {
         if let state = _authState
             , let userID = UserModel.getPrimaryUser(self.realmProvider)?.id {
@@ -106,6 +108,9 @@ class GoogleHTTPClient : AbstractHTTPClient {
     
     /// Cancels the temporary change of user brought
     ///    by temporarilyChangeUser()
+    /// We use a stack to save and restore states,
+    ///    so it's possible to temporarily change/cancel
+    ///    primary user more than once.
     func cancelTemporaryChangedUser() {
         let realm = self.realmProvider.realm()
         if let authState = _authStateStack.popLast()
