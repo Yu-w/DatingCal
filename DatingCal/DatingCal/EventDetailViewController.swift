@@ -22,6 +22,7 @@ class EventDetailViewController: UIViewController {
     
     private func refresh() {
         eventTitle?.text = eventToShow?.summary ?? "(Not found)"
+        eventLocation?.text = ""
         if let location = eventToShow?.location, location != "" {
             eventLocation?.text = "Location: " + location
         }
