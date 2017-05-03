@@ -20,15 +20,6 @@ class EventDetailViewController: UIViewController {
         }
     }
     
-    private func refresh() {
-        eventTitle?.text = eventToShow?.summary ?? "(Not found)"
-        eventLocation?.text = ""
-        if let location = eventToShow?.location, location != "" {
-            eventLocation?.text = "Location: " + location
-        }
-        eventDescription?.text = eventToShow?.describe() ?? ""
-    }
-    
     // Make sure to refresh after view shows up, in case IBOutlet references are wrong
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,6 +31,25 @@ class EventDetailViewController: UIViewController {
     }
     
     @IBAction func willDeleteEvent(_ sender: Any) {
+        let alertVC = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
+        alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: self.willReallyDeleteEvent))
+        alertVC.addAction(UIAlertAction(title: "No", style: .default))
+        self.present(alertVC, animated: true)
+    }
+    
+    // ------------- private helper functions
+    
+    private func refresh() {
+        eventTitle?.text = eventToShow?.summary ?? "(Not found)"
+        eventLocation?.text = ""
+        if let location = eventToShow?.location, location != "" {
+            eventLocation?.text = "Location: " + location
+        }
+        eventDescription?.text = eventToShow?.describe() ?? ""
+    }
+    
+    private func willReallyDeleteEvent(_ sender: UIAlertAction) {
+        // TODO: finish this function
     }
     
 }
